@@ -4,6 +4,9 @@ import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
 import { getSortedPostsData } from '../lib/data';
 
+/**
+ * use to build static render
+ */
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
   return {
