@@ -1,8 +1,10 @@
 import Head from 'next/head';
 import Layout from '../../components/layout';
-
+import useCounterStore from '../../store/zustand-store';
 
 export default function ZustandDemo() {
+
+    const {count, increment, decrement} = useCounterStore();
 
     return (<Layout>
         <Head>
@@ -14,6 +16,11 @@ export default function ZustandDemo() {
         Zustand is state management.
         </h2>
         <p>Zustand is lightweight.</p>
+        <div>
+            <p>Your score is {count}</p>
+            <button onClick={increment}>Increment +</button>
+            <button onClick={decrement}>Decrement -</button>
+          </div>
 
     </Layout>)
 }

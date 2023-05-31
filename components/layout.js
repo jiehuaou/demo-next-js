@@ -3,12 +3,17 @@ import Image from 'next/image';
 import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
+import useCounterStore from '../store/zustand-store';
 
 
 const name = 'Your Name';
 export const siteTitle = 'Next.js Sample Website';
 
 export default function Layout({ children, home }) {
+
+  const {count} = useCounterStore();
+
+
   return (
     <div className={styles.container}>
       <Head>
@@ -37,7 +42,7 @@ export default function Layout({ children, home }) {
               width={144}
               alt=""
             />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
+            <h1 className={utilStyles.heading2Xl}>{name} score {count}</h1>
           </>
         ) : (
           <>
@@ -53,7 +58,7 @@ export default function Layout({ children, home }) {
             </Link>
             <h2 className={utilStyles.headingLg}>
               <Link href="/" className={utilStyles.colorInherit}>
-                {name}
+                {name} score {count}
               </Link>
             </h2>
           </>
