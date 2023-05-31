@@ -24,12 +24,17 @@ export default function Home({allPostsData}) {
       </Head>
       <section className={utilStyles.headingMd}>
         <p>[Your Self Introduction]</p>
-        <p>
-          (This is a sample website - you’ll be building a site like this on{' '}
-          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
-        </p>
-        <h1 className="title">
-          Read <Link href="/posts/first-post">this page!</Link>
+        <h1 className={utilStyles.title}>
+          Read <Link href="/posts/first-post">this Post</Link>
+        </h1>
+        <h1 className={utilStyles.title}>
+          Read <Link href="/comments/first-comment">this Comment</Link>
+        </h1>
+        <h1 className={utilStyles.title}>
+          Read <Link href="/unstate/first-unstate">this Unstate</Link>
+        </h1>
+        <h1 className={utilStyles.title}>
+          Read <Link href="/zustand/first-zustand">this Zustand</Link>
         </h1>
       </section>
 

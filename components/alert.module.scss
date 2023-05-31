@@ -1,9 +1,19 @@
 .success {
-    color: green;
-    border: 1px green solid;
-    padding: 10px;
-  }
-  .error {
-    color: red;
-  }
-  
+  color: green;
+  border: 2px green solid;
+  padding: 10px;
+}
+
+.error {
+  color: red;
+  border: 2px green solid;
+  padding: 10px;
+}
+
+.light {
+  filter: brightness(1);
+}
+
+.dark {
+  filter: brightness(0.55);
+}
