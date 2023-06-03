@@ -37,7 +37,7 @@ export default function FirstPost() {
           
           <h1>First Comment</h1>
           <h2>
-            Everything is fine.
+            Demo Context and Reducer.
           </h2>
           <Alert type={alert} theme={theme}><div>{theme}</div></Alert>
     

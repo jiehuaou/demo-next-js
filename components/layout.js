@@ -4,6 +4,7 @@ import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
 import useCounterStore from '../store/zustand-store';
+import { useEffect } from 'react';
 
 
 const name = 'Your Name';
@@ -11,8 +12,9 @@ export const siteTitle = 'Next.js Sample Website';
 
 export default function Layout({ children, home }) {
 
-  const {count} = useCounterStore();
+  const {total, ready} = useCounterStore();
 
+  //useEffect(()=>{init()}, []);
 
   return (
     <div className={styles.container}>
@@ -41,8 +43,9 @@ export default function Layout({ children, home }) {
               height={144}
               width={144}
               alt=""
+              title={`total: ${total}`}
             />
-            <h1 className={utilStyles.heading2Xl}>{name} score {count}</h1>
+            <h1 className={utilStyles.heading2Xl}>{name}, total {ready?total:'...'}</h1>
           </>
         ) : (
           <>
@@ -54,11 +57,12 @@ export default function Layout({ children, home }) {
                 height={108}
                 width={108}
                 alt=""
+                title={`your total ${total}`}
               />
             </Link>
             <h2 className={utilStyles.headingLg}>
               <Link href="/" className={utilStyles.colorInherit}>
-                {name} score {count}
+                {name}, total {ready?total:'...'}
               </Link>
             </h2>
           </>

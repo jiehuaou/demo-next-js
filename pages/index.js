@@ -3,6 +3,8 @@ import Layout, { siteTitle } from '../components/layout';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
 import { getSortedPostsData } from '../lib/data';
+import { useEffect } from 'react';
+import useCounterStore from '../store/zustand-store';
 
 /**
  * use to build static render
@@ -17,6 +19,18 @@ export async function getStaticProps() {
 }
 
 export default function Home({allPostsData}) {
+
+  const {init, inited} = useCounterStore();
+
+  useEffect(()=>{
+    if(!inited){
+      init();
+      console.log('........ init store again.........' + inited);
+    }else{
+      console.log('........ try to init store again.........' + inited);
+    }
+  }, []);
+
   return (
     <Layout home>
       <Head>
@@ -35,6 +49,9 @@ export default function Home({allPostsData}) {
         </h1>
         <h1 className={utilStyles.title}>
           Read <Link href="/zustand/first-zustand">this Zustand</Link>
+        </h1>
+        <h1 className={utilStyles.title}>
+          Read <Link href="/money/money-book">this Money</Link>
         </h1>
       </section>
 
