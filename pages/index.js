@@ -45,6 +45,9 @@ export default function Home({allPostsData}) {
           Read <Link href="/comments/first-comment">this Comment</Link>
         </h1>
         <h1 className={utilStyles.title}>
+          Read <Link href="/swr/first-swr">this SWR</Link>
+        </h1>
+        <h1 className={utilStyles.title}>
           Read <Link href="/unstate/first-unstate">this Unstate</Link>
         </h1>
         <h1 className={utilStyles.title}>
