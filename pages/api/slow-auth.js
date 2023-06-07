@@ -1,9 +1,9 @@
 const uuid = require('uuid');
 
-const nameList = ['Albert', 'John', 'Tiger', 'Alex'];
+const nameList = [ 'John', 'Tiger', 'Fake'];
 
 const getName =function () {
-    const index = Math.round( Math.random() * 10) % 4 ;
+    const index = 0;  // Math.round( Math.random() * 10) % nameList.length ;
     console.log(`name index ........... ${index}`);
     return nameList[index];
 }
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
         setTimeout(() => {
             res.status(200).json({ user: getName(), token: uuid.v4(), stamp: new Date()});
             //return 'done';
-        }, 1500);
+        }, 1200);
     });
 
     res.status(200).json({});

@@ -25,3 +25,7 @@ img {
   max-width: 100%;
   display: block;
 }
+
+span.width2px {
+  width: 2px
+}
