@@ -18,7 +18,7 @@ const fetcher = async (url, cache) => {
   console.log(`fetch Invoice ${url} ........ ${counter.index++}`);
   //mutate((e) => e===url, undefined, { revalidate: false });
   const r = await axios.get(url);
-  deleteCache (cache, url)
+  //deleteCache (cache, url)
   return r.data;
 
 };
@@ -26,17 +26,20 @@ const fetcher = async (url, cache) => {
 
 const useInvoiceSWR = () => {
   const id = useAuthStore((state) => state.user);
-  const { cache } = useSWRConfig();
-  const { data, error } = useSWR(
-    id && id !== 'Unknow' ? `/api/slow-invoice?id=${id}` : null,
-    (url) => fetcher(url, cache)
+  const key = id && id !== 'Unknow' ? `/api/slow-invoice?id=${id}` : null;
+  const { data, error, isLoading  } = useSWR(key, async (url) => {
+      console.log(`SWR API Invoice ${url} ........ ${counter.index++}`);
+      const r = await axios.get(url);
+      return r.data;
+    }
   );
 
-  console.log("error => " + error);
+  console.log("error => " + error, ",  data = > " + data, ", loading => " + isLoading);
 
   return {
+    key: key,
     invoiceData: data,
-    loading: !data && !error,
+    loading: isLoading,
     error: !!error
   };
 };

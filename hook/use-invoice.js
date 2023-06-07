@@ -6,7 +6,7 @@ import useAuthStore from "../store/auth-store";
 const counter = { index: 1 }
 
 const fetcher = async (url, cache) => {
-  console.log(`fetch Invoice ${url} ........ ${counter.index++}`);
+  console.log(`API Invoice ${url} ........ ${counter.index++}`);
   const r = await axios.get(url);
   return r.data;
 

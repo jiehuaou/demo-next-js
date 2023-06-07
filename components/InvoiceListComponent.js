@@ -8,7 +8,7 @@
         <>
             <div>Data from {fetchType}</div>
             <ul>
-                {invoiceData && invoiceData.map(({title, author})=>(
+                {invoiceData?.map(({title, author})=>(
                     <li key={title}><span>{title}</span>, <span>{author}</span></li>
                 ))}
             </ul>

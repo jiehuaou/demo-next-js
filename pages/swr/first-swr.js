@@ -11,6 +11,7 @@ import useSWR, { mutate, useSWRConfig  } from "swr";
 import useInvoiceSWR from '../../hook/use-invoice-swr';
 import useInvoice from '../../hook/use-invoice';
 import InvoiceListComponent from '../../components/InvoiceListComponent';
+import Space2x from '../../components/Space2px';
 
 const InvoiceList = function () {
     
@@ -27,7 +28,6 @@ const InvoiceList = function () {
 
 const InvoiceListSWR = function () {
     
-    // const {invoiceData,loading,error} = useInvoice();
     const {invoiceData, loading, error} = useInvoiceSWR();
 
     if (loading) {
@@ -68,12 +68,20 @@ const delayStore = (store, defaultState={}) => {
     return data;
 }
 
+const clearCache = () => mutate(
+    () => true,
+    undefined,
+    { revalidate: true }
+  )
+
 export default function SWRDemo() {
 
     const myAuthStore = delayStore(useAuthStore(), {});
     const { cache } = useSWRConfig();
 
     const { user, token, stamp, ready, loading, login, logout } = myAuthStore;
+
+    const {key} = useInvoiceSWR();
 
 
 
@@ -89,20 +97,24 @@ export default function SWRDemo() {
         </h2>
 
         <div>
-            <button onClick={login} disabled={ready || loading}>SWR Login +</button> <span className='width2px'></span>
-            <button onClick={logout} disabled={!ready}>Logout -</button> <span className='width2px'></span>
+            <button onClick={login} disabled={ready || loading}>SWR Login +</button> <Space2x/>
+            <button onClick={logout} disabled={!ready}>Logout -</button> <Space2x/>
             <button onClick={()=>{
-                //mutate("/api/slow-invoice?id=John");
-                cache.delete("/api/slow-invoice?id=John");
-            }} disabled={!ready}>Clean SWR Cache -</button>
+                // delete Key Data at cache but not trigger UI render
+                cache.delete(key);
+                // clearCache();
+            }} disabled={!ready}>Delete SWR Cache -</button> <Space2x/>
+            <button onClick={()=>{
+                // refetch the data of specified Key, will trigger UI render if Key Data is deleted.
+                mutate(key);
+            }} disabled={!ready}>Refresh SWR Cache -</button> <Space2x/>
         </div>
         
-
         <hr />
         <div>
-            { ready ? (<InvoiceListSWR/>) : (<div>...</div>) }
-            {ready ? (<InvoiceList/>) : (<div>...</div>) }
-
+            <span>{ ready ? (<InvoiceListSWR/>) : (<div>...</div>) }</span>
+            <span className='width2px'> </span>
+            {/* <span>{ready ? (<InvoiceList/>) : (<div>...</div>) }</span> */}
         </div>
 
     </Layout>)

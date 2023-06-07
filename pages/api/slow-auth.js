@@ -3,7 +3,7 @@ const uuid = require('uuid');
 const nameList = [ 'John', 'Tiger', 'Fake'];
 
 const getName =function () {
-    const index = 0;  // Math.round( Math.random() * 10) % nameList.length ;
+    const index = 0; //Math.round( Math.random() * 10) % nameList.length ;
     console.log(`name index ........... ${index}`);
     return nameList[index];
 }
