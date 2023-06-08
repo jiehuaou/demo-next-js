@@ -1,7 +1,7 @@
 import utilStyles from '../styles/utils.module.css';
 import Image from 'next/image';
 
-export default function Loading(params) {
+export default function Loading() {
     return (<Image
         priority
         className={utilStyles.loadingImage}

@@ -48,7 +48,7 @@ export default function Home({allPostsData}) {
           Read <Link href="/auth/first-auth">this Auth</Link>
         </h1>
         <h1 className={utilStyles.title}>
-          Read <Link href="/swr/first-swr">this SWR Fetch</Link>
+          Read <Link href="/swr/first-swr">this SWR (cache) Fetch</Link>
         </h1>
         <h1 className={utilStyles.title}>
           Read <Link href="/unstate/first-unstate">this Unstate</Link>
