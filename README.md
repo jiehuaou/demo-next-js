@@ -156,7 +156,7 @@ export default function SWRDemo() {
 }
 ```
 * you can use [ data ] to build your UI list,
-* use [ loading, error ] to show loading or error message
+* use [ isLoading, error ] to show loading or error message
 * use cache.delete(key) to delete the cache entry via [ key ],
 * use mutate(key) to re-fetch data silently,
 
@@ -164,6 +164,12 @@ notice
 
 * **cache.delete(key)** will delete Data at cache but not trigger UI render,
 * **mutate(key)** will re-fetch the data of Key silently, may trigger UI render if Key's Data is deleted.
+
+### SWR, isLoading vs isValidating 
+
+**isLoading** is true only when data is fetched first time,
+
+**isValidating** is true when data is either fetched first time, or re-fetch later on.
 
 ### SWR, Preloading Data
 
@@ -175,5 +181,20 @@ import useSWR, { preload } from 'swr';
 preload('/api/user', fetcher);
 ```
 
+### SWR, delete some key
+
+use cache.keys() to find your keys
+```js
+import { mutate, useSWRConfig } from "swr";
+
+const { cache } = useSWRConfig();
+
+[...cache.keys()]
+    .filter(e=>e.startsWith('/api/some-service'))
+    .forEach(key => {
+        cache.delete(key);
+});
+
+```
 
 

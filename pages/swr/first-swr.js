@@ -97,9 +97,11 @@ export default function SWRDemo() {
     useEffect(()=>{
         return ()=>{
             console.log("exit first-swr ............");
-            [...cache.keys()].forEach(key => {
-                cache.delete(key);
-                console.log("cache.delete ............ " + key);
+            [...cache.keys()]
+                .filter(e=>e.startsWith('/api/slow-invoice'))
+                .forEach(key => {
+                    cache.delete(key);
+                    console.log("cache.delete ............ " + key);
             });
         }
     }, [])
