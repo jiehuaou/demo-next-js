@@ -27,19 +27,21 @@ const fetcher = async (url, cache) => {
 const useInvoiceSWR = () => {
   const id = useAuthStore((state) => state.user);
   const key = id && id !== 'Unknow' ? `/api/slow-invoice?id=${id}` : null;
-  const { data, error, isLoading  } = useSWR(key, async (url) => {
+  const { data, error, isLoading, isValidating   } = useSWR(key, async (url) => {
       console.log(`SWR API Invoice ${url} ........ ${counter.index++}`);
       const r = await axios.get(url);
       return r.data;
     }
   );
 
-  console.log("error => " + error, ",  data = > " + data, ", loading => " + isLoading);
+  console.log("error => " + error, ",  data = > " + data?.length, 
+    ", loading => " + isLoading, ", isValidating => " + isValidating);
 
   return {
     key: key,
     invoiceData: data,
     loading: isLoading,
+    isValidating : isValidating ,
     error: !!error
   };
 };

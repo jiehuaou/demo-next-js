@@ -28,7 +28,7 @@ const InvoiceList = function () {
 
 const InvoiceListSWR = function ({cache}) {
 
-    const {key, invoiceData, loading, error } = useInvoiceSWR();
+    const {key, invoiceData, loading, isValidating, error } = useInvoiceSWR();
 
     if (loading) {
         return <span><Loading /></span>
@@ -36,7 +36,7 @@ const InvoiceListSWR = function ({cache}) {
         return <span>Something Wrong</span>
     } else {
         return (<>
-            <InvoiceListComponent fetchType='SWR' invoiceData={invoiceData} />
+            <InvoiceListComponent fetchType='SWR' invoiceData={invoiceData} isValidating={isValidating}/>
             <button onClick={() => {
                 // delete Key Data at cache but not trigger UI render
                 cache.delete(key);

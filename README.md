@@ -67,9 +67,33 @@ export default function ZustandDemo() {
 }
 ```
 
+## Clsx - What is and how to use it
+
+clsx is generally used to conditionally apply a given className.
+
+```js
+import utilStyles from '../styles/utils.module.scss';
+import { clsx } from 'clsx';
+
+const menuStyle = clsx({
+    [utilStyles.root] : true,        //always applies
+    [utilStyles.menuOpen] : open     //only when open === true
+})
+```
+
+You can use it like this if apply multiple className.
+```js
+import { foo, bar, baz } from '../styles/utils.module.scss';
+
+const style3 = clsx(foo, bar, baz)
+
+return <div className={style3} />
+```
+
+
 ## how to use SWR fetch data
 
-define your Hook
+### define your Hook
 ```js
 import useSWR from "swr";
 
@@ -92,7 +116,7 @@ export default useInvoiceSWR;
 ```
 with useSWR,  you can access [ **data, error, isLoading** ] features.
 
-and then call your Hook inside React Component, 
+### call your Hook inside React Component, 
 
 ```js
 import { mutate, useSWRConfig } from "swr";
@@ -135,3 +159,21 @@ export default function SWRDemo() {
 * use [ loading, error ] to show loading or error message
 * use cache.delete(key) to delete the cache entry via [ key ],
 * use mutate(key) to re-fetch data silently,
+
+notice
+
+* **cache.delete(key)** will delete Data at cache but not trigger UI render,
+* **mutate(key)** will re-fetch the data of Key silently, may trigger UI render if Key's Data is deleted.
+
+### SWR, Preloading Data
+
+If you know the resource is going to be used later , use the **preload** API to start fetching it early:
+
+```js
+import useSWR, { preload } from 'swr';
+
+preload('/api/user', fetcher);
+```
+
+
+
