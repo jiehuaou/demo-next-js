@@ -90,7 +90,9 @@ const useInvoiceSWR = () => {
 };
 export default useInvoiceSWR;
 ```
-then use your Hook inside React Component, in whcih, you can access [ data, error, isLoading ] from useSWR,
+with useSWR,  you can access [ **data, error, isLoading** ] features.
+
+and then call your Hook inside React Component, 
 
 ```js
 import { mutate, useSWRConfig } from "swr";
