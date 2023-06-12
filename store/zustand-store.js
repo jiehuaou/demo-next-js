@@ -1,17 +1,20 @@
 import { create } from 'zustand';
-import {produce} from "immer"
+// import {produce} from "immer"
+import { devtools } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
 // import useSWR from 'swr';
 
-const addMoney = function (balance, amount) {
-    return balance + amount;
-}
+// const addMoney = function (balance, amount) {
+//     return balance + amount;
+// }
 
+let timerHandler = null;
 
-const useCounterStore = create((set) => ({
+const useCounterStore = create(immer((set) => ({
     inited: false,
     count: 0,
     total: 0,
-    ready: false,
+    ready: true,
     money: {
         money1: {
             balance: 123,
@@ -23,33 +26,40 @@ const useCounterStore = create((set) => ({
         }
     },
     increment: async () => {
-        set(state => ({ ready: false }));
-        set(state => ({ count: state.count + 1, total: state.total + 1 }));
-        setTimeout(() => {
-            set(state => ({ ready: true }));
+        if(timerHandler !== null) {
+            clearTimeout(timerHandler);
+            //  timerHandler = null;
+        }
+        set(state => { state.ready = false });
+        set(state => { ++state.count; ++state.total;});
+        timerHandler = setTimeout(() => {
+            set(state => { state.ready = true });
         }, 1000);
     },
-    decrement: () => set(state => ({ count: state.count - 1 })),
+    decrement: () => set(state => { --state.count; }),
     init: async () => {
         const jsonData = await fetch('/api/init').then(res=>res.json());
-        //const jsonData = await res.json();
         set({ ...jsonData, ready: true, inited: true });
     },
+    /**
+     * allow deep nested state update with help of Immer
+     */
     addMoney: (account, amount) => {
         if (account === "888") {
-            set(state => ({ money: { ...state.money, money1: { ...state.money.money1, balance: state.money.money1.balance + amount } } }))
+            set(temp => { temp.money.money1.balance = temp.money.money1.balance + amount })
         } else if (account==="999") {
-            set(produce(temp => {temp.money.money2.balance = temp.money.money2.balance + amount }  ))
+            set(temp => {temp.money.money2.balance = temp.money.money2.balance + amount })
         }
     },
     drawMoney: (account, amount) => { 
         if (account === "888") {
-            set(produce(temp => {temp.money.money1.balance = temp.money.money1.balance - amount }  ))
+            set(temp => {temp.money.money1.balance = temp.money.money1.balance - amount })
         } else if (account==="999") {
-            set(produce(temp => {temp.money.money2.balance = temp.money.money2.balance - amount }  ))
+            set(temp => {temp.money.money2.balance = temp.money.money2.balance - amount })
         }
     }
-}));
+})
+));
 
 //useCounterStore.subscribe(console.log);
 

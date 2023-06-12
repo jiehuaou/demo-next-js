@@ -5,9 +5,13 @@ import useCounterStore from '../../store/zustand-store';
 
 export default function ZustandDemo() {
 
-    const {count, total, increment, decrement} = useCounterStore();
+    const {inited, init, count, total, increment, decrement} = useCounterStore();
 
     useEffect(()=>{
+        if(!inited){
+            init();
+            console.log('........ init store again.........' + inited);
+        }
         console.log('........ render .......');
         const unsub = useCounterStore.subscribe(state=>console.log(state.count, state.total));
         return ()=>unsub();

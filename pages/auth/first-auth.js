@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 //import { useStore } from 'zustand';
 import utilityStyles from '../../styles/utils.module.css';
 import useSWR from 'swr';
+import usePersistStore from '../../hook/use-persist-store';
 
 
 
@@ -28,20 +29,20 @@ const UserName = function ({ loading, ready, user }) {
  * when zustand was persist.
  */
 
-const delayStore = (store, defaultState={}) => {
-    const result = store;
-    const [data, setData] = useState(defaultState);
+// const delayStore = (store, defaultState={}) => {
+//     const result = store;
+//     const [data, setData] = useState(defaultState);
 
-    useEffect(() => {
-        setData(result);
-    }, [result]);
+//     useEffect(() => {
+//         setData(result);
+//     }, [result]);
 
-    return data;
-}
+//     return data;
+// }
 
 export default function AuthDemo() {
 
-    const myAuthStore = delayStore(useAuthStore(), {});
+    const myAuthStore = usePersistStore(useAuthStore(), {});
 
     const { user, token, stamp, ready, loading, login, logout } = myAuthStore;
 
@@ -53,6 +54,7 @@ export default function AuthDemo() {
         </Head>
 
         <h1>Auth Demo</h1>
+        <div>demo Zustand with Persist Feature.</div>
 
         <h2>
             Your Name is <UserName user={user} ready={ready} loading={loading} />

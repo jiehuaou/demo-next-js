@@ -16,23 +16,27 @@ export default function MoneyBook() {
         return ()=>unsub();
     }, []);
 
-    const noEvent = () => { addMoney }
+    //const noEvent = () => { addMoney }
 
     return (
         <Layout>
             <Head>
                 <title>Money Book</title>
             </Head>
-            <h1>Money Book</h1>
-            <p>show deep nested state update, total Money {money1+money2}</p>
+            <h1>Money Book, Zustand Store</h1>
+            <ul>
+                <li>deep nested state update with Immer</li>
+                <li>state, total Money {money1+money2}</li>
+            </ul>
+            
             <h2>
                 Account 888 <span>({money1})</span>  <button onClick={()=>addMoney('888', 1)}>Save Money +</button>
-                <button onClick={()=>drawMoney('888', 2)}>Draw Money -</button>
+                <button onClick={()=>drawMoney('888', 1)}>Draw Money -</button>
             </h2>
 
             <h2>
                 Account 999 <span>({money2})</span>  <button onClick={()=>addMoney('999', 1)}>Save Money +</button>
-                <button onClick={()=>drawMoney('999', 3)}>Draw Money -</button>
+                <button onClick={()=>drawMoney('999', 1)}>Draw Money -</button>
             </h2>
 
 

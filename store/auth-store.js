@@ -44,27 +44,35 @@ const useAuthStore = create(persist((set) => ({
     login: async function (params) {
         console.log(" login user .......... ");
         set(whenLoading());
-        const json = await fetch('/api/slow-auth').then(res=>res.json());
+        const json = await fetch('/api/slow-auth').then(res => res.json());
         set(whenSuccess(json));
         console.log(" login user .......... " + json?.user);
     },
     logout: async function (params) {
-        set({...initState});
+        set({ ...initState });
     },
     withLoading: function () {
         set(whenLoading());
     },
     withError: function () {
         set(whenError());
-    }, 
+    },
     withSuccess: function (params) {
         set(whenSuccess(params));
     }
 })
-,{
-    name: 'auth-storage',
-    storage: createJSONStorage(() => sessionStorage), 
-}
+    , {
+        name: 'auth-storage',
+        storage: createJSONStorage(() => sessionStorage),  //sessionStorage // localStorage
+        partialize: (state) => ({
+            user: state.user,
+            token: state.token,
+            stamp: state.stamp,
+            ready: state.ready,
+            loading:   false,     // [Middle State] should not be sync to local storage
+            error: state.error,
+        }),
+    }
 ));
 
 

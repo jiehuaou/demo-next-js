@@ -12,6 +12,8 @@ import useInvoiceSWR from '../../hook/use-invoice-swr';
 import useInvoice from '../../hook/use-invoice';
 import InvoiceListComponent from '../../components/InvoiceListComponent';
 import Space2x from '../../components/Space2px';
+import usePersistStore from '../../hook/use-persist-store';
+// import useDelayStore from '../../hook/use-delay-store';
 
 const InvoiceList = function () {
 
@@ -68,16 +70,16 @@ const UserName = function ({ loading, ready, user }) {
  * when zustand was persist.
  */
 
-const delayStore = (store, defaultState = {}) => {
-    const result = store;
-    const [data, setData] = useState(defaultState);
+// const delayStore = (store, defaultState = {}) => {
+//     const result = store;
+//     const [data, setData] = useState(defaultState);
 
-    useEffect(() => {
-        setData(result);
-    }, [result]);
+//     useEffect(() => {
+//         setData(result);
+//     }, [result]);
 
-    return data;
-}
+//     return data;
+// }
 
 const clearCache = () => mutate(
     () => true,
@@ -87,7 +89,7 @@ const clearCache = () => mutate(
 
 export default function SWRDemo() {
 
-    const myAuthStore = delayStore(useAuthStore(), {});
+    const myAuthStore = usePersistStore(useAuthStore(), {});
     const { cache } = useSWRConfig();
 
     const { user, token, stamp, ready, loading, login, logout } = myAuthStore;

@@ -26,7 +26,7 @@ const fetcher = async (url, cache) => {
 
 const useInvoiceSWR = () => {
   const id = useAuthStore((state) => state.user);
-  const key = id && id !== 'Unknow' ? `/api/slow-invoice?id=${id}` : null;
+  const key = id && id !== 'Unknow' ? `/api/slow-invoice/?id=${id}` : null;
   const { data, error, isLoading, isValidating   } = useSWR(key, async (url) => {
       console.log(`SWR API Invoice ${url} ........ ${counter.index++}`);
       const r = await axios.get(url);
