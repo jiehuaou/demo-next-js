@@ -197,4 +197,32 @@ const { cache } = useSWRConfig();
 
 ```
 
+## Immer, What is and How to use ?
+
+Immer, a Tool for Simplify Deep State Updates.
+
+```js
+import {produce} from "immer";
+
+const initState = {
+  ready: false,
+    money: {
+        money1: {
+            balance: 123,
+            account: '888'
+        },
+        money2: {
+            balance: 123,
+            account: '999'
+        }
+    }
+}
+
+/// save money to deep child 【money2】
+produce(temp => {temp.money.money2.balance = temp.money.money2.balance + amount }  );
+
+
+
+
+```
 
