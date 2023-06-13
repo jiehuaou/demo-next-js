@@ -1,6 +1,7 @@
 
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+// import { useEffect, useState } from "react";
 import useSWR, { mutate, useSWRConfig } from "swr";
 import useAuthStore from "../store/auth-store";
 
@@ -35,7 +36,8 @@ const useInvoiceSWR = () => {
   );
 
   console.log("error => " + error, ",  data = > " + data?.length, 
-    ", loading => " + isLoading, ", isValidating => " + isValidating);
+    ", loading => " + isLoading, ", isValidating => " + isValidating, 
+    ",  user => " + id);
 
   return {
     key: key,

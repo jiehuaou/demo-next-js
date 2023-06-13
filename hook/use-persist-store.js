@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 
 /**
+ * use this Hook to
  * fix error "Text content does not match server-rendered HTML"
  * when zustand was persist.
  */

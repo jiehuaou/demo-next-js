@@ -13,33 +13,40 @@ const fetcher = async (url, cache) => {
 };
 
 const useInvoice = () => {
+  //const [id,] = useState(()=>user); //useAuthStore((state) => state.user);
   const id = useAuthStore((state) => state.user);
   const [data, setData] = useState([]);
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isValidating, setIsValidating] = useState(false);
 
   useEffect(() => {
     if (id === 'Unknow') return;
     console.log(" fetch user data .......... " + id);
-    setLoading(true);
+    setIsLoading(true);
     setError(false);
     fetcher(`/api/slow-invoice?id=${id}`)
       .then(json => {
         setData(json);
-        setLoading(false);
+        setIsLoading(false);
         console.log(" fetch user data .......... " + id + " -- done");
       }).catch(e => {
-        setLoading(false);
+        setIsLoading(false);
         setError(true);
         console.log(" fetch user data .......... " + id + " -- error");
       });
+  }, []);
 
-  }, [id]);
-
+  console.log("error => " + error, ",  data = > " + data?.length, 
+    ", loading => " + isLoading, ", isValidating => " + isValidating, 
+    ",  user => " + id);
+  
   return {
+    key: "/xxx",
     invoiceData: data,
-    loading: loading,
-    error: error
+    loading: isLoading,
+    isValidating : isValidating ,
+    error: !!error
   };
 };
 
