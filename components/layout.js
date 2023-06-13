@@ -4,7 +4,7 @@ import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
 import useCounterStore from '../store/zustand-store';
-import { useEffect } from 'react';
+import { Text, Container, Row, Col, Button, Grid } from '@nextui-org/react';
 
 
 const name = 'Your Name';
@@ -12,7 +12,7 @@ export const siteTitle = 'Next.js Sample Website';
 
 export default function Layout({ children, home }) {
 
-  const {total, ready} = useCounterStore();
+  const { total, ready } = useCounterStore();
 
   //useEffect(()=>{init()}, []);
 
@@ -45,26 +45,36 @@ export default function Layout({ children, home }) {
               alt=""
               title={`total: ${total}`}
             />
-            <h1 className={utilStyles.heading2Xl}>{name}, total {ready?total:'...'}</h1>
+            <h1 className={utilStyles.heading2Xl}>{name}, total {ready ? total : '...'}</h1>
           </>
         ) : (
           <>
-            <Link href="/">
-              <Image
-                priority
-                src="/images/profile.jpg"
-                className={utilStyles.borderCircle}
-                height={108}
-                width={108}
-                alt=""
-                title={`your total ${total}`}
-              />
-            </Link>
-            <h2 className={utilStyles.headingLg}>
-              <Link href="/" className={utilStyles.colorInherit}>
-                {name}, total {ready?total:'...'}
-              </Link>
-            </h2>
+            <Grid.Container gap={2} justify="center">
+              <Grid xs={2}>
+                <Link href="/">
+                  <Image
+                    priority
+                    src="/images/profile.jpg"
+                    className={utilStyles.borderCircle}
+                    height={60}
+                    width={60}
+                    alt=""
+                    title={`your total ${total}`}
+                  />
+                </Link>
+              </Grid>
+              <Grid xs={6}>
+                <Text h2 className={utilStyles.headingLg}>
+                  <Link href="/" className={utilStyles.colorInherit}>
+                    {name}, total {ready ? total : '...'}
+                  </Link>
+                </Text>
+              </Grid>
+              <Grid xs={4}>
+                <Button size="sm">hello</Button>
+              </Grid>
+            </Grid.Container>
+            <hr />
           </>
         )}
       </header>

@@ -3,18 +3,18 @@ import Head from 'next/head';
 import Layout from '../../components/layout';
 import Loading from '../../components/loading';
 import useAuthStore from '../../store/auth-store';
-// import initState from '../../store/auth-store';
 import { useEffect, useState } from 'react';
-//import { useStore } from 'zustand';
 import utilityStyles from '../../styles/utils.module.css';
 import useSWR, { mutate, useSWRConfig } from "swr";
 import useInvoiceSWR from '../../hook/use-invoice-swr';
-import useInvoice from '../../hook/use-invoice';
 import InvoiceListComponent from '../../components/InvoiceListComponent';
 import Space2x from '../../components/Space2px';
 import usePersistStore from '../../hook/use-persist-store';
-// import useDelayStore from '../../hook/use-delay-store';
+import useInvoice from '../../hook/use-invoice';
+import { Button } from '@nextui-org/react';
+import { Container, Card, Row, Col, Text } from "@nextui-org/react";
 
+/*
 const InvoiceList = function () {
 
     const { invoiceData, loading, error } = useInvoice();
@@ -27,10 +27,11 @@ const InvoiceList = function () {
         return InvoiceListComponent('Other', invoiceData)
     }
 }
+*/
 
-const InvoiceListSWR = function ({cache}) {
+const InvoiceListSWR = function ({ cache }) {
 
-    const {key, invoiceData, loading, isValidating, error } = useInvoiceSWR();
+    const { key, invoiceData, loading, isValidating, error } = useInvoiceSWR(); // useInvoiceSWR();  useInvoice();
 
     if (loading) {
         return <span><Loading /></span>
@@ -38,7 +39,7 @@ const InvoiceListSWR = function ({cache}) {
         return <span>Something Wrong</span>
     } else {
         return (<>
-            <InvoiceListComponent fetchType='SWR' invoiceData={invoiceData} isValidating={isValidating}/>
+            <InvoiceListComponent fetchType='SWR' invoiceData={invoiceData} isValidating={isValidating} />
             <button onClick={() => {
                 // delete Key Data at cache but not trigger UI render
                 cache.delete(key);
@@ -81,11 +82,15 @@ const UserName = function ({ loading, ready, user }) {
 //     return data;
 // }
 
-const clearCache = () => mutate(
-    () => true,
-    undefined,
-    { revalidate: true }
-)
+const clearInvoiceCache = (cache) => {
+    console.log("exit first-swr and clean up cache ............");
+    [...cache.keys()]
+        .filter(e => e.startsWith('/api/slow-invoice'))
+        .forEach(key => {
+            cache.delete(key);
+            console.log("cache.delete ............ " + key);
+        });
+}
 
 export default function SWRDemo() {
 
@@ -96,16 +101,8 @@ export default function SWRDemo() {
 
     //const { key } = useInvoiceSWR();
 
-    useEffect(()=>{
-        return ()=>{
-            console.log("exit first-swr ............");
-            [...cache.keys()]
-                .filter(e=>e.startsWith('/api/slow-invoice'))
-                .forEach(key => {
-                    cache.delete(key);
-                    console.log("cache.delete ............ " + key);
-            });
-        }
+    useEffect(() => {
+        return () => clearInvoiceCache(cache);
     }, [])
 
 
@@ -115,26 +112,27 @@ export default function SWRDemo() {
             <title>SWR Demo</title>
         </Head>
 
-        <h2>SWR fetch data</h2>
+        <Text h3>SWR fetch data</Text>
         <ul>
             <li>delete cache, then Re-fetch, will display the loading process.</li>
             <li>only Re-fetch will fetch Data but not show Loading .</li>
 
         </ul>
 
-        <h2>
+        <Text h4>
             Your Name is <UserName user={user} ready={ready} loading={loading} />
-        </h2>
+        </Text>
 
-        <div>
-            <button onClick={login} disabled={ready || loading}>SWR Login +</button> <Space2x />
-            <button onClick={logout} disabled={!ready}>Logout -</button> <Space2x />
-
-        </div>
+        <Container>
+            <Row>
+                <Col><Button onClick={login} disabled={ready || loading} size="sm">SWR Login +</Button> </Col>
+                <Col><Button onClick={logout} disabled={!ready} size="sm">Logout -</Button> </Col>
+            </Row>
+        </Container>
 
         <hr />
         <div>
-            <span>{ready ? (<InvoiceListSWR cache={cache} />) : (<div>...</div>)}</span>
+            <span>{ready && <InvoiceListSWR cache={cache} />}</span>
             <span className='width2px'> </span>
             {/* <span>{ready ? (<InvoiceList/>) : (<div>...</div>) }</span> */}
         </div>

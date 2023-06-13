@@ -221,8 +221,12 @@ const initState = {
 /// save money to deep child 【money2】
 produce(temp => {temp.money.money2.balance = temp.money.money2.balance + amount }  );
 
-
-
-
 ```
+another solution without **produce**
+ ```js
+import { immer } from "zustand/middleware/immer";
 
+const useCounterStore = create(immer((set) => ({
+   ...
+})));
+ ```
