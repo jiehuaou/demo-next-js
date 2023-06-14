@@ -1,15 +1,11 @@
 import Head from 'next/head';
-import dynamic from 'next/dynamic';
 import Layout from '../../components/layout';
 import Loading from '../../components/loading';
 import useAuthStore, {initState} from '../../store/auth-store';
-// import initState from '../../store/auth-store';
 import { useEffect, useState } from 'react';
-//import { useStore } from 'zustand';
 import utilityStyles from '../../styles/utils.module.css';
-import useSWR from 'swr';
 import usePersistStore from '../../hook/use-persist-store';
-
+import { Card, Text, Row, Button,Spacer } from "@nextui-org/react";
 
 
 
@@ -53,27 +49,35 @@ export default function AuthDemo() {
             <title>Auth Demo</title>
         </Head>
 
-        <h1>Auth Demo</h1>
-        <div>demo Zustand with Persist Feature.</div>
+        <Card css={{ mw: "630px" }}>
+          <Card.Header>
+            <Text h2 b>Auth Demo</Text>
+          </Card.Header>
+          <Card.Divider />
+          <Card.Body css={{ py: "$10" }}>
+            <Text>demo Zustand with Persist Feature.</Text>
+            <Text h3>
+                Your Name is <UserName user={user} ready={ready} loading={loading} />
+            </Text>
+          </Card.Body>
+          <Card.Divider />
+          <Card.Footer>
+            <Row justify="flex-end">
+              <Button size="sm"  color="primary" auto onClick={login} disabled={ready || loading}>
+                Login
+              </Button><Spacer x={1} />
+              <Button size="sm"  color="primary" auto onClick={logout} disabled={!ready}>Logout</Button>
+            </Row>
+          </Card.Footer>
+        </Card>
 
-        <h2>
-            Your Name is <UserName user={user} ready={ready} loading={loading} />
-        </h2>
-        <div>
-            <button onClick={login} disabled={ready || loading}>Login +</button> <span className='width2px'></span>
-            <button onClick={logout} disabled={!ready}>Logout -</button>
-        </div>
-        
-        <hr />
         <div>
             {
-                ready ? (<ul>
+                ready && (<ul>
                     <li>token: {token}</li>
                     <li>stamp: {stamp}</li>
                 </ul>)
-                    : (
-                        <p>...</p>
-                    )
+                   
             }
 
         </div>

@@ -4,15 +4,23 @@ import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
 import useCounterStore from '../store/zustand-store';
-import { Text, Container, Row, Col, Button, Grid } from '@nextui-org/react';
+import { Text, Avatar, Button, Grid, Dropdown } from '@nextui-org/react';
+import { useState } from 'react';
 
 
 const name = 'Your Name';
 export const siteTitle = 'Next.js Sample Website';
 
+function getSetValue(set) {
+  return set.values().next().value;
+}
+
 export default function Layout({ children, home }) {
 
   const { total, ready } = useCounterStore();
+  const [color1, setColor1] = useState(new Set(['primary']));
+
+  console.log("color ..........." + color1);
 
   //useEffect(()=>{init()}, []);
 
@@ -51,30 +59,40 @@ export default function Layout({ children, home }) {
           <>
             <Grid.Container gap={2} justify="center">
               <Grid xs={2}>
-                <Link href="/">
-                  <Image
-                    priority
-                    src="/images/profile.jpg"
-                    className={utilStyles.borderCircle}
-                    height={60}
-                    width={60}
-                    alt=""
-                    title={`your total ${total}`}
-                  />
-                </Link>
+                <Avatar
+                  src="/images/profile.jpg"
+                  color="gradient"
+                  bordered
+                />
               </Grid>
               <Grid xs={6}>
-                <Text h2 className={utilStyles.headingLg}>
-                  <Link href="/" className={utilStyles.colorInherit}>
-                    {name}, total {ready ? total : '...'}
-                  </Link>
+                <Text size="$2xl" color={getSetValue(color1)}>
+                  {name}, total {ready ? total : '...'}
                 </Text>
               </Grid>
               <Grid xs={4}>
-                <Button size="sm">hello</Button>
+                <Dropdown>
+                  <Dropdown.Button flat color="primary" css={{ tt: "capitalize" }}>
+                    {color1}
+                  </Dropdown.Button>
+                  <Dropdown.Menu
+                    aria-label="Single selection actions"
+                    color="primary"
+                    disallowEmptySelection
+                    selectionMode="single"
+                    selectedKeys={color1}
+                    onSelectionChange={setColor1}
+                  >
+                    <Dropdown.Item key="primary">primary</Dropdown.Item>
+                    <Dropdown.Item key="secondary">secondary</Dropdown.Item>
+                    <Dropdown.Item key="success">success</Dropdown.Item>
+                    <Dropdown.Item key="warning">warning</Dropdown.Item>
+                    <Dropdown.Item key="error">error</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </Grid>
             </Grid.Container>
-            <hr />
+            <div><hr /></div>
           </>
         )}
       </header>
