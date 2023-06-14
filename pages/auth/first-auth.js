@@ -59,7 +59,7 @@ export default function AuthDemo() {
           <Card.Body css={{ py: "$10" }}>
             <Text>Demo Zustand with Persist Feature.</Text>
             <Text>State can be kept even after refresh page.</Text>
-            <Text h3>
+            <Text h3 b>
                 You are <UserName user={user} ready={ready} loading={loading} />
             </Text>
           </Card.Body>

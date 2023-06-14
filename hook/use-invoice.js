@@ -46,7 +46,8 @@ const useInvoice = () => {
     invoiceData: data,
     loading: isLoading,
     isValidating : isValidating ,
-    error: !!error
+    error: !!error,
+    isQuerySubmit: key!==null
   };
 };
 

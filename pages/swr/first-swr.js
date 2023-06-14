@@ -31,7 +31,7 @@ const InvoiceList = function () {
 
 const InvoiceListSWR = function ({ cache, ready }) {
 
-    const { key, invoiceData, loading, isValidating, error } = useInvoiceSWR(); // useInvoiceSWR();  useInvoice();
+    const { key, isQuerySubmit, invoiceData, loading, isValidating, error } = useInvoiceSWR(); // useInvoiceSWR();  useInvoice();
 
     // const [first, setFirst] = useState(true);
     // useEffect(()=>{
@@ -43,7 +43,7 @@ const InvoiceListSWR = function ({ cache, ready }) {
     } else if (error) {
         return <span>Something Wrong</span>
     } else {
-        return (key!=null&&
+        return (isQuerySubmit &&
         <div>
             <InvoiceListComponent fetchType='SWR' invoiceData={invoiceData} isValidating={isValidating} />
             <Row justify='flex-end'>
