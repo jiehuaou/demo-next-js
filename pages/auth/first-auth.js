@@ -1,20 +1,20 @@
 import Head from 'next/head';
 import Layout from '../../components/layout';
-import Loading from '../../components/loading';
+// import Loading from '../../components/loading';
 import useAuthStore, {initState} from '../../store/auth-store';
 import { useEffect, useState } from 'react';
 import utilityStyles from '../../styles/utils.module.css';
 import usePersistStore from '../../hook/use-persist-store';
-import { Card, Text, Row, Button,Spacer } from "@nextui-org/react";
+import { Card, Text, Row, Button, Spacer, Loading } from "@nextui-org/react";
 
 
 
 const UserName = function ({ loading, ready, user }) {
   
     if (loading) {
-        return <span><Loading /></span>
+        return <Loading type="points" />
     } else if (!ready) {
-        return <span className={utilityStyles.notLogin}>Not Access</span>;
+        return <span className={utilityStyles.notLogin}>Not Allowed Access.</span>;
     } else {
         return <span className={utilityStyles.validLogin}>{user}</span>;
     }
@@ -57,7 +57,7 @@ export default function AuthDemo() {
           <Card.Body css={{ py: "$10" }}>
             <Text>demo Zustand with Persist Feature.</Text>
             <Text h3>
-                Your Name is <UserName user={user} ready={ready} loading={loading} />
+                You are <UserName user={user} ready={ready} loading={loading} />
             </Text>
           </Card.Body>
           <Card.Divider />
