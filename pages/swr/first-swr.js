@@ -1,18 +1,18 @@
 import Head from 'next/head';
 //import dynamic from 'next/dynamic';
 import Layout from '../../components/layout';
-import Loading from '../../components/loading';
+import ImageLoading from '../../components/loading';
 import useAuthStore from '../../store/auth-store';
 import { useEffect, useState } from 'react';
 import utilityStyles from '../../styles/utils.module.css';
 import useSWR, { mutate, useSWRConfig } from "swr";
 import useInvoiceSWR from '../../hook/use-invoice-swr';
 import InvoiceListComponent from '../../components/InvoiceListComponent';
-import Space2x from '../../components/Space2px';
+// import Space2x from '../../components/Space2px';
 import usePersistStore from '../../hook/use-persist-store';
 import useInvoice from '../../hook/use-invoice';
-import { Button } from '@nextui-org/react';
-import { Container, Card, Row, Col, Text } from "@nextui-org/react";
+// import { Button } from '@nextui-org/react';
+import { Container, Card, Row, Col, Text, Loading, Button, Spacer } from "@nextui-org/react";
 
 /*
 const InvoiceList = function () {
@@ -29,27 +29,35 @@ const InvoiceList = function () {
 }
 */
 
-const InvoiceListSWR = function ({ cache }) {
+const InvoiceListSWR = function ({ cache, ready }) {
 
     const { key, invoiceData, loading, isValidating, error } = useInvoiceSWR(); // useInvoiceSWR();  useInvoice();
 
+    // const [first, setFirst] = useState(true);
+    // useEffect(()=>{
+    //     setFirst(false)
+    // }, []);
+
     if (loading) {
-        return <span><Loading /></span>
+        return <Loading type="points" size='sm' />
     } else if (error) {
         return <span>Something Wrong</span>
     } else {
-        return (<>
+        return (key!=null&&
+        <div>
             <InvoiceListComponent fetchType='SWR' invoiceData={invoiceData} isValidating={isValidating} />
-            <button onClick={() => {
-                // delete Key Data at cache but not trigger UI render
-                cache.delete(key);
-                // clearCache();
-            }} >Delete SWR Cache -</button> <Space2x />
-            <button onClick={() => {
-                // refetch the data of specified Key, will trigger UI render if Key Data is deleted.
-                mutate(key);
-            }} >Re-fetch SWR Cache -</button> <Space2x />
-        </>)
+            <Row justify='flex-end'>
+                <Button size="sm" onPress={() => {
+                    // delete Key Data at cache but not trigger UI render
+                    cache.delete(key);
+                    // clearCache();
+                }} >Delete SWR Cache -</Button> <Spacer x={1} />
+                <Button size="sm" onPress={() => {
+                    // refetch the data of specified Key, will trigger UI render if Key Data is deleted.
+                    mutate(key);
+                }} >Re-fetch SWR Cache -</Button>
+            </Row>
+        </div>)
     }
 }
 
@@ -58,7 +66,7 @@ const InvoiceListSWR = function ({ cache }) {
 const UserName = function ({ loading, ready, user }) {
 
     if (loading) {
-        return <span><Loading /></span>
+        return <Loading type="points" size='md' />
     } else if (!ready) {
         return <span className={utilityStyles.notLogin}>Not Access</span>;
     } else {
@@ -123,16 +131,16 @@ export default function SWRDemo() {
             Your Name is <UserName user={user} ready={ready} loading={loading} />
         </Text>
 
-        <Container>
-            <Row>
-                <Col><Button onClick={login} disabled={ready || loading} size="sm">SWR Login +</Button> </Col>
-                <Col><Button onClick={logout} disabled={!ready} size="sm">Logout -</Button> </Col>
-            </Row>
-        </Container>
+
+        <Row justify='flex-end'>
+            <Button onPress={login} disabled={ready || loading} size="sm">SWR Login +</Button><Spacer x={1}></Spacer>
+            <Button onPress={logout} disabled={!ready} size="sm">Logout -</Button>
+        </Row>
+
 
         <hr />
         <div>
-            <span>{ready && <InvoiceListSWR cache={cache} />}</span>
+            <span>{ready && <InvoiceListSWR cache={cache} ready={ready}/>}</span>
             <span className='width2px'> </span>
             {/* <span>{ready ? (<InvoiceList/>) : (<div>...</div>) }</span> */}
         </div>

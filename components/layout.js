@@ -2,17 +2,17 @@ import Head from 'next/head';
 import Image from 'next/image';
 import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import useCounterStore from '../store/zustand-store';
-import { Text, Avatar, Button, Grid, Dropdown } from '@nextui-org/react';
+import { Text, Avatar, Button, Grid, Dropdown, Link, Row, Col, Card } from '@nextui-org/react';
 import { useState } from 'react';
 
 
 const name = 'Your Name';
 export const siteTitle = 'Next.js Sample Website';
 
-function getSetValue(set) {
-  return set.values().next().value;
+function getFirstValue(set) {
+  return set.values()?.next()?.value;
 }
 
 export default function Layout({ children, home }) {
@@ -20,7 +20,10 @@ export default function Layout({ children, home }) {
   const { total, ready } = useCounterStore();
   const [color1, setColor1] = useState(new Set(['primary']));
 
-  console.log("color ..........." + color1);
+  
+  [...color1?.values()].forEach(e => {
+    console.log("color ..........." + e);
+  });
 
   //useEffect(()=>{init()}, []);
 
@@ -66,7 +69,7 @@ export default function Layout({ children, home }) {
                 />
               </Grid>
               <Grid xs={6}>
-                <Text size="$2xl" color={getSetValue(color1)}>
+                <Text size="$2xl" color={getFirstValue(color1)}>
                   {name}, total {ready ? total : '...'}
                 </Text>
               </Grid>
@@ -98,9 +101,21 @@ export default function Layout({ children, home }) {
       </header>
       <main>{children}</main>
       {!home && (
-        <div className={styles.backToHome}>
-          <Link href="/">← Back to home</Link>
-        </div>
+
+        
+          <Grid.Container gap={2}>
+            <Grid xs={4}>
+              <Card>
+                <Card.Body>
+                  <NextLink href="/" width="auto">
+                  <Text color="primary" css={{}} > Back to home ← </Text>
+                  </NextLink>
+                </Card.Body>
+              </Card>
+            </Grid>
+          </Grid.Container>
+        
+
       )}
     </div>
   );

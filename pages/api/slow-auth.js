@@ -14,7 +14,7 @@ export default async function handler(req, res) {
         setTimeout(() => {
             res.status(200).json({ user: getName(), token: uuid.v4(), stamp: new Date()});
             //return 'done';
-        }, 1200);
+        }, 200);
     });
 
     res.status(200).json({});

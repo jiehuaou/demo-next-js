@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useEffect } from 'react';
 import Layout from '../../components/layout';
 import useCounterStore from '../../store/zustand-store';
+import { Text, Avatar, Button, Grid, Dropdown, Link, Row, Col, Card, Spacer } from '@nextui-org/react';
 
 export default function ZustandDemo() {
 
@@ -23,16 +24,28 @@ export default function ZustandDemo() {
             <title>Zustand Demo</title>
         </Head>
 
-        <h1>Zustand Demo</h1>
-        <h2>
-        Zustand is state management.
-        </h2>
-        <p>Zustand is lightweight.</p>
-        <div>
-            <p>Your current is {count}, your total is {total}</p>
-            <button onClick={increment}>Increment +</button>
-            <button onClick={decrement}>Decrement -</button>
-          </div>
+        <Text h3>Zustand Demo</Text>
+        <Text>Zustand is state management.</Text>
+        <Text>Zustand is lightweight.</Text>
+        <Spacer y={1}/>
+        <Card>
+            <Card.Header>
+                <Text h4>your total is {total}</Text>
+            </Card.Header>
+            <Card.Divider />
+            <Card.Body>
+                <Text>Your current is {count}, </Text>
+            </Card.Body>
+            
+            <Card.Footer>
+                <Row justify='flex-end'>
+                    <Button onPress={increment} size='sm'>Increment +</Button>
+                    <Spacer x={1}/>
+                    <Button onPress={decrement} size='sm'>Decrement -</Button>
+                </Row>
+            </Card.Footer>
+            
+          </Card>
 
     </Layout>)
 }

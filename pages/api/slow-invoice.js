@@ -30,7 +30,7 @@ export default async function handler(req, res) {
             res.status(200).json(getListById(id, len));
           }
     
-        }, 1600);
+        }, 600);
     });
 
     res.status(200).json({});

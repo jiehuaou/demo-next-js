@@ -15,15 +15,15 @@ const fetcher = async (url, cache) => {
 const useInvoice = () => {
   //const [id,] = useState(()=>user); //useAuthStore((state) => state.user);
   const id = useAuthStore((state) => state.user);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isValidating, setIsValidating] = useState(false);
 
   useEffect(() => {
     if (id === 'Unknow') return;
     console.log(" fetch user data .......... " + id);
-    setIsLoading(true);
+    //setIsLoading(true);
     setError(false);
     fetcher(`/api/slow-invoice?id=${id}`)
       .then(json => {
@@ -42,7 +42,7 @@ const useInvoice = () => {
     ",  user => " + id);
   
   return {
-    key: "/xxx",
+    key: id && id !== 'Unknow' ? `/api/slow-invoice/?id=${id}` : null,
     invoiceData: data,
     loading: isLoading,
     isValidating : isValidating ,

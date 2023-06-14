@@ -1,18 +1,17 @@
 import Head from 'next/head';
 import Layout from '../../components/layout';
-// import Loading from '../../components/loading';
 import useAuthStore, {initState} from '../../store/auth-store';
-import { useEffect, useState } from 'react';
 import utilityStyles from '../../styles/utils.module.css';
 import usePersistStore from '../../hook/use-persist-store';
 import { Card, Text, Row, Button, Spacer, Loading } from "@nextui-org/react";
+import { useEffect, useState } from 'react';
 
 
 
 const UserName = function ({ loading, ready, user }) {
   
     if (loading) {
-        return <Loading type="points" />
+        return <Loading type="points" size='md'/>
     } else if (!ready) {
         return <span className={utilityStyles.notLogin}>Not Allowed Access.</span>;
     } else {
@@ -39,10 +38,13 @@ const UserName = function ({ loading, ready, user }) {
 export default function AuthDemo() {
 
     const myAuthStore = usePersistStore(useAuthStore(), {});
-
     const { user, token, stamp, ready, loading, login, logout } = myAuthStore;
 
+    const [first, setFirst] = useState(true);
 
+    useEffect(()=>{
+        setFirst(false)
+    }, []);
 
     return (<Layout>
         <Head>
@@ -55,7 +57,8 @@ export default function AuthDemo() {
           </Card.Header>
           <Card.Divider />
           <Card.Body css={{ py: "$10" }}>
-            <Text>demo Zustand with Persist Feature.</Text>
+            <Text>Demo Zustand with Persist Feature.</Text>
+            <Text>State can be kept even after refresh page.</Text>
             <Text h3>
                 You are <UserName user={user} ready={ready} loading={loading} />
             </Text>
@@ -63,7 +66,7 @@ export default function AuthDemo() {
           <Card.Divider />
           <Card.Footer>
             <Row justify="flex-end">
-              <Button size="sm"  color="primary" auto onClick={login} disabled={ready || loading}>
+              <Button size="sm"  color="primary" auto onClick={login} disabled={ready || loading || first}>
                 Login
               </Button><Spacer x={1} />
               <Button size="sm"  color="primary" auto onClick={logout} disabled={!ready}>Logout</Button>

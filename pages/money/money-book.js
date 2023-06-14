@@ -1,9 +1,9 @@
-import Link from 'next/link';
 import Head from 'next/head';
 import Script from 'next/script';
 import Layout from '../../components/layout';
 import useCounterStore from '../../store/zustand-store';
 import { useEffect } from 'react';
+import { Text, Avatar, Button, Grid, Dropdown, Link, Row, Col, Card, Spacer } from '@nextui-org/react';
 
 export default function MoneyBook() {
 
@@ -23,21 +23,27 @@ export default function MoneyBook() {
             <Head>
                 <title>Money Book</title>
             </Head>
-            <h1>Money Book, Zustand Store</h1>
+            <Text h3>Money Book, Zustand Store</Text>
             <ul>
                 <li>deep nested state update with Immer</li>
                 <li>state, total Money {money1+money2}</li>
             </ul>
             
-            <h2>
-                Account 888 <span>({money1})</span>  <button onClick={()=>addMoney('888', 1)}>Save Money +</button>
-                <button onClick={()=>drawMoney('888', 1)}>Draw Money -</button>
-            </h2>
-
-            <h2>
-                Account 999 <span>({money2})</span>  <button onClick={()=>addMoney('999', 1)}>Save Money +</button>
-                <button onClick={()=>drawMoney('999', 1)}>Draw Money -</button>
-            </h2>
+            <Row justify='flex-start'>
+                <span>Account 888 ({money1})</span>  
+                <Spacer x={5}></Spacer>
+                <Button size='xs' onPress={()=>addMoney('888', 1)} flat>Save Money +</Button>
+                <Spacer x={1}></Spacer>
+                <Button size='xs' onPress={()=>drawMoney('888', 1)} flat>Draw Money -</Button>
+            </Row>
+            <Row> <Spacer x={1}></Spacer> </Row>
+            <Row justify='flex-start'>
+                <span>Account 999 ({money2})</span>  
+                <Spacer x={5}></Spacer>
+                <Button size='xs' onPress={()=>addMoney('999', 1)} flat>Save Money +</Button>
+                <Spacer x={1}></Spacer>
+                <Button size='xs' onPress={()=>drawMoney('999', 1)} flat>Draw Money -</Button>
+            </Row>
 
 
         </Layout>
