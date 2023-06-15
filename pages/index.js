@@ -42,7 +42,7 @@ export default function Home({allPostsData}) {
           Read <Link href="/posts/first-post">this Post</Link>
         </h1>
         <h1 className={utilStyles.title}>
-          Read <Link href="/comments/first-comment">this Comment</Link>
+          Read <Link href="/react-hook/first-hook">React Hook</Link>
         </h1>
         <h1 className={utilStyles.title}>
           Read <Link href="/auth/first-auth">this Auth</Link>

@@ -230,3 +230,49 @@ const useCounterStore = create(immer((set) => ({
    ...
 })));
  ```
+
+## use memo and useCallback
+
+### what is memo ?
+
+**memo** is used to wrap component to skip re-rendering when its props are the same as on last render, whenever parent re-render.
+
+```js
+const PostButton = memo(({ helloAction }) => {
+
+    useEffect(() => {
+        // will show log at every loop if not using useCallback, even if data is not changed.
+        console.log('2) hello...  helloAction=>' + helloAction);
+    }, [helloAction]);
+
+    // will show log at every loop if not using "memo"
+    console.log('1) hello...  helloAction=>' + helloAction);
+
+    // without useCallback & memo, this Button will re-render at every loop 
+    return (
+        <Button onPress={helloAction} size='sm'>hello</Button>
+    )
+});
+```
+
+### what is useCallback?
+
+**useCallback** is used to cache function when Dependency not changed
+since ()=>{} will always be different object, 
+and trigger ref component re-render.
+
+```js
+function Comp(){
+    
+    // Now sayHello is unchanged as long as Dependency not changed.
+    const sayHello = useCallback(() => {
+        setOutput('hello ' + data);
+    }, [data, setOutput]);
+
+    return  (<div>
+                ...
+                <ResetButton resetAction={resetHello} />
+                ...
+            </div>)
+}
+```    

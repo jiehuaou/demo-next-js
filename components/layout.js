@@ -6,6 +6,7 @@ import NextLink from 'next/link';
 import useCounterStore from '../store/zustand-store';
 import { Text, Avatar, Button, Grid, Dropdown, Link, Row, Col, Card } from '@nextui-org/react';
 import { useState } from 'react';
+import { shallow } from 'zustand/shallow';
 
 
 const name = 'Your Name';
@@ -17,7 +18,7 @@ function getFirstValue(set) {
 
 export default function Layout({ children, home }) {
 
-  const { total, ready } = useCounterStore();
+  const [ total, ready ] = useCounterStore( (state) => [state.total, state.ready], shallow);
   const [color1, setColor1] = useState(new Set(['primary']));
 
   
