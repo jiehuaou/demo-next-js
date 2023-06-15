@@ -1,18 +1,13 @@
 import Head from 'next/head';
-//import dynamic from 'next/dynamic';
 import Layout from '../../components/layout';
-import ImageLoading from '../../components/loading';
 import useAuthStore from '../../store/auth-store';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import utilityStyles from '../../styles/utils.module.css';
-import useSWR, { mutate, useSWRConfig } from "swr";
+import { mutate, useSWRConfig } from "swr";
 import useInvoiceSWR from '../../hook/use-invoice-swr';
 import InvoiceListComponent from '../../components/InvoiceListComponent';
-// import Space2x from '../../components/Space2px';
 import usePersistStore from '../../hook/use-persist-store';
-import useInvoice from '../../hook/use-invoice';
-// import { Button } from '@nextui-org/react';
-import { Container, Card, Row, Col, Text, Loading, Button, Spacer } from "@nextui-org/react";
+import { Row, Text, Loading, Button, Spacer } from "@nextui-org/react";
 
 /*
 const InvoiceList = function () {
@@ -47,15 +42,15 @@ const InvoiceListSWR = function ({ cache, ready }) {
         <div>
             <InvoiceListComponent fetchType='SWR' invoiceData={invoiceData} isValidating={isValidating} />
             <Row justify='flex-end'>
-                <Button size="sm" onPress={() => {
+                <Button flat={true} size="sm" disabled={isValidating} onPress={() => {
                     // delete Key Data at cache but not trigger UI render
                     cache.delete(key);
                     // clearCache();
-                }} >Delete SWR Cache -</Button> <Spacer x={1} />
-                <Button size="sm" onPress={() => {
+                }} >Delete SWR Cache</Button> <Spacer x={1} />
+                <Button flat={true} size="sm" disabled={isValidating} onPress={() => {
                     // refetch the data of specified Key, will trigger UI render if Key Data is deleted.
                     mutate(key);
-                }} >Re-fetch SWR Cache -</Button>
+                }} >Re-fetch SWR Cache</Button>
             </Row>
         </div>)
     }
@@ -133,8 +128,9 @@ export default function SWRDemo() {
 
 
         <Row justify='flex-end'>
-            <Button onPress={login} disabled={ready || loading} size="sm">SWR Login +</Button><Spacer x={1}></Spacer>
-            <Button onPress={logout} disabled={!ready} size="sm">Logout -</Button>
+            <Button onPress={login} disabled={ready || loading} size="sm" flat={true}>
+                SWR Login</Button><Spacer x={1}></Spacer>
+            <Button onPress={logout} disabled={!ready} size="sm" flat={true} >Logout</Button>
         </Row>
 
 
