@@ -27,16 +27,17 @@ export default function FirstPost() {
           console.log(`script loaded correctly, window.FB has been populated`)
         }
       />
-      <h1>First Post</h1>
-      <h2>
-        hello world
-      </h2>
-      <Alert type={alert}><div>hello</div></Alert>
-
-      <div>
-        <p>Your score is {score}</p>
-        <button onClick={changeEverything}>Click this +</button>
-      </div>
+      <h2>First Post</h2>
+      <div>Dynamic Route</div>
+      <ul>
+        {
+          [1,2,3].map(e=>{ return (
+            <li key={e}>
+              <Link href={`/posts/${e}`}>Post {e}</Link>
+            </li>)
+          })
+        }
+      </ul>
 
     </Layout>
   );

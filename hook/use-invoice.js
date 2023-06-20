@@ -42,7 +42,7 @@ const useInvoice = () => {
     ",  user => " + id);
   
   return {
-    key: id && id !== 'Unknow' ? `/api/slow-invoice/?id=${id}` : null,
+    key: id && id !== 'Unknow' ? `/api/invoice/${id}` : null,
     invoiceData: data,
     loading: isLoading,
     isValidating : isValidating ,

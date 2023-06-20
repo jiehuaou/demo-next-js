@@ -88,7 +88,7 @@ const UserName = function ({ loading, ready, user }) {
 const clearInvoiceCache = (cache) => {
     console.log("exit first-swr and clean up cache ............");
     [...cache.keys()]
-        .filter(e => e.startsWith('/api/slow-invoice'))
+        .filter(e => e.startsWith('/api/invoice'))
         .forEach(key => {
             cache.delete(key);
             console.log("cache.delete ............ " + key);

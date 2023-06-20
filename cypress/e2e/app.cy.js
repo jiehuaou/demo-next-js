@@ -10,7 +10,7 @@ describe('Navigation', () => {
         cy.url().should('include', '/swr/first-swr');
 
         // The new page should contain an h1 with "About page"
-        cy.get('h2').contains('SWR fetch data');
+        cy.get('h3').contains('SWR fetch data');
 
         cy.intercept({
                     method: "GET",
@@ -19,14 +19,33 @@ describe('Navigation', () => {
 
         cy.intercept({
                 method: "GET",
-                url: "/api/slow-invoice**",
+                url: "/api/invoice/**",
             }).as("invoiceData");        
 
-        cy.get('button:contains("SWR Login +")').click();
+        // -------- login
+        cy.get('button:contains("SWR Login")').click();
 
         cy.wait("@authData").its('response.statusCode').should('eq', 200);
 
-        cy.wait("@invoiceData");  //.its('response.statusCode').should('eq', 200);
+        cy.wait("@invoiceData").its('response.statusCode').should('eq', 200);
+        
+        cy.get('div').contains('Data from SWR');
+
+        cy.wait(3000);
+
+        //------- logout
+        cy.get('button:contains("Logout")').click();
+
+        cy.get('span:contains("Not Access")');
+
+        cy.wait(3000);
+
+        // -------- login again
+        cy.get('button:contains("SWR Login")').click();
+
+        cy.wait("@authData").its('response.statusCode').should('eq', 200);
+
+        cy.wait("@invoiceData").its('response.statusCode').should('eq', 200);
         
         cy.get('div').contains('Data from SWR');
 

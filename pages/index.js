@@ -13,12 +13,12 @@ export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
   return {
     props: {
-      allPostsData,
+      postsData: allPostsData,
     },
   };
 }
 
-export default function Home({allPostsData}) {
+export default function Home({postsData}) {
 
   const {init, inited} = useCounterStore();
 
@@ -64,7 +64,7 @@ export default function Home({allPostsData}) {
       <section className='{`${utilStyles.headingMd} ${utilStyles.padding1px}`}'>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, title }) => (
+          {postsData.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>
               {title}
               <br />
