@@ -1,11 +1,48 @@
+// @ts-check
 
 import axios from "axios";
 import { useEffect, useState } from "react";
 import useAuthStore from "../store/auth-store";
 
+/**
+ * @callback HelloCallback
+ * @param {string} status
+ * @returns {boolean}
+ */
+
+/**
+ * @callback SimpleCallback
+ * @returns {void}
+ */
+
+
+
+/**
+ * HELLO WORLD
+ * @param {string} data
+ * @param {HelloCallback} cb
+ * @returns {void}
+ */
+function hello(data, cb) {
+  cb(data);
+}
+
+hello('abc', (e)=>{
+  console.log(e?.length);
+  return true;
+});
+
+
+
 const counter = { index: 1 }
 
-const fetcher = async (url, cache) => {
+/**
+ * 
+ * @param {string} url 
+ * @param {object} cache 
+ * @returns 
+ */
+const fetcher = async (url, cache = null) => {
   console.log(`API Invoice ${url} ........ ${counter.index++}`);
   const r = await axios.get(url);
   return r.data;
@@ -15,10 +52,10 @@ const fetcher = async (url, cache) => {
 const useInvoice = () => {
   //const [id,] = useState(()=>user); //useAuthStore((state) => state.user);
   const id = useAuthStore((state) => state.user);
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isValidating, setIsValidating] = useState(false);
+  const [isValidating, ] = useState(false);
 
   useEffect(() => {
     if (id === 'Unknow') return;
@@ -47,7 +84,7 @@ const useInvoice = () => {
     loading: isLoading,
     isValidating : isValidating ,
     error: !!error,
-    isQuerySubmit: key!==null
+    isQuerySubmit: id && id !== 'Unknow'
   };
 };
 

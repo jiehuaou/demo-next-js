@@ -1,9 +1,31 @@
+// @ts-check
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware'
 // import useSWR from 'swr';
 
+/**
+ * @typedef {object} AuthState
+ * @property {string} user
+ * @property {string} token
+ * @property {string} stamp
+ * @property {boolean} ready
+ * @property {boolean} loading
+ * @property {boolean} error
+ */
 
-export const initState = {
+/**
+ * @typedef {object} AuthData
+ * @property {string} user
+ * @property {string} token
+ * @property {string} stamp
+ */
+
+/**
+ * @type {AuthState}
+ */
+
+
+const initState = {
     user: 'Unknow',
     token: '',
     stamp: '',
@@ -12,7 +34,11 @@ export const initState = {
     error: false,
 }
 
-const whenLoading = function () {
+/**
+ * 
+ * @returns {AuthState}
+ */
+function whenLoading() {
     return {
         ...initState,
         loading: true,
@@ -21,6 +47,11 @@ const whenLoading = function () {
     }
 }
 
+/**
+ * 
+ * @param {AuthData} params 
+ * @returns {AuthState}
+ */
 const whenSuccess = function (params) {
     return {
         ...params,
@@ -30,6 +61,10 @@ const whenSuccess = function (params) {
     }
 }
 
+/**
+ * 
+ * @returns {AuthState}
+ */
 const whenError = function () {
     return {
         ...initState,
@@ -41,14 +76,14 @@ const whenError = function () {
 
 const useAuthStore = create(persist((set) => ({
     ...initState,
-    login: async function (params) {
+    login: async function () {
         console.log(" login user .......... ");
         set(whenLoading());
         const json = await fetch('/api/slow-auth').then(res => res.json());
         set(whenSuccess(json));
         console.log(" login user .......... " + json?.user);
     },
-    logout: async function (params) {
+    logout: async function () {
         set({ ...initState });
     },
     withLoading: function () {
@@ -57,6 +92,10 @@ const useAuthStore = create(persist((set) => ({
     withError: function () {
         set(whenError());
     },
+    /**
+     * 
+     * @param {AuthData} params 
+     */
     withSuccess: function (params) {
         set(whenSuccess(params));
     }
@@ -75,5 +114,6 @@ const useAuthStore = create(persist((set) => ({
     }
 ));
 
+export {initState};
 
 export default useAuthStore;
