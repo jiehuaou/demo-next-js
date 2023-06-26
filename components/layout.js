@@ -1,13 +1,17 @@
+//@ts-check
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 import NextLink from 'next/link';
 import useCounterStore from '../store/zustand-store';
-import { Text, Avatar, Button, Grid, Dropdown, Link, Row, Col, Card } from '@nextui-org/react';
-import { useState } from 'react';
+import { Text, Avatar, Button, Grid, Dropdown, Card, Loading, Row, Spacer } from '@nextui-org/react';
+import { useState, useEffect } from 'react';
 import { shallow } from 'zustand/shallow';
-
+import { useSession, signIn, signOut } from "next-auth/react"
+import React from 'react';
+// import Session from 'next-auth/core/types';
+// import React from 'react';
 
 const name = 'Your Name';
 export const siteTitle = 'Next.js Sample Website';
@@ -16,8 +20,50 @@ function getFirstValue(set) {
   return set.values()?.next()?.value;
 }
 
+
+
+/**
+ * @param {object} props
+ * @param {import('next-auth/core/types').Session|null} props.session 
+ * @param {"authenticated" | "loading" | "unauthenticated"} props.status
+ * @returns {import('react').ReactElement}
+ */
+const UserName = function ({session, status}) {
+  if(status==='loading') {
+    return (<Loading />)
+  } else if (status==='authenticated') {
+    // @ts-ignore
+    return (<Text h2>{session.user.name}</Text>)
+  } else if (status==='unauthenticated') {
+    return (<Text h2>Your Name</Text>)
+  }
+  return <></>;
+}
+
+/**
+ * @param {object} props
+ * @param {import('next-auth/core/types').Session|null} props.session 
+ * @returns {import('react').ReactElement}
+ */
+const SignInOut = function ({session}) {
+  if (session) {
+    return (
+      <Button flat={true} onPress={e=>signOut()}>sign Out</Button>
+    )
+  } else {
+    return (
+      <Button flat={true} onPress={e=>signIn()}>sign In</Button>
+    )
+  }
+}
+
+
+
+
+
 export default function Layout({ children, home }) {
 
+  const { data:session, status } = useSession()
   const [ total, ready ] = useCounterStore( (state) => [state.total, state.ready], shallow);
   const [color1, setColor1] = useState(new Set(['primary']));
 
@@ -57,7 +103,13 @@ export default function Layout({ children, home }) {
               alt=""
               title={`total: ${total}`}
             />
-            <h1 className={utilStyles.heading2Xl}>{name}, total {ready ? total : '...'}</h1>
+            <Row justify='center'>
+              <UserName session={session} status={status}></UserName>
+              <Spacer x={1}/>
+              <h2> total {ready ? total : '...'}, </h2>
+            </Row>
+            <SignInOut session={session} />
+            
           </>
         ) : (
           <>
@@ -84,7 +136,8 @@ export default function Layout({ children, home }) {
                     color="primary"
                     disallowEmptySelection
                     selectionMode="single"
-                    selectedKeys={color1}
+                    selectedKeys={color1} 
+                    // @ts-ignore
                     onSelectionChange={setColor1}
                   >
                     <Dropdown.Item key="primary">primary</Dropdown.Item>
@@ -102,21 +155,17 @@ export default function Layout({ children, home }) {
       </header>
       <main>{children}</main>
       {!home && (
-
-        
           <Grid.Container gap={2}>
             <Grid xs={4}>
               <Card>
                 <Card.Body>
-                  <NextLink href="/" width="auto">
+                  <NextLink href="/">
                   <Text color="primary" css={{}} > Back to home ← </Text>
                   </NextLink>
                 </Card.Body>
               </Card>
             </Grid>
           </Grid.Container>
-        
-
       )}
     </div>
   );

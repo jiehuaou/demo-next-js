@@ -38,27 +38,30 @@ export default function Home({postsData}) {
       </Head>
       <section className={utilStyles.headingMd}>
         <p>[Your Self Introduction]</p>
-        <h1 className={utilStyles.title}>
+        <div className={utilStyles.title}>
           Read <Link href="/posts/first-post">this Post</Link>
-        </h1>
-        <h1 className={utilStyles.title}>
+        </div>
+        <div className={utilStyles.title}>
+          Read <Link href="/auth-pass/first-pass">Password Auth</Link>
+        </div>
+        <div className={utilStyles.title}>
           Read <Link href="/react-hook/first-hook">React Hook</Link>
-        </h1>
-        <h1 className={utilStyles.title}>
-          Read <Link href="/auth/first-auth">this Auth</Link>
-        </h1>
-        <h1 className={utilStyles.title}>
-          Read <Link href="/swr/first-swr">this SWR (cache) Fetch</Link>
-        </h1>
-        <h1 className={utilStyles.title}>
-          Read <Link href="/unstate/first-unstate">this Unstate</Link>
-        </h1>
-        <h1 className={utilStyles.title}>
-          Read <Link href="/zustand/first-zustand">this Zustand</Link>
-        </h1>
-        <h1 className={utilStyles.title}>
-          Read <Link href="/money/money-book">this Money</Link>
-        </h1>
+        </div>
+        <div className={utilStyles.title}>
+          Read <Link href="/auth-f/first-auth">Fake Auth</Link>
+        </div>
+        <div className={utilStyles.title}>
+          Read <Link href="/swr/first-swr">SWR (cache) Fetch</Link>
+        </div>
+        <div className={utilStyles.title}>
+          Read <Link href="/unstate/first-unstate">Unstate</Link>
+        </div>
+        <div className={utilStyles.title}>
+          Read <Link href="/zustand/first-zustand">Zustand</Link>
+        </div>
+        <div className={utilStyles.title}>
+          Read <Link href="/money/money-book">Money</Link>
+        </div>
       </section>
 
       <section className='{`${utilStyles.headingMd} ${utilStyles.padding1px}`}'>
