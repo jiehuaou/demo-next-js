@@ -42,13 +42,13 @@ export default function Home({postsData}) {
           Read <Link href="/posts/first-post">this Post</Link>
         </div>
         <div className={utilStyles.title}>
-          Read <Link href="/auth-pass/first-pass">Password Auth</Link>
+          Read <Link href="/auth/sign-in">Password Auth</Link>
         </div>
         <div className={utilStyles.title}>
           Read <Link href="/react-hook/first-hook">React Hook</Link>
         </div>
         <div className={utilStyles.title}>
-          Read <Link href="/auth-f/first-auth">Fake Auth</Link>
+          Read <Link href="/authx/first-auth">Fake Auth</Link>
         </div>
         <div className={utilStyles.title}>
           Read <Link href="/swr/first-swr">SWR (cache) Fetch</Link>

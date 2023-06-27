@@ -23,36 +23,49 @@ function getFirstValue(set) {
 
 
 /**
- * @param {object} props
- * @param {import('next-auth/core/types').Session|null} props.session 
- * @param {"authenticated" | "loading" | "unauthenticated"} props.status
- * @returns {import('react').ReactElement}
+ * @param {import('next-auth/core/types').Session|null} session 
+ * @param {string} status 
+ * @returns {object}
  */
-const UserName = function ({session, status}) {
-  if(status==='loading') {
-    return (<Loading />)
-  } else if (status==='authenticated') {
+const getUserName = function (session, status) {
+  if (status === 'loading') {
+    return {};
+  } else if (status === 'authenticated') {
     // @ts-ignore
-    return (<Text h2>{session.user.name}</Text>)
-  } else if (status==='unauthenticated') {
-    return (<Text h2>Your Name</Text>)
+    return {...session.user}
+  } else if (status === 'unauthenticated') {
+    return {name:'Your Name'};
   }
-  return <></>;
+  return '';
 }
+
+const UserPanel = ({session, status})=>{
+  if (status === 'authenticated') {
+    const {name, role} = session.user;
+    return (
+      <><Text h2>{name}</Text><Spacer x={1} /><Text h2 color="primary">{role}</Text></>
+    )
+  } else if (status === 'unauthenticated') {
+    return <Text h2>Your Name</Text>
+  }
+  return null;
+}
+
+
 
 /**
  * @param {object} props
  * @param {import('next-auth/core/types').Session|null} props.session 
  * @returns {import('react').ReactElement}
  */
-const SignInOut = function ({session}) {
+const SignInOut = function ({ session }) {
   if (session) {
     return (
-      <Button flat={true} onPress={e=>signOut()}>sign Out</Button>
+      <Button flat={true} onPress={e => signOut()}>sign Out</Button>
     )
   } else {
     return (
-      <Button flat={true} onPress={e=>signIn()}>sign In</Button>
+      <Button flat={true} onPress={e => signIn()}>sign In</Button>
     )
   }
 }
@@ -63,14 +76,13 @@ const SignInOut = function ({session}) {
 
 export default function Layout({ children, home }) {
 
-  const { data:session, status } = useSession()
-  const [ total, ready ] = useCounterStore( (state) => [state.total, state.ready], shallow);
+  const { data: session, status } = useSession(); 
+  const [total, ready] = useCounterStore((state) => [state.total, state.ready], shallow);
   const [color1, setColor1] = useState(new Set(['primary']));
 
-  
-  [...color1?.values()].forEach(e => {
-    console.log("color ..........." + e);
-  });
+  // [...color1?.values()].forEach(e => {
+  //   console.log("color ..........." + e);
+  // });
 
   //useEffect(()=>{init()}, []);
 
@@ -104,12 +116,10 @@ export default function Layout({ children, home }) {
               title={`total: ${total}`}
             />
             <Row justify='center'>
-              <UserName session={session} status={status}></UserName>
-              <Spacer x={1}/>
-              <h2> total {ready ? total : '...'}, </h2>
+              <UserPanel session={session} status={status} />
             </Row>
             <SignInOut session={session} />
-            
+
           </>
         ) : (
           <>
@@ -122,9 +132,12 @@ export default function Layout({ children, home }) {
                 />
               </Grid>
               <Grid xs={6}>
-                <Text size="$2xl" color={getFirstValue(color1)}>
-                  {name}, total {ready ? total : '...'}
-                </Text>
+                <Row justify='center'>
+                  <Text h3>{getUserName(session, status).name}</Text>
+                  <Spacer x={1} />
+                  <Text h3> total {ready ? total : '...'}, </Text>
+                </Row>
+                {/* <SignInOut session={session} /> */}
               </Grid>
               <Grid xs={4}>
                 <Dropdown>
@@ -136,7 +149,7 @@ export default function Layout({ children, home }) {
                     color="primary"
                     disallowEmptySelection
                     selectionMode="single"
-                    selectedKeys={color1} 
+                    selectedKeys={color1}
                     // @ts-ignore
                     onSelectionChange={setColor1}
                   >
@@ -155,17 +168,17 @@ export default function Layout({ children, home }) {
       </header>
       <main>{children}</main>
       {!home && (
-          <Grid.Container gap={2}>
-            <Grid xs={4}>
-              <Card>
-                <Card.Body>
-                  <NextLink href="/">
+        <Grid.Container gap={2}>
+          <Grid xs={4}>
+            <Card>
+              <Card.Body>
+                <NextLink href="/">
                   <Text color="primary" css={{}} > Back to home ← </Text>
-                  </NextLink>
-                </Card.Body>
-              </Card>
-            </Grid>
-          </Grid.Container>
+                </NextLink>
+              </Card.Body>
+            </Card>
+          </Grid>
+        </Grid.Container>
       )}
     </div>
   );

@@ -4,13 +4,13 @@ import useCounterStore from '../store/zustand-store';
 import { NextUIProvider } from '@nextui-org/react';
 import { SessionProvider } from "next-auth/react"
 
-export default function App({ Component, pageProps : { session, ...pageProps }}) {
+export default function App({ Component, pageProps}) {
 
   console.log("---------------app start----------------------");
   // return <Component {...pageProps} />;
 
   return (
-    <SessionProvider session={session}>
+    <SessionProvider session={pageProps.session}>
       <NextUIProvider>
         <ThemeProvider>
           <Component {...pageProps} />
