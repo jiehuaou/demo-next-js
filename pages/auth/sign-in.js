@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const tryLogin = (email, password)=>{
     console.log(`try login .......... ${email} / ${password}`);
-    debugger;
+    // debugger;
     signIn("credentials", {
         email, password,
     })

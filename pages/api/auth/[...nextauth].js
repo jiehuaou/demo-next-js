@@ -4,7 +4,7 @@ import GithubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const options = {
-  secret: 'any string here',
+  secret: process.env.SECRET_TEXT,
   providers: [
     GithubProvider({
       clientId: '6324f23cf4c7363f0bba',
@@ -53,7 +53,7 @@ const options = {
         });
         const user = await res.json();
         if (res.ok && user) {
-          console.log(`[authorize] return user ..........user:`, user);
+          //console.log(`[authorize] return user ..........user:`, user);
           return user;
         } else return null;
       },
@@ -62,18 +62,26 @@ const options = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      console.log(`[callbacks] return jwt ..........token:`, token, 'user:', user);
+      //console.log(`[callbacks] return jwt ..........token:`, token, 'user:', user);
       return { ...token, ...user };
     },
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token from a provider.
       session.user = token;
-      console.log(`[callbacks] return session .......... session:`, session);
+      // console.log(`[callbacks] return session .......... session:`, session);
       return session;
     },
   },
   pages: {
-   // signIn: '/auth/sign-in',
+   signIn: '/auth/sign-in',
+  },
+  session: { strategy: "jwt" },
+
+  jwt: {
+    // The maximum age of the NextAuth.js issued JWT in seconds.
+    // Defaults to `session.maxAge`.
+    maxAge: 7200 ,
   }
+
 };
 export default (req, res) => NextAuth(req, res, options);
