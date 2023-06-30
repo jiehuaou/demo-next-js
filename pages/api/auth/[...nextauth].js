@@ -32,7 +32,7 @@ const options = {
       },
 
       /**
-       * do user/password authenticate
+       * demo to authenticate via back-end java with username/password 
        * 
        * @param {*} credentials 
        * @param {*} req 
@@ -41,6 +41,7 @@ const options = {
       async authorize(credentials, req) {
         const { email, password } = credentials;
         console.log(`try [authorize] login .......... ${email} / ${password}`);
+        // mock to call the back-end java back-end
         const res = await fetch("http://localhost:3000/api/login-psw", {
           method: "POST",
           headers: {

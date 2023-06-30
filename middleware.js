@@ -1,6 +1,5 @@
 //@ts-check
 import { NextResponse } from 'next/server';
-import { useSession, signIn, signOut } from "next-auth/react"
 import { getToken } from 'next-auth/jwt';
 
 /**

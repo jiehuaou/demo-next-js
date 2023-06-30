@@ -2,7 +2,7 @@
 import { Users } from "../../data/user";
 
 /**
- * demo an authentication backend service ( mock java access to database )
+ * demo an authentication backend service ( mock the java back-end with database service)
  *
  * @param {import("next").NextApiRequest} req 
  * @param {import("next").NextApiResponse} res 
