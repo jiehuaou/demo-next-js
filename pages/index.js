@@ -45,7 +45,7 @@ export default function Home({postsData}) {
           Read <Link href="/auth/sign-in">Password Auth</Link>
         </div>
         <div className={utilStyles.title}>
-          Read <Link href="/protect/profile">Protected Profile</Link>
+          Read <Link href="/protect/profile">Protected Profile⚡㊙️</Link>
         </div>
         <div className={utilStyles.title}>
           Read <Link href="/react-hook/first-hook">React Hook</Link>
@@ -57,7 +57,7 @@ export default function Home({postsData}) {
           Read <Link href="/swr/first-swr">SWR (cache) Fetch</Link>
         </div>
         <div className={utilStyles.title}>
-          Read <Link href="/unstate/first-unstate">Unstate</Link>
+          Read <Link href="/luni">Proxy to 万年日历</Link>
         </div>
         <div className={utilStyles.title}>
           Read <Link href="/zustand/first-zustand">Zustand</Link>
