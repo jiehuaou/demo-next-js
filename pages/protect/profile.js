@@ -1,13 +1,15 @@
 import Layout from "../../components/layout";
 import Head from 'next/head';
-import { Card, Grid, Text, Badge } from "@nextui-org/react";
-import { useSession } from "next-auth/react"
+import { Card, Grid, Text, Badge, Button } from "@nextui-org/react";
+import { useSession, signOut } from "next-auth/react"
 
 const iconColor = 'secondary';
 
 export default function Profile() {
 
     const { data: session, status } = useSession();
+
+    console.log(`[Profile] session ..........user:`, session?.user);
 
     return (
         <Layout>
@@ -48,6 +50,11 @@ export default function Profile() {
                             <Badge color={iconColor} content='status'>
                                 <Badge size="lg" color="primary" variant="bordered">{status}</Badge>
                             </Badge>
+                        </Grid>
+                        <Grid>
+                            <Button bordered flat onPress={signOut}>
+                                Logout
+                            </Button>
                         </Grid>
                     </Grid.Container>
                 </Card.Body>

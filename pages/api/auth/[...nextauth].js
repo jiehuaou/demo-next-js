@@ -1,15 +1,30 @@
-
+//@ts-check
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials";
 
+
+/**
+ * use jsDoc to declare type extending
+ * 
+ * @typedef {object} RolePart
+ * @property {string} [role]
+ * 
+ * @typedef {import("next-auth").User & RolePart} RoleUser
+ * 
+ */
+
+
+/**
+ * @type {import("next-auth").AuthOptions}
+ */
 const options = {
   secret: process.env.SECRET_TEXT,
   providers: [
     GithubProvider({
       clientId: '6324f23cf4c7363f0bba',
-      // clientSecret: 'bdb15e2bbaf504997e039b34c739afaa79c68213',
-      clientSecret: 'ab305403f3a401fad6168b4104d4432b72d20a12'
+      clientSecret: 'bdb15e2bbaf504997e039b34c739afaa79c68213',
+      // clientSecret: 'ab305403f3a401fad6168b4104d4432b72d20a12'
     }),
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
@@ -62,9 +77,26 @@ const options = {
     // ...add more providers here
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      //console.log(`[callbacks] return jwt ..........token:`, token, 'user:', user);
-      return { ...token, ...user };
+
+
+    /**
+     * this callback merge （user, account ）into token
+     * 
+     * @param {object} args
+     * 
+     * @param {import("next-auth/jwt").JWT} args.token
+     * @param {RoleUser} args.user
+     * @param {import("next-auth").Account | null} args.account, in which has access_token
+     * 
+     * @returns {Promise<object>}
+     */
+    async jwt({ token, user, account }) {
+      // console.log(`[callbacks] return jwt ..........token:`, token, ' account:', account, '  user:', user);
+      const { access_token: accessToken = 'unavailable',  } = account ?? {};
+      const { role: role = 'unavailable', } = user??{};
+      
+      const jwtObject = { accessToken, role, ...token, ...user };
+      return jwtObject;
     },
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token from a provider.
@@ -74,15 +106,17 @@ const options = {
     },
   },
   pages: {
-   signIn: '/auth/sign-in',
+    signIn: '/auth/sign-in',
   },
-  session: { strategy: "jwt" },
+
+  session: { strategy: 'jwt' },
 
   jwt: {
     // The maximum age of the NextAuth.js issued JWT in seconds.
     // Defaults to `session.maxAge`.
-    maxAge: 7200 ,
+    maxAge: 7200,
   }
 
 };
+
 export default (req, res) => NextAuth(req, res, options);

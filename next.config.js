@@ -1,3 +1,7 @@
+/**
+ * proxy to other site or service
+ */
+
 module.exports = () => {
     const rewrites = () => {
       return [
