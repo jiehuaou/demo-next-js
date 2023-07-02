@@ -1,5 +1,5 @@
 //@ts-check
-import { Users } from "../../data/user";
+import { validateUser } from "../../data/user";
 
 /**
  * demo an authentication backend service ( mock the java back-end with database service)
@@ -15,14 +15,14 @@ export default async function handler(req, res) {
             return;
         }
         const body = JSON.parse(JSON.stringify(req.body))
-        const user = Users.find((user) => user.email === body.email && user.password === parseInt(body.password));
+        const user = validateUser(body.email, body.password);
         if (!user) {
             res.status(404).send({ message: 'User does not exit!' });
+            console.log(`[api.login-psw] ${body.email}/${body.password}  .............. `, 'login failed with ', user);
             return;
         }
 
-        let {password, ...protectUser} = user; // skip the password
-        res.status(200).json(protectUser);
+        res.status(200).json(user);
     } catch (error) {
         res.status(405).send({ message: `{error.message}` });
         return;

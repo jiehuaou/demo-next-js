@@ -12,14 +12,14 @@ export default function Profile() {
     console.log(`[Profile] session ..........user:`, session?.user);
 
     return (
-        <Layout>
+        <Layout home={false}>
             <Head>
                 <title>User Profile</title>
             </Head>
 
             <Card>
                 <Card.Header>
-                    <Text h3>Hello {status === 'authenticated' ? session?.user?.name : 'your names'}</Text>
+                    <Text h3>Profile - {status === 'authenticated' ? session?.user?.name : 'your names'}</Text>
                 </Card.Header>
                 <Card.Divider />
                 <Card.Body>

@@ -48,6 +48,9 @@ export default function Home({postsData}) {
           Read <Link href="/protect/profile">Protected Profile⚡㊙️</Link>
         </div>
         <div className={utilStyles.title}>
+          Read <Link href="/protect/user-list">Protected Users⚡㊙️</Link>
+        </div>
+        <div className={utilStyles.title}>
           Read <Link href="/react-hook/first-hook">React Hook</Link>
         </div>
         <div className={utilStyles.title}>
