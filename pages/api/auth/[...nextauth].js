@@ -85,16 +85,20 @@ const options = {
      * @param {object} args
      * 
      * @param {import("next-auth/jwt").JWT} args.token
-     * @param {RoleUser} args.user
-     * @param {import("next-auth").Account | null} args.account, in which has access_token
+     * @param {RoleUser} args.user - user is from authorize(), which can contain jwt by external service.
+     * @param {import("next-auth").Account | null} args.account - which has access_token (jwt), if user does not provide jwt.
      * 
      * @returns {Promise<object>}
      */
     async jwt({ token, user, account }) {
-      // console.log(`[callbacks] return jwt ..........token:`, token, ' account:', account, '  user:', user);
-      const { access_token: accessToken = 'unavailable',  } = account ?? {};
-      const { role: role = 'unavailable', } = user??{};
       
+      // user is from authorize(), which can contain jwt by external service.
+      // account has access_token (jwt) by next-auth,
+      // if user does not provide jwt, then we need to get it from account.
+
+      const accessToken = account?.access_token || 'unavailable';
+      const role = user?.role || 'unavailable';
+
       const jwtObject = { accessToken, role, ...token, ...user };
       return jwtObject;
     },
