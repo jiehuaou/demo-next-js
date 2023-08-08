@@ -14,9 +14,24 @@ const iconColor = 'secondary';
  */
 
 /**
+ * access an external resource via jwt token
+ * @param {whenDataReady} cb 
+ * @param {*} session
+ */
+const fetcherExternalApi = async (cb, session)=>{
+    const data = await fetch('/api/java/fetch-external-users', { 
+        headers: { Authorization: 'Bearer ' + session?.user?.accessToken??'not-found' }, 
+    });
+    const json = await data.json();
+    console.log(`[Profile] user data ..........user:`, json);
+    cb(json);
+}
+
+/**
+ * access a protected resource
  * @param {whenDataReady} cb 
  */
-const fetcher = async (cb)=>{
+ const fetcherProtectApi = async (cb)=>{
     const data = await fetch('/api/protect/fetch-users');
     const json = await data.json();
     console.log(`[Profile] user data ..........user:`, json);
@@ -31,12 +46,14 @@ export default function UserListPage() {
 
     const { data: session, status } = useSession();
     const [userData, setUserData] = useState();
+    const [extUserData, setExtUserData] = useState();
 
     console.log(`[Profile] session [${status}]..........user:`, session);
 
     useEffect(()=>{
         if(status==='authenticated') {
-            fetcher(e=>setUserData(e));
+            fetcherProtectApi(e=>setUserData(e));
+            fetcherExternalApi(e=>setExtUserData(e), session);
         }
     }, [status])
 
@@ -56,6 +73,9 @@ export default function UserListPage() {
                     <Grid.Container gap={1}>
                         <Grid>
                             <UserListComponent userData={userData} isLoading={!userData}/>
+                        </Grid>
+                        <Grid>
+                            <UserListComponent userData={extUserData} isLoading={!extUserData}/>
                         </Grid>
                         <Grid>
                             <Button bordered flat onPress={e => signOut()}>

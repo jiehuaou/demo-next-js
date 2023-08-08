@@ -7,6 +7,8 @@
  * @property {string} email
  * @property {string} role
  * @property {string} id
+ * @property {string|null} accessToken
+ * @property {string|null} refreshToken
  */
 
 /**
@@ -24,10 +26,10 @@
  */
 
 const Users = [
-    { id: "111", name: "John Doe", email: "johnDoe@xyz.com", password: 1234, role: "user" },
-    { id: "112", name: "Jane Doe", email: "janeDoe@xyz.com", password: 1234, role: "user" },
-    { id: "113", name: "Jenny Joe", email: "johnAdmin@xyz.com", password: 1234, role: "admin" },
-    { id: "114", name: "Jude Doe", email: "judeDoe@xyz.com", password: 1234, role: "admin" },
+    { id: "111", name: "John Doe", email: "johnDoe@xyz.com", password: 1234, role: "user", accessToken: null, refreshToken: null },
+    { id: "112", name: "Jane Doe", email: "janeDoe@xyz.com", password: 1234, role: "user", accessToken: null, refreshToken: null },
+    { id: "113", name: "Jenny Admin", email: "JennyAdmin@xyz.com", password: 1234, role: "admin", accessToken: null, refreshToken: null },
+    { id: "114", name: "Jude Doe", email: "judeDoe@xyz.com", password: 1234, role: "admin", accessToken: null, refreshToken: null },
 ];
 
 
@@ -47,8 +49,8 @@ const Users = [
  */
 const validateUser = function (email, password) {
     const email2 = email.trim().toLowerCase();
-    const user = Users.find(e=>{
-        return e.email.toLowerCase()===email2 && e.password===parseInt(password)
+    const user = Users.find(e => {
+        return e.email.toLowerCase() === email2 && e.password === parseInt(password)
     })
 
     console.log(`[validateUser] ${email}/${password}  .............. `, user);
@@ -59,7 +61,7 @@ const validateUser = function (email, password) {
     /**
      * 
      */
-    const {password: psw, ...protectUser} = user; // skip the password
+    const { password: psw, ...protectUser } = user; // skip the password
     return protectUser;
 }
 

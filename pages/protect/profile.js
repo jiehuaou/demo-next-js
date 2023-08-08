@@ -38,7 +38,7 @@ export default function Profile() {
                         </Grid>
                         <Grid>
                             <Badge color={iconColor} content='id'>
-                                <Badge size="lg" color="primary" variant="bordered">{session?.user?.id}</Badge>
+                                <Badge size="lg" color="primary" variant="bordered">{session?.user?.sub}</Badge>
                             </Badge>
                         </Grid>
                         <Grid>

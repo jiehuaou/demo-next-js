@@ -22,7 +22,7 @@ import { useSession, signOut } from "next-auth/react";
                     minWidth: "100%",
                 }}>
                 <Table.Header>
-                    <Table.Column>User ID</Table.Column>
+                    <Table.Column>ID</Table.Column>
                     <Table.Column>Email</Table.Column>
                     <Table.Column>Role</Table.Column>
                 </Table.Header>

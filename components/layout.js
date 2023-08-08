@@ -5,7 +5,7 @@ import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 import NextLink from 'next/link';
 import useCounterStore from '../store/zustand-store';
-import { Text, Avatar, Button, Grid, Dropdown, Card, Loading, Row, Spacer } from '@nextui-org/react';
+import { Text, Avatar, Button, Grid, Dropdown, Badge, Loading, Row, Spacer } from '@nextui-org/react';
 import { useState, useEffect } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useSession, signIn, signOut } from "next-auth/react"
@@ -32,16 +32,16 @@ const getUserName = function (session, status) {
     return {};
   } else if (status === 'authenticated') {
     // @ts-ignore
-    return {...session.user}
+    return { ...session.user }
   } else if (status === 'unauthenticated') {
-    return {name:'Your Name'};
+    return { name: 'Your Name' };
   }
   return '';
 }
 
-const UserPanel = ({session, status})=>{
+const UserPanel = ({ session, status }) => {
   if (status === 'authenticated') {
-    const {name, role} = session.user;
+    const { name, role } = session.user;
     return (
       <><Text h2>{name}</Text><Spacer x={1} /><Text h2 color="primary">{role}</Text></>
     )
@@ -76,13 +76,11 @@ const SignInOut = function ({ session }) {
 
 export default function Layout({ children, home }) {
 
-  const { data: session, status } = useSession(); 
+  const { data: session, status } = useSession();
   const [total, ready] = useCounterStore((state) => [state.total, state.ready], shallow);
   const [color1, setColor1] = useState(new Set(['primary']));
 
-  // [...color1?.values()].forEach(e => {
-  //   console.log("color ..........." + e);
-  // });
+  const preview = session?.user?.image ?? '/images/profile.jpg';
 
   //useEffect(()=>{init()}, []);
 
@@ -108,7 +106,7 @@ export default function Layout({ children, home }) {
           <>
             <Image
               priority
-              src="/images/profile.jpg"
+              src={preview}
               className={utilStyles.borderCircle}
               height={144}
               width={144}
@@ -126,7 +124,7 @@ export default function Layout({ children, home }) {
             <Grid.Container gap={2} justify="center">
               <Grid xs={2}>
                 <Avatar
-                  src="/images/profile.jpg"
+                  src={preview}
                   color="gradient"
                   bordered
                 />
@@ -168,15 +166,11 @@ export default function Layout({ children, home }) {
       </header>
       <main>{children}</main>
       {!home && (
-        <Grid.Container gap={2}>
+        <Grid.Container gap={2} justify="flex-end">
           <Grid xs={4}>
-            <Card>
-              <Card.Body>
-                <NextLink href="/">
-                  <Text color="primary" css={{}} > Back to home ← </Text>
-                </NextLink>
-              </Card.Body>
-            </Card>
+            <NextLink href="/">
+              <Badge size="lg" color="primary" variant="bordered">Back to home</Badge>
+            </NextLink>
           </Grid>
         </Grid.Container>
       )}

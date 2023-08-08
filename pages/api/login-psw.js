@@ -1,4 +1,5 @@
 //@ts-check
+import createToken from "../../data/access-token";
 import { validateUser } from "../../data/user";
 
 /**
@@ -21,6 +22,8 @@ export default async function handler(req, res) {
             console.log(`[api.login-psw] ${body.email}/${body.password}  .............. `, 'login failed with ', user);
             return;
         }
+
+        user.accessToken = createToken(user);
 
         res.status(200).json(user);
     } catch (error) {
