@@ -1,5 +1,5 @@
 import { Users } from "../../../data/user";
-import createToken from "../../../data/access-token";
+import tk from "../../../data/access-token";
 
 /**
  * this service is fake one to mock an external java service.
@@ -13,6 +13,9 @@ export default function handler(req, res) {
     const { headers } = req;
     const { authorization } = headers;
     console.log("authorization --> ", authorization);
+    if (!authorization || !tk.verifyToken(authorization.slice(7))) {
+        res.status(401).send({ message: 'Unauthorized' });
+    }
 
     const externalUsers = Users.map(e=>{
         const {password, ...user} = e;

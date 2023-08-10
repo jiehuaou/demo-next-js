@@ -15,6 +15,7 @@ const createFakeToken = function(user) {
 }
 
 const createToken = function(user) {
+    // const secret = process.env.SECRET_TEXT;
     let exp = Math.floor(Date.now() / 1000) + (60 * 60);
     let iat = Math.floor(Date.now() / 1000) ;
     const {accessToken, refreshToken, ...data} = user;
@@ -24,6 +25,20 @@ const createToken = function(user) {
     return jwt.sign(JSON.stringify(jwtData), secret);
 }
 
+const verifyToken = function(token) {
+    // const secret = process.env.SECRET_TEXT;
+    let data = null;
+    try {
+        data = jwt.verify(token, secret);
+        if (!data.exp || data.exp < Math.floor(Date.now() / 1000)) {
+            throw new Error("Token expired");
+        }
+    } catch (error) {
+        console.log("[verifyToken error] ==> ", error.toString());
+        return null;
+    }
+    return data;
+}
 
-export { fakeToken, createFakeToken };
-export default createToken;
+
+export default{ fakeToken, createFakeToken, verifyToken, createToken };

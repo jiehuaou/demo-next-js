@@ -1,5 +1,5 @@
 //@ts-check
-import createToken from "../../data/access-token";
+import tk from "../../data/access-token";
 import { validateUser } from "../../data/user";
 
 /**
@@ -23,7 +23,7 @@ export default async function handler(req, res) {
             return;
         }
 
-        user.accessToken = createToken(user);
+        user.accessToken = tk.createToken(user);
 
         res.status(200).json(user);
     } catch (error) {

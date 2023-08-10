@@ -19,12 +19,17 @@ const iconColor = 'secondary';
  * @param {*} session
  */
 const fetcherExternalApi = async (cb, session)=>{
-    const data = await fetch('/api/java/fetch-external-users', { 
-        headers: { Authorization: 'Bearer ' + session?.user?.accessToken??'not-found' }, 
-    });
-    const json = await data.json();
-    console.log(`[Profile] user data ..........user:`, json);
-    cb(json);
+    try {
+        const data = await fetch('/api/java/fetch-external-users', { 
+            headers: { Authorization: 'Bearer ' + session?.user?.accessToken??'not-found' }, 
+        });
+        const json = await data.json();
+        console.log(`[Profile] user data ..........user:`, json);
+        cb(json);
+    } catch (error) {
+        cb([]);
+    }
+    
 }
 
 /**
@@ -32,10 +37,15 @@ const fetcherExternalApi = async (cb, session)=>{
  * @param {whenDataReady} cb 
  */
  const fetcherProtectApi = async (cb)=>{
-    const data = await fetch('/api/protect/fetch-users');
-    const json = await data.json();
-    console.log(`[Profile] user data ..........user:`, json);
-    cb(json);
+    try {
+        const data = await fetch('/api/protect/fetch-users');
+        const json = await data.json();
+        console.log(`[Profile] user data ..........user:`, json);
+        cb(json);
+    } catch (error) {
+        cb([]);
+    }
+    
 }
 
 /**
