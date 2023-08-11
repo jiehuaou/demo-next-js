@@ -9,12 +9,12 @@ import tk from "../../../data/access-token";
  * @param {import("next").NextApiResponse} res 
  * @returns {Promise<void>}
  */
-export default function handler(req, res) {
+export default async function handler(req, res) {
     const { headers } = req;
     const { authorization } = headers;
     console.log("authorization --> ", authorization);
-    if (!authorization || !tk.verifyToken(authorization.slice(7))) {
-        res.status(401).send({ message: 'Unauthorized' });
+    if (!authorization || ! await tk.verifyToken(authorization.slice(7))) {
+        return res.status(401).send({ message: 'Unauthorized' });
     }
 
     const externalUsers = Users.map(e=>{

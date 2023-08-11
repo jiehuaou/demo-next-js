@@ -1,4 +1,5 @@
-import jwt from "jsonwebtoken";
+// import jwt from "jsonwebtoken";
+import {jwtVerify, SignJWT, JWTPayload, JWTVerifyResult} from 'jose';
 
 const secret = process.env.SECRET_TEXT;
 
@@ -7,38 +8,49 @@ const fakeToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkw
 /**
  * Creates a token for the given user.
  *
- * @param {object} user - The user object.
+ * @param {JWTPayload} user - The user object.
  * @return {string} The generated token.
  */
 const createFakeToken = function(user) {
     return fakeToken;
 }
 
-const createToken = function(user) {
+
+/**
+ * Creates a token for the given user.
+ *
+ * @param {JWTPayload} user - The user object.
+ * @return {Promise<string>} The generated token.
+ */
+const createToken = async function(user) {
     // const secret = process.env.SECRET_TEXT;
     let exp = Math.floor(Date.now() / 1000) + (60 * 60);
     let iat = Math.floor(Date.now() / 1000) ;
-    const {accessToken, refreshToken, ...data} = user;
-    const jwtData = {
-        exp, iat, ...data
-    }
-    return jwt.sign(JSON.stringify(jwtData), secret);
+    const {accessToken, refreshToken, ...payload} = user;
+    const jwt = new SignJWT({payload})
+        .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+        .setExpirationTime(exp)
+        .setIssuedAt(iat);
+    return jwt.sign(new TextEncoder().encode(secret));
 }
 
-const verifyToken = function(token) {
+/**
+ * verify a token.
+ *
+ * @param {string} token
+ * @return {Promise<JWTVerifyResult>} 
+ */
+const verifyToken = async function(token) {
     // const secret = process.env.SECRET_TEXT;
-    let data = null;
     try {
-        data = jwt.verify(token, secret);
-        if (!data.exp || data.exp < Math.floor(Date.now() / 1000)) {
-            throw new Error("Token expired");
-        }
+        const result = await jwtVerify(token, new TextEncoder().encode(secret));
+        return result;
     } catch (error) {
         console.log("[verifyToken error] ==> ", error.toString());
-        return null;
     }
-    return data;
+    return null;
 }
+
 
 
 export default{ fakeToken, createFakeToken, verifyToken, createToken };

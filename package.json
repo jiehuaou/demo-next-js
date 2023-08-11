@@ -1,12 +1,14 @@
 {
   "private": true,
-  "x-type": "module",
+  "type-do-not-use": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "cypress": "cypress open",
-    "test1": "env-cmd -e dev mocha -r esm tests/*.mjs "
+    "test1 not working": "env-cmd -e dev mocha -r esm tests/*.js ",
+    "test2": "env-cmd -e dev mocha --require @babel/register tests/*.js ",
+    "test3": "cross-env BABEL_ENV=test-console mocha tests/*.js"
   },
   "dependencies": {
     "@nextui-org/react": "^1.0.0-beta.13",
@@ -14,6 +16,7 @@
     "clsx": "^1.2.1",
     "gray-matter": "^4.0.3",
     "immer": "^10.0.2",
+    "jose": "^4.14.4",
     "jsonwebtoken": "^9.0.1",
     "next": "latest",
     "next-auth": "^4.22.1",
@@ -25,11 +28,21 @@
     "zustand": "^4.3.8"
   },
   "devDependencies": {
+    "@babel/cli": "^7.22.10",
+    "@babel/core": "^7.22.10",
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-react": "^7.22.5",
+    "@babel/register": "^7.22.5",
     "chai": "^4.3.7",
     "cross-env": "^7.0.3",
     "cypress": "^12.14.0",
     "env-cmd": "^10.1.0",
     "esm": "^3.2.25",
     "mocha": "^10.2.0"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
   }
 }
