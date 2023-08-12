@@ -13,11 +13,19 @@ import { useSession, signIn, signOut } from "next-auth/react";
  * @param {import('next-auth/jwt').JWT | null} session
  * @returns {Promise<NextResponse<any>>}
  */
-const pageDenyHandler = async function (request, session) {
+const loginHandler = async function (request, session) {
   
   const url = request.nextUrl.clone();
   const callbackUrl = request.nextUrl.pathname;
   url.pathname = '/auth/sign-in';
+  url.searchParams.append('callbackUrl', callbackUrl);
+  return NextResponse.redirect(url);
+}
+
+const pageDenyHandler = async function (request, session) {
+  const url = request.nextUrl.clone();
+  const callbackUrl = request.nextUrl.pathname;
+  url.pathname = '/error/deny';
   url.searchParams.append('callbackUrl', callbackUrl);
   return NextResponse.redirect(url);
 }
@@ -53,7 +61,7 @@ export async function middleware(request) {
   console.log("middleware ..... session", session);
   if (!session) {
     if (request.nextUrl.pathname.startsWith('/protect/')) {
-      return pageDenyHandler(request, session);
+      return loginHandler(request, session);
     } else if (request.nextUrl.pathname.startsWith('/api/protect/')) {
       return apiDenyHandler(request, session);
     }
@@ -65,7 +73,8 @@ export async function middleware(request) {
     const result = await tk.verifyToken(accessToken);
     console.log("middleware verifyToken(accessToken) ==> ", result);
     if(!result) {
-      signOut();
+      //await signOut();
+      console.log("middleware verifyToken ====> signout");
       throw new Error("middleware verifyToken(accessToken) ==> failed ");
     }
   } catch (error) {

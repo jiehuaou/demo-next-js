@@ -22,10 +22,10 @@ const createFakeToken = function(user) {
  * @param {JWTPayload} user - The user object.
  * @return {Promise<string>} The generated token.
  */
-const createToken = async function(user) {
+const createToken = async function(user, duration = 20, issuedAt = 0) {
     // const secret = process.env.SECRET_TEXT;
-    let exp = Math.floor(Date.now() / 1000) + (60 * 60);
-    let iat = Math.floor(Date.now() / 1000) ;
+    let iat = issuedAt || Math.floor(Date.now() / 1000) ;
+    let exp = iat + (duration * 60);
     const {accessToken, refreshToken, ...payload} = user;
     const jwt = new SignJWT({payload})
         .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })

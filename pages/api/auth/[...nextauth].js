@@ -20,12 +20,8 @@ async function handler(req, secret) {
 /**
  * use jsDoc to declare type extending
  * 
- * @typedef {object} RolePart
- * @property {string} [role]
- * @property {string} [accessToken]
- * @property {string} [refreshToken]
  * 
- * @typedef {import("next-auth").User & RolePart} RoleUser
+ * @typedef {import("next-auth").User & import("../../../pages/types").UserExtended} RoleUser
  * 
  */
 
@@ -112,11 +108,6 @@ const options = {
       // "user" is from authorize(), which may provide jwt by external service.
       // "account" provides access_token (jwt) by Build-in provider as well.
       // selecting jwt from either "Account" or "User" is depending on your need.
-      if(account){
-        console.log(`[callbacks] return jwt .......... token:`, token);
-        console.log(`[callbacks] return jwt .......... user:`, user);
-        console.log(`[callbacks] return jwt .......... account:`, account);
-      }
 
       // this is for build-in provider
       if (account && account.provider==='github' ) {
@@ -132,6 +123,9 @@ const options = {
         }
         if (user?.refreshToken) {
           token.refreshToken = user?.refreshToken;
+        }
+        if (user?.tokenExpireAt) {
+          token.tokenExpireAt = user?.tokenExpireAt;
         }
         
       }
@@ -155,7 +149,7 @@ const options = {
   jwt: {
     // The maximum age of the NextAuth.js issued JWT in seconds.
     // Defaults to `session.maxAge`.
-    maxAge: 7200,
+    maxAge: 3600,
   }
 
 };

@@ -1,4 +1,5 @@
 //@ts-check
+import { use } from "chai";
 import tk from "../../data/access-token";
 import { validateUser } from "../../data/user";
 
@@ -23,7 +24,10 @@ export default async function handler(req, res) {
             return;
         }
 
-        user.accessToken = await tk.createToken(user);
+        const duration = 20;
+        
+        user.tokenExpireAt = Math.floor(Date.now() / 1000) + duration * 60;
+        user.accessToken = await tk.createToken(user, duration);
 
         res.status(200).json(user);
     } catch (error) {
