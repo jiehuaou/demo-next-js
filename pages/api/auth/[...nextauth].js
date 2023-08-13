@@ -21,7 +21,7 @@ async function handler(req, secret) {
  * use jsDoc to declare type extending
  * 
  * 
- * @typedef {import("next-auth").User & import("../../../pages/types").UserExtended} RoleUser
+ * @typedef {import("next-auth").User & import("../../../pages/types").UserExtendedPart} RoleUser
  * 
  */
 
@@ -98,15 +98,15 @@ const options = {
      * @param {object} args
      * 
      * @param {import("next-auth/jwt").JWT} args.token
-     * @param {RoleUser} args.user - user is from authorize(), which may contain jwt by external service.
-     * @param {import("next-auth").Account | null} args.account - which has access_token (jwt), if user does not provide jwt.
+     * @param {RoleUser} args.user 
+     * @param {import("next-auth").Account | null} args.account 
      * 
      * @returns {Promise<object>}
      */
     async jwt({ token, user, account }) {
       
       // "user" is from authorize(), which may provide jwt by external service.
-      // "account" provides access_token (jwt) by Build-in provider as well.
+      // "account" provide meta-data as well as access_token (jwt) by Build-in provider.
       // selecting jwt from either "Account" or "User" is depending on your need.
 
       // this is for build-in provider
@@ -131,7 +131,16 @@ const options = {
       }
       return token;
     },
-    async session({ session, token, user }) {
+    /**
+     * this callback is where we specify what will be available on the client with useSession().
+     * 
+     * @param {object} args
+     * @param {object} args.session - used to stored the token
+     * @param {import("next-auth/jwt").JWT} args.token - from jwt callback
+     * 
+     * @returns {Promise<object>}
+     */
+    async session({ session, token }) {
       // Send properties to the client, like an access_token from a provider.
       session.user = token;
       const counter = getCounter();
@@ -154,4 +163,9 @@ const options = {
 
 };
 
+
+/**
+ * @param {import("next").NextApiRequest} req 
+ * @param {import("next").NextApiResponse} res 
+ */
 export default (req, res) => NextAuth(req, res, options);

@@ -22,7 +22,7 @@ const AccessDenyPage = () => {
           
           <Card.Footer>
             <Row justify="flex-end">
-              <Button size="sm"  color="primary" auto onClick={() => signOut()}>Logout</Button>
+              <Button size="sm"  color="primary" auto onClick={() => signOut({callbackUrl:'/'})}>Logout</Button>
             </Row>
           </Card.Footer>
         </Card>
