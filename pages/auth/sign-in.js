@@ -1,16 +1,23 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { getProviders, getSession, signIn } from "next-auth/react"
-import { Button, Card, Grid, Input, Row, Spacer, Text, Badge } from "@nextui-org/react";
+import { Button, Card, Grid, Input, Row, Spacer, Text, Badge, Dropdown } from "@nextui-org/react";
 import Link from "next/link";
 import { useRouter } from 'next/router';
 
-const tryLogin = (email, password, callbackUrl) => {
-    console.log(`try login .......... ${email} / ${password}`);
+const tryLogin = (emailSet, password, callbackUrl) => {
+    console.log(`try login .......... ${emailSet} / ${password}`);
+    const collection = [...emailSet];
+    const email = collection[0];
     // debugger;
     signIn("credentials", {
         email, password,
         callbackUrl
-    }, )
+    })
+}
+
+const onUpdateEmail = (e, setEmail) => {
+    console.log(`update email .......... `, e);
+    setEmail(new Set([e.currentKey]));
 }
 
 const ErrorPanel = ({ error }) => {
@@ -30,7 +37,7 @@ const ErrorPanel = ({ error }) => {
  */
 const Signin = ({ providers }) => {
     //console.log("............", providers);
-    const email = useRef("johnDoe@xyz.com");
+    const [email, setEmail] = useState(new Set(["johnDoe@xyz.com"]));
     const password = useRef("1234");
 
     const router = useRouter();
@@ -53,10 +60,26 @@ const Signin = ({ providers }) => {
 
                             <Spacer y={1.6} />
                             <Row justify="center">
-                                <Input clearable bordered labelPlaceholder="Name" initialValue="johnDoe@xyz.com"
-                                    label="Email"
-                                    onChange={(e) => (email.current = e.target.value)}
-                                /></Row>
+                                <Dropdown>
+                                    <Dropdown.Button flat color="primary" css={{ tt: "capitalize" }}>
+                                        {email}
+                                    </Dropdown.Button>
+                                    <Dropdown.Menu
+                                        aria-label="Single selection actions"
+                                        color="primary"
+                                        disallowEmptySelection
+                                        selectionMode="single"
+                                        selectedKeys={email}
+                                        // @ts-ignore
+                                        onSelectionChange={e=> onUpdateEmail(e, setEmail)}
+                                    >
+                                        <Dropdown.Item key="johnDoe@xyz.com">johnDoe@xyz.com</Dropdown.Item>
+                                        <Dropdown.Item key="JohnAdmin@xyz.com">JohnAdmin@xyz.com</Dropdown.Item>
+                                        <Dropdown.Item key="judeDoe@xyz.com">judeDoe@xyz.com</Dropdown.Item>
+                                        
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </Row>
                             <Spacer y={1.6} />
                             <Row justify="center">
                                 <Input clearable bordered labelPlaceholder="Name" initialValue="1234"
@@ -65,7 +88,7 @@ const Signin = ({ providers }) => {
                                 /></Row>
                             <Spacer y={1} />
                             <Row justify="center">
-                                <Button flat bordered onPress={() => tryLogin(email.current, password.current, callbackUrl)}>
+                                <Button flat bordered onPress={() => tryLogin(email, password.current, callbackUrl)}>
                                     Log in
                                 </Button>
                             </Row>

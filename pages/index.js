@@ -45,10 +45,10 @@ export default function Home({postsData}) {
           Read <Link href="/auth/sign-in">Password Auth</Link>
         </div>
         <div className={utilStyles.title}>
-          Read <Link href="/protect/profile">Protected Profile⚡㊙️</Link>
+          Read <Link href="/protect/profile">Protected Profile (Role: User)⚡㊙️</Link>
         </div>
         <div className={utilStyles.title}>
-          Read <Link href="/protect/user-list">Protected Users⚡㊙️</Link>
+          Read <Link href="/protect/admin/user-list">Protected Users (Role: admin)⚡㊙️</Link>
         </div>
         <div className={utilStyles.title}>
           Read <Link href="/react-hook/first-hook">React Hook</Link>

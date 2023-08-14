@@ -7,14 +7,14 @@ import { useSession, signIn, signOut } from "next-auth/react";
 // const secret = process.env.SECRET_TEXT;
 
 /**
- * deny access page
+ * login page
  * @date 2023-07-02
  * @param {import('next/server').NextRequest} request
  * @param {import('next-auth/jwt').JWT | null} session
  * @returns {Promise<NextResponse<any>>}
  */
 const loginHandler = async function (request, session) {
-  
+
   const url = request.nextUrl.clone();
   const callbackUrl = request.nextUrl.pathname;
   url.pathname = '/auth/sign-in';
@@ -22,6 +22,13 @@ const loginHandler = async function (request, session) {
   return NextResponse.redirect(url);
 }
 
+/**
+ * deny access page
+ * @date 2023-07-02
+ * @param {import('next/server').NextRequest} request
+ * @param {import('next-auth/jwt').JWT | null} session
+ * @returns {Promise<NextResponse<any>>}
+ */
 const pageDenyHandler = async function (request, session) {
   const url = request.nextUrl.clone();
   const callbackUrl = request.nextUrl.pathname;
@@ -59,6 +66,8 @@ export async function middleware(request) {
 
   console.log("middleware .....", request.nextUrl.pathname);
   console.log("middleware ..... session", session);
+
+  // redirect to login if not authenticated
   if (!session) {
     if (request.nextUrl.pathname.startsWith('/protect/')) {
       return loginHandler(request, session);
@@ -67,18 +76,9 @@ export async function middleware(request) {
     }
   }
 
-  try {
-    const accessToken = '' + session?.accessToken;
-    console.log("middleware accessToken ==> ", accessToken);
-    const result = await tk.verifyToken(accessToken);
-    console.log("middleware verifyToken(accessToken) ==> ", result);
-    if(!result) {
-      //await signOut();
-      console.log("middleware verifyToken ====> signout");
-      throw new Error("middleware verifyToken(accessToken) ==> failed ");
-    }
-  } catch (error) {
-    console.log("middleware verifyToken(accessToken) ==> ", error.toString());
+  // redirect to deny-access if without admin role.
+  const role = '' + session?.role;
+  if (role !== 'admin' && request.nextUrl.pathname.includes('/protect/admin/')) {
     if (request.nextUrl.pathname.startsWith('/protect/')) {
       return pageDenyHandler(request, session);
     } else if (request.nextUrl.pathname.startsWith('/api/protect/')) {
@@ -87,8 +87,8 @@ export async function middleware(request) {
   }
 
   return NextResponse.next();
+  
 }
-
 // Only Matching Paths will apply the rule
 export const config = {
   matcher: ['/protect/:path*', '/api/protect/:path*']

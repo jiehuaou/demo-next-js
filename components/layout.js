@@ -74,6 +74,13 @@ const SignInOut = function ({ session }) {
 
 
 
+/**
+ * Renders the layout component.
+ * @param {Object} args - The child components to be rendered.
+ * @param {Object} args.children - The child components to be rendered.
+ * @param {boolean} args.home - Indicates if the layout is the home page.
+ * @return {JSX.Element} The rendered layout component.
+ */
 export default function Layout({ children, home }) {
 
   const { data: session, status } = useSession();

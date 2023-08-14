@@ -52,7 +52,7 @@ export default function Profile() {
                             </Badge>
                         </Grid>
                         <Grid>
-                            <Button bordered flat onPress={signOut}>
+                            <Button size={'sm'} color="primary" onPress={signOut}>
                                 Logout
                             </Button>
                         </Grid>

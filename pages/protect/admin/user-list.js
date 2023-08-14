@@ -1,10 +1,10 @@
 //@ts-check
-import Layout from "../../components/layout";
+import Layout from "../../../components/layout";
 import Head from 'next/head';
 import { Card, Grid, Text, Badge, Button, Loading, Table } from "@nextui-org/react";
 import { useSession, signOut } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-import UserListComponent from "../../components/UserListComponent";
+import UserListComponent from "../../../components/UserListComponent";
 
 const iconColor = 'secondary';
 
@@ -23,10 +23,16 @@ const fetcherExternalApi = async (cb, session)=>{
         const data = await fetch('/api/java/fetch-external-users', { 
             headers: { Authorization: 'Bearer ' + session?.user?.accessToken??'not-found' }, 
         });
-        const json = await data.json();
-        console.log(`[Profile] user data ..........user:`, json);
-        cb(json);
+        if(data.ok){
+            const json = await data.json();
+            console.log(`[user-list] user data ..........user:`, json);
+            cb(json);
+        } else {
+            throw new Error(`${data.status} ${data.statusText}`);
+        }
+        
     } catch (error) {
+        console.log("[user-list] fetcherExternalApi error: ", error);
         cb([]);
     }
     

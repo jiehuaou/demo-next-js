@@ -24,9 +24,9 @@ export default async function handler(req, res) {
             return;
         }
 
-        const duration = 20;
+        const duration = parseInt(process.env.EXPIRED_SECOND || '3000');
         
-        user.tokenExpireAt = Math.floor(Date.now() / 1000) + duration * 60;
+        user.tokenExpireAt = Math.floor(Date.now() / 1000) + duration;
         user.accessToken = await tk.createToken(user, duration);
 
         res.status(200).json(user);
