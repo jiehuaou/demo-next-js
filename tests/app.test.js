@@ -3,6 +3,7 @@ import { assert, expect } from 'chai';  // Using Assert style
 // const expect = require('chai').expect;
 
 import tk from "../data/access-token.js";
+import * as jose from 'jose';
 
 describe('test token module', async () => {
     const user = {
@@ -27,17 +28,27 @@ describe('test token module', async () => {
 
 
     it('test to verify token in mal-formed', async () => {
-        const result = await tk.verifyToken('anything wrong');
+        const result = await tk.verifyToken('anything wrong'
+            , (e)=>{
+                expect(e).to.be.instanceOf(jose.errors.JWSInvalid);
+            });
         assert.isNull(result);
 
     });
 
     it('test to verify token in expired', async () => {
-        const result = await tk.verifyToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjEyMzQ1NjU0fQ.9LfNVeBASKOqPYRwYVgEVqfgbj7AMxK-bV0Lu7IiHow');
+        const result = await tk.verifyToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjEyMzQ1NjU0fQ.9LfNVeBASKOqPYRwYVgEVqfgbj7AMxK-bV0Lu7IiHow'
+            , (e)=>{
+                expect(e).to.be.instanceOf(jose.errors.JWTExpired);
+            });
         assert.isNull(result);
     });
 
-    it('Does not do much!', () => {
-        expect(true).to.equal(true);
+    it('test to verify token in different key', async () => {
+        const result = await tk.verifyToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+            , (e)=>{
+                expect(e).to.be.instanceOf(jose.errors.JWSSignatureVerificationFailed);
+            });
+        assert.isNull(result);
     });
 });

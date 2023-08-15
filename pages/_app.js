@@ -9,8 +9,11 @@ export default function App({ Component, pageProps}) {
   console.log("---------------app start----------------------");
   // return <Component {...pageProps} />;
 
+  /**
+   * session refetch on Interval of 10 seconds, force session to be checked expired.
+   */
   return (
-    <SessionProvider session={pageProps.session}>
+    <SessionProvider session={pageProps.session} refetchInterval={10}>
       <NextUIProvider>
         <ThemeProvider>
           <Component {...pageProps} />

@@ -37,18 +37,22 @@ const createToken = async function(user, durationSeconds = 180, issuedAt = 0) {
 
 
 /**
- * verify a token.
+ * Verify a token.
  *
- * @param {string} token
- * @return {Promise<JWTVerifyResult>} 
+ * @param {string} token - The token to verify.
+ * @param {function} onError - (Optional) Callback function to handle errors.
+ * @returns {Promise<JWTVerifyResult>} - A promise that resolves to the verification result.
  */
-const verifyToken = async function(token) {
-    // const secret = process.env.SECRET_TEXT;
+const verifyToken = async function(token, onError = (err) => {}) {
     try {
+        // const secret = process.env.SECRET_TEXT;
         const result = await jwtVerify(token, new TextEncoder().encode(secret));
         return result;
     } catch (error) {
         console.log("[verifyToken error] ==> ", error.toString());
+        if(onError) {
+            onError(error);
+        }
     }
     return null;
 }

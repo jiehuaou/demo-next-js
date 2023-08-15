@@ -9,12 +9,17 @@ const getCounter = () => {
     return ++counter;
 };
 
-async function handler(req, secret) {
-  // if using `NEXTAUTH_SECRET` env variable, we detect it, and you won't actually need to `secret`
-  // const token = await getToken({ req })
-  const token = await getToken({ req, secret });
-  console.log("JSON Web Token", token);
-  return token;
+/**
+ * Checks if a token is expired.
+ *
+ * @param {number|any} tokenExpireAt - The expiration time of the token in seconds.
+ * @return {boolean} True if the token is expired, false otherwise.
+ */
+const isTokenExpired = (tokenExpireAt) => {
+  if (!tokenExpireAt) {
+    return false;
+  }
+  return tokenExpireAt < Math.floor(Date.now() / 1000);
 }
 
 /**
@@ -141,10 +146,12 @@ const options = {
      * @returns {Promise<object>}
      */
     async session({ session, token }) {
-      // Send properties to the client, like an access_token from a provider.
-      session.user = token;
+      // kill the sesion if token is expired.
+      if (isTokenExpired(token?.tokenExpireAt)) {
+        throw new Error('token is expired');
+      }
       const counter = getCounter();
-      const session2 = {...session, counter};
+      const session2 = {...session, user: token, counter};
       console.log(`[callbacks] return session .......... session:`, session2);
       return session2;
     },
