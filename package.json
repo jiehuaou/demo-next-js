@@ -40,6 +40,10 @@
     "esm": "^3.2.25",
     "mocha": "^10.2.0"
   },
+  "x-devDep": {
+    "x-@types/react": "18.2.20",
+    "x-typescript": "5.1.6"
+  },
   "babel": {
     "presets": [
       "@babel/preset-env"

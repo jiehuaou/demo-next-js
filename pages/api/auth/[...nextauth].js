@@ -12,7 +12,7 @@ const getCounter = () => {
 /**
  * Checks if a token is expired.
  *
- * @param {number|any} tokenExpireAt - The expiration time of the token in seconds.
+ * @param {number|undefined} tokenExpireAt - The expiration time of the token in seconds.
  * @return {boolean} True if the token is expired, false otherwise.
  */
 const isTokenExpired = (tokenExpireAt) => {
@@ -141,7 +141,7 @@ const options = {
      * 
      * @param {object} args
      * @param {object} args.session - used to stored the token
-     * @param {import("next-auth/jwt").JWT} args.token - from jwt callback
+     * @param {import("next-auth/jwt").JWT & UserExtendedPart} args.token - from jwt callback
      * 
      * @returns {Promise<object>}
      */
