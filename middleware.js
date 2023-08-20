@@ -1,10 +1,10 @@
 //@ts-check
 import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-import tk from "./data/access-token";
-import { useSession, signIn, signOut } from "next-auth/react";
 
-// const secret = process.env.SECRET_TEXT;
+// this file can not import "next-auth/react" since it reference dynamic function 
+// and cause nextjs build failed.
+
 
 /**
  * login page

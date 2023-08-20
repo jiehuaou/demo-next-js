@@ -2,7 +2,11 @@
 
 /**
  * this file is for types definition only.
+ * 
+ * note: this file can not stay in /pages folder, 
+ * because it does not export any react component, and cause nextjs build failed.
  */
+
 
 /**
  * @typedef {object} LoginUser

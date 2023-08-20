@@ -1,6 +1,5 @@
 
 import { Card, Grid, Text, Badge, Button, Loading,Table } from "@nextui-org/react";
-import { useSession, signOut } from "next-auth/react";
 
 /**
  * 

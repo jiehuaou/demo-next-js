@@ -1,4 +1,8 @@
 
+/**
+ * define global types which are used in other files without importing.
+ */
+
 declare global {
     interface SessionEx {
         email: string;
