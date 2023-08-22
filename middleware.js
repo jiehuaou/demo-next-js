@@ -1,10 +1,11 @@
 //@ts-check
 import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-
+import LoggerFactory from './lib/logger';
 // this file can not import "next-auth/react" since it reference dynamic function 
 // and cause nextjs build failed.
 
+const logger = LoggerFactory(process.env.LOG_MIDDLEWARE);
 
 /**
  * login page
@@ -64,8 +65,8 @@ export async function middleware(request) {
 
   const session = await getToken({ req: request, secret: process.env.SECRET_TEXT });
 
-  console.log("middleware .....", request.nextUrl.pathname);
-  console.log("middleware ..... session", session);
+  logger("middleware .....", request.nextUrl.pathname);
+  logger("middleware ..... session", session);
 
   // redirect to login if not authenticated
   if (!session) {

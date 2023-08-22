@@ -13,12 +13,6 @@
  * @property {string} id
  * @property {string} name
  * @property {string} email
- * 
- * @typedef {object} UserExtendedPart
- * @property {string} [role]
- * @property {string} [accessToken]
- * @property {string} [refreshToken]
- * @property {number} [tokenExpireAt] 
  */
 
 /**

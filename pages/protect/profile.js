@@ -46,7 +46,7 @@ const ProfileBody = ({session, status}) => {
 export default function Profile() {
 
     const { data: session, status } = useSession();
-    console.log(`[Profile] session [${status}]..........user:`, session?.user);
+    //console.log(`[Profile] session [${status}]..........user:`, session?.user);
     useAuth(status);
 
     // if(status!=='authenticated') {

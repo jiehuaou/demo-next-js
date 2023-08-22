@@ -2,7 +2,7 @@
 import { assert, expect } from 'chai';  // Using Assert style
 import hello from '../www/my-lib';
 
-describe('hello', () => {
+describe('test hello lib', () => {
     it('keep the email property of params', () => {
 
         const params = {

@@ -1,7 +1,7 @@
 //@ts-check
 import Layout from "../../../components/layout";
 import Head from 'next/head';
-import { Card, Grid, Text, Badge, Button, Loading, Table } from "@nextui-org/react";
+import { Card, Grid, Text, Badge, Button, Loading } from "@nextui-org/react";
 import { useSession, signOut } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import UserListComponent from "../../../components/UserListComponent";
@@ -65,7 +65,7 @@ export default function UserListPage() {
     const [userData, setUserData] = useState();
     const [extUserData, setExtUserData] = useState();
 
-    console.log(`[Profile] session [${status}]..........user:`, session);
+    //console.log(`[Profile] session [${status}]..........user:`, session);
 
     useAuth(status);
 
@@ -77,7 +77,7 @@ export default function UserListPage() {
     }, [status])
 
     if(status!=='authenticated') {
-        return <Loading type="points" size='sm' />
+        return <div>...</div>
     }
 
     return (
@@ -90,7 +90,7 @@ export default function UserListPage() {
                 <Card.Header>
                     <Text h3>User List</Text>
                 </Card.Header>
-                <Card.Divider />
+                {/* <Card.Divider></Card.Divider> */}
                 <Card.Body>
                     <Text>This is protected resource, only login user can access this page.</Text>
                     <Grid.Container gap={1}>

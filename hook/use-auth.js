@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { useSession } from "next-auth/react";
+
 
 const buildLoginUrl = (path, callbackUrl) => {
     const params = new URLSearchParams();
@@ -14,9 +13,9 @@ const buildLoginUrl = (path, callbackUrl) => {
  * @param {string} status - The authentication status of the user.
  */
 const useAuth = (status) => {
-    
+    const router = useRouter();
     if (status === 'unauthenticated') {
-        const router = useRouter();
+        
         const callbackUrl = router.pathname;
         const url = buildLoginUrl('/auth/sign-in', callbackUrl);
         console.log(`[useAuth] redirect to ${url}`);

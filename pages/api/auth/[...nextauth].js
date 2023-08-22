@@ -2,7 +2,11 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials";
-import { getToken } from "next-auth/jwt"
+import LoggerFactory from "../../../lib/logger";
+
+const jwtLogger = LoggerFactory(process.env.LOG_JWT);
+const authLogger = LoggerFactory(process.env.LOG_AUTHORIZE);
+const sessionLogger = LoggerFactory(process.env.LOG_SESSION);
 
 let counter = 0;
 const getCounter = () => {  
@@ -26,7 +30,7 @@ const isTokenExpired = (tokenExpireAt) => {
  * use jsDoc to declare type extending
  * 
  * 
- * @typedef {import("next-auth").User & import("../../../pages/types").UserExtendedPart} RoleUser
+ * @typedef {import("next-auth").User & UserExtendedPart} RoleUser
  * 
  */
 
@@ -71,7 +75,7 @@ const options = {
        */
       async authorize(credentials, req) {
         const { email, password } = credentials;
-        console.log(`try [authorize] login .......... ${email} / ${password}`);
+        authLogger(`try [authorize] login .......... ${email} / ${password}`);
         // mock to call the back-end java back-end
         const res = await fetch("http://localhost:3000/api/login-psw", {
           method: "POST",
@@ -85,7 +89,7 @@ const options = {
         });
         const user = await res.json();
         if (res.ok && user) {
-          console.log(`[authorize] return user ..........user:`, user);
+          authLogger(`[authorize] return user ..........user:`, user);
           return user;
         } else {
           return null;
@@ -98,7 +102,9 @@ const options = {
 
 
     /**
-     * this callback merge （user, account ）into token
+     * when user signIn or refetchInterval event, this callback will be called.
+     * within this callback, we can merge （user, account ）into token at SignIn
+     * or we can refresh JWT token at RefetchInterval event.
      * 
      * @param {object} args
      * 
@@ -109,6 +115,8 @@ const options = {
      * @returns {Promise<object>}
      */
     async jwt({ token, user, account }) {
+
+      jwtLogger(`[jwt] >user:`, user, ' >account: ', account, ' >token: ', token);
       
       // "user" is from authorize(), which may provide jwt by external service.
       // "account" provide meta-data as well as access_token (jwt) by Build-in provider.
@@ -152,7 +160,7 @@ const options = {
       }
       const counter = getCounter();
       const session2 = {...session, user: token, counter};
-      console.log(`[callbacks] return session .......... session:`, session2);
+      sessionLogger(`[callbacks] return session .......... session:`, session2);
       return session2;
     },
   },
