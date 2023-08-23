@@ -1,10 +1,11 @@
 //@ts-check
+/// <reference path="./global.d.ts" />
 
 /**
- * this file is for types definition only.
+ * this file is for Jsdoc definition only.
  * 
  * note: this file can not stay in /pages folder, 
- * because it does not export any react component, and cause nextjs build failed.
+ * because it does not export any react component, and will cause nextjs build failed.
  */
 
 

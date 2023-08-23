@@ -1,6 +1,6 @@
 //@ts-check
 import { assert, expect } from 'chai';  // Using Assert style
-import hello from '../www/my-lib';
+import {hello, helloFunction} from '../www/my-lib';
 
 describe('test hello lib', () => {
     it('keep the email property of params', () => {
@@ -28,4 +28,16 @@ describe('test hello lib', () => {
 
         assert.strictEqual(result.extra, 'extra');
     });
+
+    it('test hello2 of Other.myFunction type', () => {
+        const params = {
+            email: 'test@example.com',
+            age: 30,
+        };
+
+        const result = helloFunction(params);
+
+        assert.strictEqual(result, 'hello2');
+    });
+
 });
