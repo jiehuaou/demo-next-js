@@ -1,9 +1,14 @@
 // import jwt from "jsonwebtoken";
-import {jwtVerify, SignJWT, JWTPayload, JWTVerifyResult} from 'jose';
+import {jwtVerify, SignJWT, } from 'jose';
 
 const secret = process.env.SECRET_TEXT;
 
 const fakeToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiZW1haWwiOiJoZWxsb0Bjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTkxODIzOTAyMiwiZXhwIjoxOTE4MjM5MDIyfQ.X24Qljc7h2FdlNQY2kYm7SqNTH1YxiucwIJzhe3FAc4";
+
+/**
+ * @typedef {import('jose').JWTVerifyResult} JWTVerifyResult
+ * @typedef {import('jose').JWTPayload} JWTPayload
+ */
 
 /**
  * Creates a token for the given user.
@@ -41,14 +46,14 @@ const createToken = async function(user, durationSeconds = 180, issuedAt = 0) {
  *
  * @param {string} token - The token to verify.
  * @param {function} onError - (Optional) Callback function to handle errors.
- * @returns {Promise<JWTVerifyResult>} - A promise that resolves to the verification result.
+ * @returns {Promise<JWTVerifyResult|null>} - A promise that resolves to the verification result.
  */
-const verifyToken = async function(token, onError = (err) => {}) {
+const verifyToken = async function(token, onError = () => {}) {
     try {
         // const secret = process.env.SECRET_TEXT;
         const result = await jwtVerify(token, new TextEncoder().encode(secret));
         return result;
-    } catch (error) {
+    } catch (/** @type {any} */ error) {
         console.log("[verifyToken error] ==> ", error.toString());
         if(onError) {
             onError(error);

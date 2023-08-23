@@ -10,8 +10,8 @@ declare module Other {
   };
 
   export interface MyInterface {
-    age: number;
     email: string;
+    age: number;
   }
 
   export function greetFunction(param: MyInterface): string;

@@ -32,6 +32,10 @@ const isTokenExpired = (tokenExpireAt) => {
  * 
  * @typedef {import("next-auth").User & UserExtendedPart} RoleUser
  * 
+ * @typedef {import("next-auth/jwt").JWT} NextAuthJWT
+ * 
+ * @typedef {import("next-auth").Session} NextAuthSession
+ * 
  */
 
 
@@ -112,7 +116,7 @@ const options = {
      * @param {RoleUser} args.user 
      * @param {import("next-auth").Account | null} args.account 
      * 
-     * @returns {Promise<object>}
+     * @returns {Promise<NextAuthJWT>} 
      */
     async jwt({ token, user, account }) {
 
@@ -148,10 +152,10 @@ const options = {
      * this callback is where we specify what will be available on the client with useSession().
      * 
      * @param {object} args
-     * @param {object} args.session - used to stored the token
+     * @param {NextAuthSession} args.session - used to stored the token
      * @param {import("next-auth/jwt").JWT & UserExtendedPart} args.token - from jwt callback
      * 
-     * @returns {Promise<object>}
+     * @returns {Promise<NextAuthSession>}
      */
     async session({ session, token }) {
       // kill the sesion if token is expired.

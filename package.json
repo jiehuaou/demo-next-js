@@ -31,14 +31,17 @@
     "@babel/preset-env": "^7.22.10",
     "@babel/preset-react": "^7.22.5",
     "@babel/register": "^7.22.5",
+    "@types/chai": "^4.3.5",
+    "@types/mocha": "^10.0.1",
     "@types/react": "18.2.20",
-    "typescript": "5.1.6",
+    "@types/uuid": "^9.0.2",
     "chai": "^4.3.7",
     "cross-env": "^7.0.3",
     "cypress": "^12.14.0",
     "env-cmd": "^10.1.0",
     "esm": "^3.2.25",
-    "mocha": "^10.2.0"
+    "mocha": "^10.2.0",
+    "typescript": "5.1.6"
   },
   "babel": {
     "presets": [

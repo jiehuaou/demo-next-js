@@ -1,6 +1,6 @@
 //@ts-check
-///<reference path="../types/other.d.ts" />
-///<reference path="../types/global.d.ts" />
+//reference path="../types/other.d.ts" 
+//reference path="../types/global.d.ts" 
 
 /**
  * demo how to reference types from d.ts file

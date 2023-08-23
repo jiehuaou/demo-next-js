@@ -16,6 +16,7 @@ declare global {
         accessToken?: string;
         refreshToken?: string;
         tokenExpireAt?: number;
+        [key: string]: any
     }
 
 }

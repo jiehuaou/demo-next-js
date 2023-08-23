@@ -1,5 +1,4 @@
 //@ts-check
-import { use } from "chai";
 import tk from "../../data/access-token";
 import { validateUser } from "../../data/user";
 

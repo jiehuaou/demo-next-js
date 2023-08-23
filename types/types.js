@@ -22,7 +22,7 @@
  */
 
 /**
- * @typedef {LoginUser & UserExtendedPart } ExtendedUser
+ * @typedef {LoginUser & UserExtendedPart} ExtendedUser
  */
 
 /**

@@ -29,7 +29,7 @@ describe('test token module', async () => {
 
     it('test to verify token in mal-formed', async () => {
         const result = await tk.verifyToken('anything wrong'
-            , (e)=>{
+            , (/** @type {any} */ e)=>{
                 expect(e).to.be.instanceOf(jose.errors.JWSInvalid);
             });
         assert.isNull(result);
