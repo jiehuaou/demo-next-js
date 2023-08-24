@@ -30,7 +30,7 @@ const Users = [
 const validateUser = function (email, password) {
     const email2 = email.trim().toLowerCase();
     const user = Users.find(e => {
-        return e.email.toLowerCase() === email2 && e.password === parseInt(password)
+        return e?.email?.toLowerCase() === email2 && e.password === parseInt(password)
     })
 
     console.log(`[validateUser] ${email}/${password}  .............. `, user);

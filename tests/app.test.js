@@ -20,10 +20,9 @@ describe('test token module', async () => {
     it('test to verify token OK', async () => {
         console.log(token);
         const result = await tk.verifyToken(token);
-        const {payload} = result;
-        const {payload: data} = payload;
-        assert.strictEqual(data.email, user.email);
-
+        const payload = result?.payload;
+        assert.strictEqual(payload.email, user.email);
+        
     });
 
 
@@ -38,7 +37,7 @@ describe('test token module', async () => {
 
     it('test to verify token in expired', async () => {
         const result = await tk.verifyToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjEyMzQ1NjU0fQ.9LfNVeBASKOqPYRwYVgEVqfgbj7AMxK-bV0Lu7IiHow'
-            , (e)=>{
+            , (/** @type {any} */ e)=>{
                 expect(e).to.be.instanceOf(jose.errors.JWTExpired);
             });
         assert.isNull(result);
@@ -46,7 +45,7 @@ describe('test token module', async () => {
 
     it('test to verify token in different key', async () => {
         const result = await tk.verifyToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
-            , (e)=>{
+            , (/** @type {any} */ e)=>{
                 expect(e).to.be.instanceOf(jose.errors.JWSSignatureVerificationFailed);
             });
         assert.isNull(result);
