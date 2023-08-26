@@ -276,3 +276,26 @@ function Comp(){
             </div>)
 }
 ```    
+
+### unit testing with env variable
+
+**".env-cmdrc"** File: define env variable
+```json
+{
+    "dev": {
+        "SECRET_TEXT": "123456",
+        "ENV3": "envtest3"
+    },
+    "production": {
+        "ENV1": "production"
+    }
+}
+```
+
+test cmd with **dev variable**, in package.json
+```json
+{
+  "test": "env-cmd -e dev mocha --require @babel/register tests/*.js ",
+}
+```
+

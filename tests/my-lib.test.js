@@ -1,6 +1,6 @@
 //@ts-check
 import { assert, expect } from 'chai';  // Using Assert style
-import {hello, helloFunction} from '../www/my-lib';
+import { hello, helloFunction, talkEx } from '../www/my-lib';
 
 describe('test hello lib', () => {
     it('keep the email property of params', () => {
@@ -18,6 +18,9 @@ describe('test hello lib', () => {
     });
 
     it('modifies the extra property of params', () => {
+        /**
+         * @type {SessionEx}
+         */
         const params = {
             email: 'test@example.com',
             role: 'user',
@@ -30,6 +33,9 @@ describe('test hello lib', () => {
     });
 
     it('test hello2 of Other.myFunction type', () => {
+        /**
+         * @Type {other.MyInterface}
+         */
         const params = {
             email: 'test@example.com',
             age: 30,
@@ -39,5 +45,39 @@ describe('test hello lib', () => {
 
         assert.strictEqual(result, 'hello2');
     });
+
+    it('test Declaration merging allows you to extend', () => {
+        /**
+         * @type {HelloEx}
+         */
+        const param = {
+            action: 'hello',
+            where: 'china',
+            world: {
+                target: 'Tiger',
+                title: 'Sir',
+            }
+        }
+        const result = talkEx(param);
+        result.world.title = 'Sir';
+        expect(result).to.be.deep.equal(param);
+    })
+
+    it('test function from TS ', () => {
+        /**
+         * @type {HelloEx}
+         */
+        const param = {
+            action: 'hello',
+            where: 'china',
+            world: {
+                target: 'Tiger',
+                title: 'Sir',
+            }
+        }
+        const result = talkEx(param);
+        result.world.title = 'Sir';
+        expect(result).to.be.deep.equal(param);
+    })
 
 });

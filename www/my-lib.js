@@ -2,6 +2,7 @@
 //reference path="../types/other.d.ts" 
 //reference path="../types/global.d.ts" 
 
+
 /**
  * demo how to reference types from d.ts file
  */
@@ -20,7 +21,7 @@ function hello(params) {
 
 /**
  * demo function implementation of Other.greetFunction.
- * @type {Other.greetFunction}
+ * @type {other.greetFunction}
  */
 const helloFunction = (params) => {
     console.log("hello2 ==>", params);
@@ -29,12 +30,29 @@ const helloFunction = (params) => {
 
 /**
  * demo function implementation of Other.otherFunction.
- * @type {Other.otherFunction}
+ * @type {other.otherFunction}
  */
  const helloOther = (params) => {
     console.log("hello2 ==>", params);
     return true;
 }
 
+/**
+ * @type {talk}
+ */
+const talkEx = (params) => {
+    console.log(params);
+    const {action,where, world : {target, title}} = params;
+    const result = {
+        action,
+        where,
+        world: {
+            target,
+            title
+        }
+    };
+    return result;
+}
 
-export {hello, helloFunction, helloOther};
+
+export {hello, helloFunction, helloOther, talkEx};

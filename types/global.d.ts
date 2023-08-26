@@ -19,6 +19,37 @@ declare global {
         [key: string]: any
     }
 
+    interface World {
+        target: string;
+    }
+    interface HelloEx {
+        action: string;
+        world: World;
+    }
+    interface World {
+        title: string;
+    }
+
+    /**
+     * Declaration merging allows you to extend existing interface 
+     * with additional properties as following:
+     *   
+     * interface HelloEx {
+     *      action: string;
+     *      where: string;
+     *      world: {
+     *         target: string;
+     *         title: string;
+     *     }
+     * }
+     * 
+     */
+    interface HelloEx {
+        where: string;
+    }
+
+    function talk (param: HelloEx) : HelloEx ;
+
 }
 
-export {SessionEx, UserExtendedPart };
+export {};
