@@ -1,10 +1,14 @@
 //@ts-check
-//reference path="../types/other.d.ts" 
-//reference path="../types/global.d.ts" 
-
 
 /**
  * demo how to reference types from d.ts file
+ */
+
+/**
+ * @typedef {import("../types/other").MyIdentity} MyIdentity
+ * @typedef {import("../types/other").MyContact} MyContact
+ * @typedef {import("../types/other").greetFunction} greetFunction
+ * @typedef {import("../types/other").contactFunction} contactFunction
  */
 
 /**
@@ -21,20 +25,27 @@ function hello(params) {
 
 /**
  * demo function implementation of Other.greetFunction.
- * @type {other.greetFunction}
+ * @param {MyIdentity} params
+ * @return {MyIdentity}
  */
-const helloFunction = (params) => {
+const helloIdentity = (params) => {
     console.log("hello2 ==>", params);
-    return "hello2"
+    console.log("hello2 token ==>", params.token);
+    const {id, name, token} = params;
+    const result = {id, name, token: token + '*'}
+    return result;
 }
 
 /**
- * demo function implementation of Other.otherFunction.
- * @type {other.otherFunction}
+ * demo function implementation of Other.contactFunction.
+ * @type {contactFunction}
  */
- const helloOther = (params) => {
+ const helloContact = (params) => {
     console.log("hello2 ==>", params);
-    return true;
+    console.log("hello2 mobile ==>", params.mobile);
+    const {mobile, age, email} = params;
+    const result = {age, email, mobile: mobile + '*'};
+    return result;
 }
 
 /**
@@ -55,4 +66,4 @@ const talkEx = (params) => {
 }
 
 
-export {hello, helloFunction, helloOther, talkEx};
+export {hello, helloIdentity, helloContact, talkEx};

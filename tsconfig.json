@@ -104,7 +104,7 @@
     "jsx": "preserve"
   },
   "include": [
-    "types/**/*.ts",
+    "types/**/*.?s",
     "www/**/*.js",
     "pages/api/**/*.js",
     "data/**/*.js",

@@ -1,5 +1,5 @@
 //@ts-check
-/// <reference path="./global.d.ts" />
+//////<reference path="./global.d.ts" />
 
 /**
  * this file is for Jsdoc definition only.
