@@ -1,6 +1,6 @@
 
 /**
- * demo how to use .ts file to declare types for react prject.
+ * demo how to use .ts file to declare types.
  */
 
 
