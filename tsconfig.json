@@ -96,7 +96,7 @@
       "dom.iterable",
       "esnext"
     ],
-    "noEmit": false,
+    "noEmit": true,
     "incremental": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,

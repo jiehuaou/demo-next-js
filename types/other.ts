@@ -4,12 +4,12 @@
  */
 
 
-export interface MyIdentity {
+interface MyIdentity {
   id: number;
   name: string;
 }
 
-export interface MyContact {
+interface MyContact {
   email: string;
   age: number;
 }
@@ -19,7 +19,7 @@ export interface MyContact {
  * @param {MyIdentity} param
  * @return {string}
  */
-export type greetFunction = (param: MyIdentity) => MyIdentity;
+// export type greetFunction = (param: MyIdentity) => MyIdentity;
 
 
 /**
@@ -27,6 +27,6 @@ export type greetFunction = (param: MyIdentity) => MyIdentity;
  * @param {MyContact} param
  * @return {boolean}
  */
- export type contactFunction = (param: MyContact) => MyContact;
+// export type contactFunction = (param: MyContact) => MyContact;
 
-
+export {type MyIdentity,type MyContact };

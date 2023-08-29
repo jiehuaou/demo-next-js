@@ -1,13 +1,13 @@
 //@ts-check
-/// <reference path="../types/other.d.ts"  />
+//// <reference path="../types/other.d.ts"  />
 
 import { assert, expect } from 'chai';  // Using Assert style
 import { hello, helloIdentity, helloContact, talkEx } from '../www/my-lib';
 
 /**
  * @typedef {import("../types/other").MyIdentity} MyIdentity
- * @typedef {import("../types/other").MyContact} MyContact 
- **/
+ * @typedef {import("../types/other").MyContact} MyContact
+ */
 
 describe('test hello lib', () => {
     it('keep the email property of params', () => {
@@ -45,8 +45,7 @@ describe('test hello lib', () => {
         /**
          * @Type {MyIdentity}
          */
-        let params; 
-        
+        let params;
         params = {
             name: 'test@example.com',
             id: 30,
@@ -59,18 +58,11 @@ describe('test hello lib', () => {
     });
 
     it('test hello2 of contactFunction type', () => {
+               
         /**
          * @Type {MyContact}
          */
-        const data = {
-
-        }
-        console.log(data);
-        
-        /**
-         * @Type {MyContact}
-         */
-        const params = {
+        let params = {
             email: 'test@example.com',
             age: 30,
             mobile: '11188889999'

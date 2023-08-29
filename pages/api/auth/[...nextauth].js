@@ -163,9 +163,11 @@ const options = {
         throw new Error('token is expired');
       }
       const counter = getCounter();
-      const session2 = {...session, user: token, counter};
-      sessionLogger(`[callbacks] return session .......... session:`, session2);
-      return session2;
+      //const session2 = {...session, user: token, counter};
+      session.counter = counter;
+      session.user = token;
+      sessionLogger(`[callbacks] return session .......... session:`, session);
+      return session;
     },
   },
   pages: {

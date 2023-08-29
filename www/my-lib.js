@@ -1,14 +1,22 @@
 //@ts-check
+///  <reference path="../types/other.ts"  />
+//// <reference path="../types/other2.d.ts"  />
 
 /**
  * demo how to reference types from d.ts file
  */
 
+//  * @typedef {import("../types/other").greetFunction} greetFunction
+//  * @typedef {import("../types/other").contactFunction} contactFunction
+
+// /**
+//  * @typedef {import("../types/other").MyIdentity & import("../types/other2").MyIdentity} MyIdentity
+//  * @typedef {import("../types/other").MyContact & import("../types/other2").MyContact} MyContact
+//  */
+
 /**
  * @typedef {import("../types/other").MyIdentity} MyIdentity
  * @typedef {import("../types/other").MyContact} MyContact
- * @typedef {import("../types/other").greetFunction} greetFunction
- * @typedef {import("../types/other").contactFunction} contactFunction
  */
 
 /**
@@ -38,7 +46,8 @@ const helloIdentity = (params) => {
 
 /**
  * demo function implementation of Other.contactFunction.
- * @type {contactFunction}
+ * @param {MyContact} params
+ * @return {MyContact}
  */
  const helloContact = (params) => {
     console.log("hello2 ==>", params);

@@ -31,7 +31,7 @@ declare global {
     }
 
     /**
-     * Declaration merging allows you to extend existing interface 
+     * "Declaration merging" allows you to extend existing interface 
      * with additional properties as following:
      *   
      * interface HelloEx {
@@ -50,6 +50,12 @@ declare global {
 
     function talk (param: HelloEx) : HelloEx ;
 
+}
+
+declare module 'next-auth' {
+    interface Session {
+        counter?: number;  // extend 'next-auth'.Session with new custom Property ‘counter’.
+    }
 }
 
 export {};
