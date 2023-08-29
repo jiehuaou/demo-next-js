@@ -52,9 +52,11 @@ declare global {
 
 }
 
+
+// extend 'next-auth'.Session with new custom Property ‘counter’.
 declare module 'next-auth' {
     interface Session {
-        counter?: number;  // extend 'next-auth'.Session with new custom Property ‘counter’.
+        counter?: number;  
     }
 }
 
