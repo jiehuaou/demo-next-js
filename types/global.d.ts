@@ -1,3 +1,4 @@
+import { type MyContact, type MyIdentity, type greetFunction } from "./other";
 
 /**
  * define global types which are used in other files without importing.
@@ -50,6 +51,12 @@ declare global {
 
     function talk (param: HelloEx) : HelloEx ;
 
+    type MyIdentity2 = MyIdentity; 
+
+    type MyContact2 = MyContact;
+
+    type greetFunc = greetFunction;
+
 }
 
 
@@ -59,5 +66,7 @@ declare module 'next-auth' {
         counter?: number;  
     }
 }
+
+
 
 export {};

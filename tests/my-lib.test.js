@@ -5,13 +5,14 @@ import { assert, expect } from 'chai';  // Using Assert style
 import { hello, helloIdentity, helloContact, talkEx } from '../www/my-lib';
 
 /**
- * @typedef {import("../types/other").MyIdentity} MyIdentity
- * @typedef {import("../types/other").MyContact} MyContact
+ * @typedef {import("../types/other").MyIdentity} MyIdentity000
+ * @typedef {import("../types/other").MyContact}  MyContact000
  */
 
 describe('test hello lib', () => {
     it('keep the email property of params', () => {
         /**
+         * this type is from global
          * @type {SessionEx}
          */
         const params = {
@@ -28,6 +29,7 @@ describe('test hello lib', () => {
 
     it('modifies the extra property of params', () => {
         /**
+         * this type is from global
          * @type {SessionEx}
          */
         const params = {
@@ -43,10 +45,10 @@ describe('test hello lib', () => {
 
     it('test hello2 of greetFunction type', () => {
         /**
-         * @Type {MyIdentity}
+         * this type is from import
+         * @type {MyIdentity000}
          */
-        let params;
-        params = {
+        let params = {
             name: 'test@example.com',
             id: 30,
             token: '66666666666'
@@ -60,7 +62,8 @@ describe('test hello lib', () => {
     it('test hello2 of contactFunction type', () => {
                
         /**
-         * @Type {MyContact}
+         * this type is from global
+         * @type {MyContact2}
          */
         let params = {
             email: 'test@example.com',
@@ -69,7 +72,6 @@ describe('test hello lib', () => {
         };
 
         const result = helloContact(params);
-        
         assert.strictEqual(result.mobile, '11188889999*');
     });
 

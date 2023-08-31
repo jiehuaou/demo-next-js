@@ -6,12 +6,12 @@
  * existing interface with additional properties.
  */
 
-declare module './other' {
+ declare module './other' {
 
     interface MyIdentity {
         
         /**
-         * user token 888-999-1111
+         * security token \d{3}-\d{3}-\d{4}
          */
         token: string;
     }
@@ -19,9 +19,9 @@ declare module './other' {
     interface MyContact {
         
         /**
-         * user mobile 123-{6}8
+         * user mobile 123-\d{6}
          */
-        mobile: string;  // 
+        mobile: string;  // 123-888888
     }
 }
 

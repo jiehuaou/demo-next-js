@@ -19,7 +19,7 @@ interface MyContact {
  * @param {MyIdentity} param
  * @return {string}
  */
-// export type greetFunction = (param: MyIdentity) => MyIdentity;
+export type greetFunction = (param: MyIdentity) => MyIdentity;
 
 
 /**
