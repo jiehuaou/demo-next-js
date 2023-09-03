@@ -21,6 +21,16 @@ declare module "foo-lib" {
         token: string;
     }
 
+    /**
+     * demo to add custom property
+     */
+    export interface FooRequest {
+        /**
+         * new extra field
+         */
+        extra?: string;
+    }
+
 
 }
 //export = {}

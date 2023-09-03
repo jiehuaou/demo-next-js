@@ -277,7 +277,7 @@ function Comp(){
 }
 ```    
 
-### unit testing with env variable
+## unit testing with env variable
 
 **".env-cmdrc"** File: define env variable
 ```json
@@ -299,3 +299,162 @@ test cmd with **dev variable**, in package.json
 }
 ```
 
+## TypeScript: declare named module
+```ts
+// file: foo-module.d.ts
+declare module "foo-lib" {
+    export interface FooRequest {
+        id: number;
+        name: string;
+    }
+}
+```
+
+## TypeScript: extending named module
+
+adding new property to existing interface
+
+```ts
+// file: foo-module2.d.ts
+declare module "foo-lib" {
+    export interface FooRequest {
+        extra?: string;
+    }
+}
+```
+
+## JavaScript: reference named module Type from javascript
+
+Jsdoc import types from module via module-name.
+
+```js
+// file: consumer.js
+/**
+ * @typedef {import("foo-lib").FooRequest} FooRequest
+ */
+
+
+/**
+ * @param{FooRequest} request
+ * @return{void}
+ */
+function query(request) {
+  console.log(request);
+}
+
+/**
+ * @type{FooRequest}
+ */ 
+const data = {id:123, name:'abc', extra:'hello'}
+
+query(data); // call function
+```
+
+## TypeScript: declare module without name
+
+Actually the file name becomes the module name.
+
+```ts
+// file: other1.ts
+interface MyIdentity {
+  id: number;
+  name: string;
+}
+export {type MyIdentity};
+```
+
+## TypeScript: extending module without name
+```ts
+// file: other2.ts
+declare module './other' {
+    interface MyIdentity {
+        token: string;
+    }
+ }
+export {}
+```
+## JavaScript: reference non-module Type from javascript
+```js
+/**
+ * @typedef {import("../types/other1").MyIdentity} MyIdentity
+ */
+
+/**
+ * @type {MyIdentity}
+ */
+let params = {
+      name: 'test@example.com',
+      id: 30,
+      token: '66666666666'
+  };
+```
+
+## TypeScript：make local types globally accessible
+```ts
+// file: global.d.ts
+import { type MyIdentity } from "./other1";
+declare global {
+  type MyIdentity2 = MyIdentity; 
+}
+
+export {};
+```
+Now **MyIdentity2** is globally accessible without explicitly import.
+
+## TypeScript: declare namespace
+```ts
+// file: shape-namespace.d.ts
+declare namespace myshape {
+  interface Point {
+    x: number;
+    y: number;
+  }
+}
+export = myshape;
+```
+
+## TypeScript: extending namespace
+```ts
+// file: shape-namespace2.d.ts
+import { Point } from "./shape-namespace";
+
+declare namespace myshape {
+  interface Rectangle {
+    start: Point;
+    end: Point;
+  }
+}
+export = myshape;
+```
+
+## TypeScript: jsdoc import namespace types
+```js
+// file: consume.js
+/**
+ * @typedef {import('../types/shape-namespace').Point} Point
+ * @typedef {import('../types/shape-namespace2').Rectangle} Rectangle
+ */
+```
+importing need to specify different file respectively !
+
+## TypeScript: module vs namespace
+
+TypeScript does **not recommend** to use namespace any more.
+
+Actually module is simpler to import than namespace.
+
+```js
+/**
+ * import module is relative simple
+ * 
+ * @typedef {import("foo-lib").FooRequest} FooRequest
+ */
+
+/**
+ * import namespace is verbose, which looks not good.
+ * 
+ * @typedef {import('../types/shape-namespace').Point} Point
+ * @typedef {import('../types/shape-namespace2').Rectangle} Rectangle
+ */
+
+```

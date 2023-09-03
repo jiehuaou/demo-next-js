@@ -107,7 +107,8 @@ describe('jsdoc test', () => {
          */
         const request = {
             id: 123,
-            name: 'hello'
+            name: 'hello',
+            extra: 'extra-1'
         }
 
         const result = fooQuery(request);
