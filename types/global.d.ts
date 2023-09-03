@@ -5,6 +5,20 @@ import { type MyContact, type MyIdentity, type greetFunction } from "./other";
  */
 
 declare global {
+
+    /**
+     * generic Error Type
+     */
+    interface ErrorType {
+        /**
+         * get error message
+         */
+        toString(): string;
+    }
+
+    /**
+     * Fake SessionEx
+     */
     interface SessionEx {
         email: string;
         role: string;
@@ -51,22 +65,24 @@ declare global {
 
     function talk (param: HelloEx) : HelloEx ;
 
+    
+    // -----------------------------------
+    // make local types globally accessible
+
     type MyIdentity2 = MyIdentity; 
-
     type MyContact2 = MyContact;
-
     type greetFunc = greetFunction;
+    // -----------------------------------
 
 }
 
 
 // extend 'next-auth'.Session with new custom Property ‘counter’.
-declare module 'next-auth' {
+declare module "next-auth" {
     interface Session {
         counter?: number;  
     }
 }
-
 
 
 export {};

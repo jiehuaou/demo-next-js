@@ -3,7 +3,8 @@
   "type-do-not-use": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "tsc --checkjs && next build",
+    "check": "tsc --checkjs",
     "start": "next start",
     "cypress": "cypress open",
     "test": "env-cmd -e dev mocha --require @babel/register tests/*.js ",

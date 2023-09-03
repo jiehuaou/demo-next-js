@@ -53,7 +53,9 @@ const verifyToken = async function(token, onError = () => {}) {
         const result = await jwtVerify(token, new TextEncoder().encode(secret));
         return result?.payload??null;
     } catch (/** @type {any} */ error) {
-        console.log("[verifyToken error] ==> ", error.toString());
+        // cast to generic Error
+        const err = /** @type {ErrorType} */ (error);
+        console.log("[verifyToken error] ==> ", err.toString());
         if(onError) {
             onError(error);
         }

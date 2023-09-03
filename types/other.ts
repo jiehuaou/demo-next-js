@@ -1,6 +1,6 @@
 
 /**
- * demo how to use .ts file to declare types.
+ * demo how to use .ts file to declare types without module or namespace.
  */
 
 

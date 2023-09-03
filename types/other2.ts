@@ -1,4 +1,3 @@
-// import { MyContact,  MyIdentity } from "./other";
 
 /**
  * 
