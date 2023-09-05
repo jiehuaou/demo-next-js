@@ -12,18 +12,25 @@ import { assert, expect } from 'chai';  // Using Assert style
 /**
  * import namespace is verbose, which looks not good.
  * 
- * @typedef {import('../types/shape-namespace').Point} Point
- * @typedef {import('../types/shape-namespace').Circle} Circle
- * @typedef {import('../types/shape-namespace').getArea} GetCircleArea
+ * @typedef {import('@ts/shape-namespace').Point} Point
+ * @typedef {import('@ts/shape-namespace').Circle} Circle
+ * @typedef {import('@ts/shape-namespace').getArea} GetCircleArea
  * 
- * @typedef {import('../types/shape-namespace2').Rectangle} Rectangle
- * @typedef {import('../types/shape-namespace2').getArea} GetRectArea
+ * @typedef {import('@ts/shape-namespace2').Rectangle} Rectangle
+ * @typedef {import('@ts/shape-namespace2').getArea} GetRectArea
  */
 
 /**
  * @type{query}
  */
 const fooQuery = (request) => {
+    if(typeof request === 'string') {
+        return  {
+            id: 0,
+            expired: Math.floor(new Date().getTime() / 1000) + 1000,
+            token: 'test-' + request
+        }
+    }
     /**
      * @type{FooResponse}
      */
@@ -117,12 +124,24 @@ describe('jsdoc test', () => {
         expect(result.token).to.be.equal(`test-${request.name}`);
     })
 
+    it('jsdoc import foo-module 2 test', () => {
+        /**
+         * @type{string}
+         */
+        const request = 'hello';
+
+        const result = fooQuery(request);
+        
+        expect(result.id).to.be.equal(0);
+        expect(result.token).to.be.equal(`test-${request}`);
+    })
+
     it('jsdoc import namespace myshape 1 test', () => {
         /**
          * @type{Circle}
          */
         const request = {
-            center: {x:2, y:3},
+            center: {x:2, y:3},  // this circle does not have "z" property.
             radius: 10 
         }
 
@@ -135,7 +154,7 @@ describe('jsdoc test', () => {
          * @type{Rectangle}
          */
         const request = {
-            start: {x:2, y:3},
+            start: {x:2, y:3, z:4},  // this circle does have "z" property.
             end: {x:4, y:6}, 
         }
 

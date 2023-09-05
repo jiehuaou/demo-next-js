@@ -6,7 +6,7 @@
 declare namespace myshape {
 
   /**
-   * location Point
+   * location Point(x,y)
    */
   interface Point {
     x: number;

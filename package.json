@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "tsc --checkjs && env-cmd -e dev mocha --require @babel/register tests/*.js && next build",
-    "check": "tsc --checkjs",
+    "chk": "tsc --checkjs",
     "start": "next start",
     "cypress": "cypress open",
     "test": "env-cmd -e dev mocha --require @babel/register tests/*.js ",

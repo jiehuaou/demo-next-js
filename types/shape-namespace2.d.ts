@@ -1,4 +1,5 @@
-import { Point } from "./shape-namespace";
+/////<reference path="./shape-namespace.d.ts" />
+import { Point as Pointxy } from "./shape-namespace";
 
 /**
  * "extending namespace" need to import type if you want to use it.
@@ -10,10 +11,23 @@ import { Point } from "./shape-namespace";
 
 declare namespace myshape {
 
+  interface Z {
+    /**
+     * z coordinate
+     */
+    z?: number;
+  }
+
+  /**
+   * location Point(x,y,z)
+   */
+  export type Point = Pointxy & Z;
+
+  
   /**
    * Rectangle shape with start and end.
    */
-  interface Rectangle {
+   export interface Rectangle {
     start: Point;
     end: Point;
   }
@@ -21,9 +35,15 @@ declare namespace myshape {
   /**
    * compute Area of Rectangle
    */
-  function getArea(area: Rectangle): number;
+   export function getArea(area: Rectangle): number;
 
 
+}
+
+const data : myshape.Point = {
+  x: 1,
+  y: 2,
+  z: 3
 }
 
 export = myshape;

@@ -5,8 +5,8 @@ import { assert, expect } from 'chai';  // Using Assert style
 import { hello, helloIdentity, helloContact, talkEx } from '../www/my-lib';
 
 /**
- * @typedef {import("../types/other").MyIdentity} MyIdentity000
- * @typedef {import("../types/other").MyContact}  MyContact000
+ * @typedef {import("@ts/other").MyIdentity} MyIdentity000
+ * @typedef {import("@ts/other").MyContact}  MyContact000
  */
 
 describe('test hello lib', () => {

@@ -9,6 +9,9 @@
 declare module "foo-lib" {
 
     export interface FooRequest {
+        /**
+         * request id
+         */
         id: number;
         name: string;
     }
@@ -20,11 +23,30 @@ declare module "foo-lib" {
     // }
 
     /**
-     * create token for the given user
+     * create token for the given user, function merge
+     * (request: FooRequest | string) : FooResponse;
      */
-    export function query(request: FooRequest) : FooResponse;
+    export function query(request: FooRequest): FooResponse;
+    export function query(request: string): FooResponse;
 
-    //export = query;
+    // export interface query {
+    //     (request: FooRequest) : FooResponse;
+    //     (request: string) :FooResponse;
+    // }
+
+    const data: FooRequest = {
+        id: 1,
+        name: "hello",
+        extra: "extra" // this field is defined in different file.
+    }
 
 }
+
+
+let data : import("foo-lib").FooRequest = {
+    id: 1,
+    name: "hello",
+    extra: "extra" // this field is defined in different file.
+}
+
 //export = {}
