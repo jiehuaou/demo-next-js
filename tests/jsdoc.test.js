@@ -2,7 +2,7 @@ import { assert, expect } from 'chai';  // Using Assert style
 
 
 /**
- * import module is relative simple
+ * import module is relative simple,  use only one logical name even from different files.
  * 
  * @typedef {import("foo-lib").FooRequest} FooRequest
  * @typedef {import("foo-lib").FooResponse} FooResponse
@@ -10,7 +10,7 @@ import { assert, expect } from 'chai';  // Using Assert style
  */
 
 /**
- * import namespace is verbose, which looks not good.
+ * import namespace is verbose, which use path/filename, and looks hard to maintain.
  * 
  * @typedef {import('@ts/shape-namespace').Point} Point
  * @typedef {import('@ts/shape-namespace').Circle} Circle
