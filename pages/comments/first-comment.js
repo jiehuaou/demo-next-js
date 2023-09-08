@@ -1,24 +1,29 @@
-import Link from 'next/link';
 import Head from 'next/head';
-import Script from 'next/script';
-import Layout from '../../components/layout';
+import { useReducer, useState } from "react";
 import Alert from '../../components/alert';
-import useSWR from 'swr';
-import { useState, useReducer } from "react";
+import Layout from '../../components/layout';
 import { useThemeContext } from "../../context/theme";
 
+/**
+ * A description of the entire function.
+ *
+ * @param {number} state - the state parameter
+ * @param {number} action - the action parameter
+ * @return {number} the result of multiplying the state and action
+ */
 const myReducer = function (state, action) {
     //debugger;
     return state * action;
 }
 
-export default function FirstPost() {
+export default function FirstComment() {
 
-    // this is global state
+   
+    // @ts-ignore
     const [theme, setTheme] = useThemeContext();
 
     // this is local state
-    const [multiplication, doMultiple] = useReducer((state, action) => myReducer(state, action), 50);
+    const [multiplication, doMultiple] = useReducer( myReducer, 50);
 
     const [alert, setAlert] = useState('success');
     const changeAlert = () => setAlert(alert=='success'?'error':'success');
@@ -36,9 +41,9 @@ export default function FirstPost() {
           </Head>
           
           <h1>First Comment</h1>
-          <h2>
-            Demo Context and Reducer.
-          </h2>
+          <p>
+            Demo Context and Reducer, and change theme.
+          </p>
           <Alert type={alert} theme={theme}><div>{theme}</div></Alert>
     
           <div>

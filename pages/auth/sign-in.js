@@ -4,22 +4,44 @@ import { Button, Card, Grid, Input, Row, Spacer, Text, Badge, Dropdown } from "@
 import Link from "next/link";
 import { useRouter } from 'next/router';
 
+/**
+ * 
+ * @param {Set<string>} emailSet 
+ * @param {string} password 
+ * @param {string|string[]|undefined} callbackUrl 
+ */
 const tryLogin = (emailSet, password, callbackUrl) => {
     console.log(`try login .......... ${emailSet} / ${password}`);
     const collection = [...emailSet];
     const email = collection[0];
+    let callback = '';
+    if (typeof callbackUrl === 'object' && callbackUrl.length > 0) {
+        callback = callbackUrl[0];
+    } else if (typeof callbackUrl === 'string') {
+        callback = callbackUrl;
+    }
     // debugger;
     signIn("credentials", {
         email, password,
-        callbackUrl
+        callbackUrl: callback
     })
 }
 
+/**
+ * 
+ * @param {{currentKey:string}} e 
+ * @param {(param: Set<String>)=>void} setEmail 
+ */
 const onUpdateEmail = (e, setEmail) => {
     console.log(`update email .......... `, e);
     setEmail(new Set([e.currentKey]));
 }
 
+/**
+ * 
+ * @param {{error:string | string[]}} param0 
+ * @returns {JSX.Element|null}
+ */
 const ErrorPanel = ({ error }) => {
     if (!error) {
         return null;
@@ -55,9 +77,8 @@ const Signin = ({ providers }) => {
                         }
                     </Card.Header>
                     <Card.Divider />
-                    <Card.Body justify='center'>
+                    <Card.Body>
                         <form action="#" className="flex flex-col space-y-5">
-
                             <Spacer y={1.6} />
                             <Row justify="center">
                                 <Dropdown>
@@ -110,6 +131,14 @@ const Signin = ({ providers }) => {
 }
 export default Signin;
 
+/**
+ * @typedef {{req: {}}} NextServerSideContext
+ * 
+ * Retrieves server-side properties based on the provided context.
+ *
+ * @param {NextServerSideContext} context - The context object containing request information.
+ * @return {Promise<object>} The server-side properties.
+ */
 export async function getServerSideProps(context) {
     const { req } = context;
     const session = await getSession({ req });

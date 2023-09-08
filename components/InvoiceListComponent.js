@@ -11,9 +11,10 @@ const IconPic = function () {
 }
 
 /**
- * 
- * @param {*} fetchType - swr|other
- * @param {*} invoiceData - list of Invoice{}
+ * @param {object} args
+ * @param {string} args.fetchType - swr|other
+ * @param {{title:string, author:string}[]} args.invoiceData - list of Invoice{}
+ * @param {boolean} args.isValidating - 
  */
 const InvoiceListComponent = function ({ fetchType, invoiceData, isValidating }) {
     return (

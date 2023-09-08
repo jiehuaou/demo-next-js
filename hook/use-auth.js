@@ -1,6 +1,12 @@
 import { useRouter } from "next/router";
 
 
+/**
+ * 
+ * @param {string} path 
+ * @param {string} callbackUrl 
+ * @returns {string}
+ */
 const buildLoginUrl = (path, callbackUrl) => {
     const params = new URLSearchParams();
     params.append('callbackUrl', callbackUrl);

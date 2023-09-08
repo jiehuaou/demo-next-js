@@ -1,63 +1,58 @@
+import { Button, Loading, Row, Spacer, Text } from "@nextui-org/react";
 import Head from 'next/head';
-import Layout from '../../components/layout';
-import useAuthStore from '../../store/auth-store';
 import { useEffect } from 'react';
-import utilityStyles from '../../styles/utils.module.css';
 import { mutate, useSWRConfig } from "swr";
-import useInvoiceSWR from '../../hook/use-invoice-swr';
 import InvoiceListComponent from '../../components/InvoiceListComponent';
+import Layout from '../../components/layout';
+import useInvoiceSWR from '../../hook/use-invoice-swr';
 import usePersistStore from '../../hook/use-persist-store';
-import { Row, Text, Loading, Button, Spacer } from "@nextui-org/react";
+import useAuthStore from '../../store/auth-store';
+import utilityStyles from '../../styles/utils.module.css';
 
-/*
-const InvoiceList = function () {
 
-    const { invoiceData, loading, error } = useInvoice();
+/**
+ * @typedef {import("swr").Cache} SwrCache
+ */
 
-    if (loading) {
-        return <span><Loading /></span>
-    } else if (error) {
-        return <span>Something Wrong</span>
-    } else {
-        return InvoiceListComponent('Other', invoiceData)
-    }
-}
-*/
 
-const InvoiceListSWR = function ({ cache, ready }) {
+/**
+ * @param {{cache: SwrCache}} args
+ * @return {JSX.Element|null}
+ */
+const InvoiceListSWR = function ({ cache }) {
 
     const { key, isQuerySubmit, invoiceData, loading, isValidating, error } = useInvoiceSWR(); // useInvoiceSWR();  useInvoice();
-
-    // const [first, setFirst] = useState(true);
-    // useEffect(()=>{
-    //     setFirst(false)
-    // }, []);
 
     if (loading) {
         return <Loading type="points" size='sm' />
     } else if (error) {
         return <span>Something Wrong</span>
-    } else {
-        return (isQuerySubmit &&
-        <div>
-            <InvoiceListComponent fetchType='SWR' invoiceData={invoiceData} isValidating={isValidating} />
-            <Row justify='flex-end'>
-                <Button flat={true} size="sm" disabled={isValidating} onPress={() => {
-                    // delete Key Data at cache but not trigger UI render
-                    cache.delete(key);
-                    // clearCache();
-                }} >Delete SWR Cache</Button> <Spacer x={1} />
-                <Button flat={true} size="sm" disabled={isValidating} onPress={() => {
-                    // refetch the data of specified Key, will trigger UI render if Key Data is deleted.
-                    mutate(key);
-                }} >Re-fetch SWR Cache</Button>
-            </Row>
-        </div>)
+    } else if (isQuerySubmit) {
+        return (
+            <div>
+                <InvoiceListComponent fetchType='SWR' invoiceData={invoiceData} isValidating={isValidating} />
+                <Row justify='flex-end'>
+                    <Button flat={true} size="sm" disabled={isValidating} onPress={() => {
+                        // delete Key Data at cache but not trigger UI render
+                        key && cache.delete(key);
+                        // clearCache();
+                    }} >Delete SWR Cache</Button> <Spacer x={1} />
+                    <Button flat={true} size="sm" disabled={isValidating} onPress={() => {
+                        // refetch the data of specified Key, will trigger UI render if Key Data is deleted.
+                        mutate(key);
+                    }} >Re-fetch SWR Cache</Button>
+                </Row>
+            </div>)
     }
+
+    return null;
 }
 
 
-
+/**
+ * 
+ * @type {React.FC<{user:string, ready:boolean, loading:boolean}>}
+ */
 const UserName = function ({ loading, ready, user }) {
 
     if (loading) {
@@ -85,10 +80,13 @@ const UserName = function ({ loading, ready, user }) {
 //     return data;
 // }
 
+/**
+ * @param {SwrCache} cache 
+ */
 const clearInvoiceCache = (cache) => {
     console.log("exit first-swr and clean up cache ............");
-    [...cache.keys()]
-        .filter(e => e.startsWith('/api/invoice'))
+    [.../**@type {IterableIterator<string>} */ (cache.keys())]
+       .filter(e => e.startsWith('/api/invoice'))
         .forEach(key => {
             cache.delete(key);
             console.log("cache.delete ............ " + key);
@@ -100,7 +98,7 @@ export default function SWRDemo() {
     const myAuthStore = usePersistStore(useAuthStore(), {});
     const { cache } = useSWRConfig();
 
-    const { user, token, stamp, ready, loading, login, logout } = myAuthStore;
+    const { user,  ready, loading, login, logout } = myAuthStore;
 
     //const { key } = useInvoiceSWR();
 
@@ -136,7 +134,7 @@ export default function SWRDemo() {
 
         <hr />
         <div>
-            <span>{ready && <InvoiceListSWR cache={cache} ready={ready}/>}</span>
+            <span>{ready && <InvoiceListSWR cache={cache} />}</span>
             <span className='width2px'> </span>
             {/* <span>{ready ? (<InvoiceList/>) : (<div>...</div>) }</span> */}
         </div>

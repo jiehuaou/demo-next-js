@@ -1,5 +1,5 @@
-import { Users } from "../../../data/user";
-import tk from "../../../data/access-token";
+import { Users } from "@data/user";
+import tk from "@data/access-token";
 
 /**
  * this service is fake one to mock an external java service.

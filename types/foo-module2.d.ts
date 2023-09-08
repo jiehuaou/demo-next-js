@@ -31,6 +31,5 @@ declare module "foo-lib" {
         extra?: string;
     }
 
-
 }
 //export = {}

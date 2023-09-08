@@ -1,7 +1,12 @@
 import styles from './alert.module.scss';
 import { clsx } from 'clsx';
+import React from 'react';
 
-export default function Alert({ children, type, theme }) {
+/**
+ * 
+ * @type {React.FC<{children:React.ReactNode, type:string, theme:string}>}
+ */
+const Alert =  ({ children, type, theme }) => {
   return (
     <div
       className={
@@ -18,3 +23,5 @@ export default function Alert({ children, type, theme }) {
   );
 }
 
+
+export default Alert;

@@ -13,19 +13,18 @@ import React from 'react';
 // import Session from 'next-auth/core/types';
 // import React from 'react';
 
-const name = 'Your Name';
-export const siteTitle = 'Next.js Sample Website';
+/**
+ * @typedef {import("next-auth").Session} NextAuthSession
+ */
 
-function getFirstValue(set) {
-  return set.values()?.next()?.value;
-}
+export const siteTitle = 'Next.js Sample Website';
 
 
 
 /**
- * @param {import('next-auth/core/types').Session|null} session 
+ * @param {NextAuthSession|null} session 
  * @param {string} status 
- * @returns {object}
+ * @returns {{name?:string}}
  */
 const getUserName = function (session, status) {
   if (status === 'loading') {
@@ -36,12 +35,20 @@ const getUserName = function (session, status) {
   } else if (status === 'unauthenticated') {
     return { name: 'Your Name' };
   }
-  return '';
+  return {};
 }
 
+/**
+ * Renders the user panel based on the session status.
+ *
+ * @param {object} args - The session object containing user information.
+ * @param {string} args.status - The status of the session ('authenticated' or 'unauthenticated').
+ * @param {NextAuthSession|null} args.session - The user object containing user details.
+ * @return {JSX.Element|null} The rendered user panel.
+ */
 const UserPanel = ({ session, status }) => {
   if (status === 'authenticated') {
-    const { name, role } = session.user;
+    const { name = null, role = null } = session?.user??{};
     return (
       <><Text h2>{name}</Text><Spacer x={1} /><Text h2 color="primary">{role}</Text></>
     )
@@ -56,7 +63,7 @@ const UserPanel = ({ session, status }) => {
 /**
  * @param {object} props
  * @param {import('next-auth/core/types').Session|null} props.session 
- * @returns {import('react').ReactElement}
+ * @returns {JSX.Element}
  */
 const SignInOut = function ({ session }) {
   if (session) {
@@ -77,8 +84,8 @@ const SignInOut = function ({ session }) {
 /**
  * Renders the layout component.
  * @param {Object} args - The child components to be rendered.
- * @param {Object} args.children - The child components to be rendered.
- * @param {boolean} args.home - Indicates if the layout is the home page.
+ * @param {JSX.Element[]} args.children - The child components to be rendered.
+ * @param {boolean} [args.home] - Indicates if the layout is the home page.
  * @return {JSX.Element} The rendered layout component.
  */
 export default function Layout({ children, home }) {

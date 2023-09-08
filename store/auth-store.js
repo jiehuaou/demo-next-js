@@ -23,8 +23,6 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 /**
  * @type {AuthState}
  */
-
-
 const initState = {
     user: 'Unknow',
     token: '',
@@ -74,6 +72,22 @@ const whenError = function () {
     }
 }
 
+
+/**
+ * @typedef { ()=>Promise<void>} asyncAction
+ * @typedef { (param:AuthData)=>Promise<void>} asyncParamAction
+ * 
+ * @typedef { {login: asyncAction, logout: asyncAction, 
+ *              withLoading: asyncAction, withError: asyncAction,
+ *              withSuccess: asyncParamAction} } AuthAction
+ * 
+ */
+
+/**
+ * @typedef { AuthState & AuthAction } AuthStoreType
+ * 
+ * @returns {AuthStoreType}
+ */
 const useAuthStore = create(persist((set) => ({
     ...initState,
     login: async function () {
@@ -92,8 +106,8 @@ const useAuthStore = create(persist((set) => ({
     withError: function () {
         set(whenError());
     },
+
     /**
-     * 
      * @param {AuthData} params 
      */
     withSuccess: function (params) {
@@ -108,12 +122,12 @@ const useAuthStore = create(persist((set) => ({
             token: state.token,
             stamp: state.stamp,
             ready: state.ready,
-            loading:   false,     // [Middle State] should not be sync to local storage
+            loading: false,     // [Middle State] should not be sync to local storage
             error: state.error,
         }),
     }
 ));
 
-export {initState};
+export { initState };
 
 export default useAuthStore;

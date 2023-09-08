@@ -72,6 +72,15 @@ function toPromise(data) {
     return Promise.resolve(data);
 }
 
+/**
+ * never Return
+ * @returns {never}
+ */
+function neverReturn() {
+    console.log('never return');
+    throw new Error('never return');
+}
+
 describe('jsdoc test', () => {
     it('jsdoc cast test', () => {
         /**
@@ -160,5 +169,20 @@ describe('jsdoc test', () => {
 
         const result = getRectArea(request);        
         expect(result).to.be.equal((4-2)*(6-3));
+    })
+
+    it('jsdoc neverReturn test', () => {
+        // todo: fix
+    })
+
+    it('jsdoc Destructuring test', () => {
+        /**
+         * @type {{name?: string}}
+         */
+        const request = {
+            name: 'hello',
+        }
+        const {name} = request;
+        console.log(name);
     })
 });

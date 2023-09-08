@@ -1,10 +1,14 @@
 import Head from 'next/head';
-import Layout, { siteTitle } from '../components/layout';
+import Layout, { siteTitle } from '@comp/layout';
 import utilStyles from '../styles/utils.module.css';
 import Link from 'next/link';
-import { getSortedPostsData } from '../lib/data';
+import { getSortedPostsData } from '@lib/data';
 import { useEffect } from 'react';
 import useCounterStore from '../store/zustand-store';
+
+/**
+ * @typedef {import("@lib/data").MatterResult} MatterResult
+ */
 
 /**
  * use to build static render
@@ -13,11 +17,16 @@ export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
   return {
     props: {
-      postsData: allPostsData,
+      postsData: [],
     },
   };
 }
 
+/**
+ * @param {object} args 
+ * @param {MatterResult[]} args.postsData 
+ * @returns 
+ */
 export default function Home({postsData}) {
 
   const {init, inited} = useCounterStore();
@@ -68,20 +77,20 @@ export default function Home({postsData}) {
         <div className={utilStyles.title}>
           Read <Link href="/money/money-book">Money</Link>
         </div>
+        <div className={utilStyles.title}>
+          Read <Link href="/comments/first-comment">FirstComment</Link>
+        </div>
+        
       </section>
 
       <section className='{`${utilStyles.headingMd} ${utilStyles.padding1px}`}'>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>
-          {postsData.map(({ id, date, title }) => (
-            <li className={utilStyles.listItem} key={id}>
-              {title}
-              <br />
-              {id}
-              <br />
-              {date}
+          {/* {postsData.map(({ id, date, title }) => (
+            <li className={utilStyles.listItem} key={id}>            
+                {`${title} - ${id} - ${date}`}
             </li>
-          ))}
+          ))} */}
         </ul>
       </section>
     </Layout>

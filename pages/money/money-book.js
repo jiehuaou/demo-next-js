@@ -1,9 +1,8 @@
+import { Button, Row, Spacer, Text } from '@nextui-org/react';
 import Head from 'next/head';
-import Script from 'next/script';
+import { useEffect } from 'react';
 import Layout from '../../components/layout';
 import useCounterStore from '../../store/zustand-store';
-import { useEffect } from 'react';
-import { Text, Avatar, Button, Grid, Dropdown, Link, Row, Col, Card, Spacer } from '@nextui-org/react';
 
 export default function MoneyBook() {
 

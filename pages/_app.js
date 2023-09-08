@@ -1,11 +1,17 @@
-import '../styles/globals.css';
-import { ThemeProvider } from "../context/theme";
-import useCounterStore from '../store/zustand-store';
 import { NextUIProvider } from '@nextui-org/react';
 import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "../context/theme";
+import '../styles/globals.css';
 
 const REFETCH_INTERVAL_SECOND = parseInt(process.env.REFETCH_INTERVAL_SECOND || '30');
 
+/**
+ * Generate the function comment for the given function body.
+ * @param {object} args
+ * @param {React.FunctionComponent} args.Component - The component to render.
+ * @param {{session:import('next-auth').Session}} args.pageProps - The props for the component.
+ * @return {JSX.Element} The rendered component.
+ */
 export default function App({ Component, pageProps}) {
 
   console.log("---------------app start----------------------");

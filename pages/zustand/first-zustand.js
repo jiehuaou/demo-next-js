@@ -1,10 +1,16 @@
+import { Button, Card, Row, Spacer, Text } from '@nextui-org/react';
 import Head from 'next/head';
-import { useEffect } from 'react';
+import  { useEffect } from 'react';
 import Layout from '../../components/layout';
 import useCounterStore from '../../store/zustand-store';
-import { Text, Avatar, Button, Grid, Dropdown, Link, Row, Col, Card, Spacer } from '@nextui-org/react';
 
-export default function ZustandDemo() {
+
+/**
+ * ZustandDemo component.
+ *
+ * @return {JSX.Element} A React component.
+ */
+const ZustandDemo = () => {
 
     const {inited, init, count, total, increment, decrement} = useCounterStore();
 
@@ -49,3 +55,5 @@ export default function ZustandDemo() {
 
     </Layout>)
 }
+
+export default ZustandDemo;

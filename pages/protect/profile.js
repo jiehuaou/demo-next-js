@@ -6,6 +6,11 @@ import useAuth from "../../hook/use-auth";
 
 const iconColor = 'secondary';
 
+/**
+ * @typedef {import("next-auth").Session} NextAuthSession
+ * 
+ * @type {React.FC<{session:NextAuthSession, status:string}>}
+ */
 const ProfileBody = ({session, status}) => {
     return (
         <Grid.Container alignItems="center" gap={2}>
@@ -35,7 +40,7 @@ const ProfileBody = ({session, status}) => {
                             </Badge>
                         </Grid>
                         <Grid>
-                            <Button size={'sm'} color="primary" onPress={signOut}>
+                            <Button size={'sm'} color="primary" onPress={e=>signOut()}>
                                 Logout
                             </Button>
                         </Grid>
@@ -43,15 +48,15 @@ const ProfileBody = ({session, status}) => {
     )
 }
 
+/**
+ * show user profile
+ * @returns {JSX.Element}
+ */
 export default function Profile() {
 
     const { data: session, status } = useSession();
     //console.log(`[Profile] session [${status}]..........user:`, session?.user);
     useAuth(status);
-
-    // if(status!=='authenticated') {
-    //     return <Loading type="points" size='sm' />
-    // }
 
     return (
         <Layout home={false}>
@@ -70,11 +75,9 @@ export default function Profile() {
                         status === 'authenticated' ? 
                             <ProfileBody session={session} status={status}/>
                             :<Loading type="points" size='sm' />
-                    }
-                    
+                    } 
                 </Card.Body>
             </Card>
-
         </Layout>
     )
 }

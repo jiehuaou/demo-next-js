@@ -2,7 +2,7 @@
 
 /**
  * mock the database
- * @type {import('../types/types').RawUser []}
+ * @type {import('@ts/types').RawUser []}
  */
 
 const Users = [
@@ -25,7 +25,7 @@ const Users = [
  * 
  * @param {string} email 
  * @param {string} password 
- * @return {import("../types/types").ExtendedUser|null}
+ * @return {import("@ts/types").ExtendedUser|null}
  */
 const validateUser = function (email, password) {
     const email2 = email.trim().toLowerCase();

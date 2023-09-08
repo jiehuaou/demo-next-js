@@ -1,12 +1,12 @@
 
-import { Card, Grid, Text, Badge, Button, Loading,Table } from "@nextui-org/react";
+import { Loading, Table } from "@nextui-org/react";
 
 /**
+ * @typedef {{id:string, email:string, role:string}} UserData
  * 
- * @param {*} param0 
- * @returns {import('react').ReactElement}
+ * @type {React.FC<{userData?: UserData[], isLoading: boolean}>}
  */
- const UserListComponent = function ({ userData, isLoading }) {
+ const UserListComponent = function ({ userData = [], isLoading }) {
 
     if(isLoading) {
         return <Loading type="points" size='sm' />

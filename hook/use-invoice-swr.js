@@ -1,12 +1,18 @@
 
 import axios from "axios";
-import { useState } from "react";
 // import { useEffect, useState } from "react";
-import useSWR, { mutate, useSWRConfig } from "swr";
+import useSWR from "swr";
 import useAuthStore from "../store/auth-store";
 
 const counter = { index: 1 }
 
+/**
+ * Deletes a specified URL from the cache after a specified delay.
+ *
+ * @param {import("swr").Cache} cache - The cache object to delete the URL from.
+ * @param {string} url - The URL to be deleted from the cache.
+ * @param {number} millsec - The delay in milliseconds before deleting the URL from the cache. Default is 15000 milliseconds.
+ */
 const deleteCache = function (cache, url, millsec = 15000) {
   setTimeout(() => {
     cache.delete(url);
@@ -14,6 +20,13 @@ const deleteCache = function (cache, url, millsec = 15000) {
   }, millsec);
 }
 
+/**
+ * Fetches data from a specified URL and returns the response data.
+ *
+ * @param {string} url - The URL from which to fetch the data.
+ * @param {object} cache - The cache object to be used for caching the response.
+ * @return {Promise<object>} A promise that resolves to the response data.
+ */
 const fetcher = async (url, cache) => {
 
   console.log(`fetch Invoice ${url} ........ ${counter.index++}`);

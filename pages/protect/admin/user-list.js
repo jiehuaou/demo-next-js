@@ -57,7 +57,7 @@ const fetcherExternalApi = async (cb, session)=>{
 
 /**
  * 
- * @returns {React.JSX.Element}
+ * @returns {JSX.Element}
  */
 export default function UserListPage() {
 

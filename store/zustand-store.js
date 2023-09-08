@@ -1,16 +1,32 @@
 import { create } from 'zustand';
 // import {produce} from "immer"
-import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 // import useSWR from 'swr';
 
-// const addMoney = function (balance, amount) {
-//     return balance + amount;
-// }
 
+
+/**
+ * @type {NodeJS.Timeout|null}
+ */
 let timerHandler = null;
 
-const useCounterStore = create(immer((set) => ({
+/**
+ * @typedef {{inited: boolean, count: number, total: number, ready: boolean,
+ *      money: { 
+ *          money1: {balance: number,account: string },
+ *          money2: {balance: number,account: string }}
+ * }} CounterType
+ * 
+ * @typedef {(state:CounterType) => void} CounterAction
+ * 
+ * @typedef {(action:CounterAction)=> void} EnqueueAction
+ */
+
+
+/**
+ * use inline jsdoc to describe Zustand "set".
+ */
+const useCounterStore = create(immer((/**@type {EnqueueAction} */set) => ({
     inited: false,
     count: 0,
     total: 0,
@@ -26,36 +42,44 @@ const useCounterStore = create(immer((set) => ({
         }
     },
     increment: async () => {
-        if(timerHandler !== null) {
+        if (timerHandler !== null) {
             clearTimeout(timerHandler);
             //  timerHandler = null;
         }
         set(state => { state.ready = false });
-        set(state => { ++state.count; ++state.total;});
+        set(state => { ++state.count; ++state.total; });
         timerHandler = setTimeout(() => {
             set(state => { state.ready = true });
         }, 1000);
     },
     decrement: () => set(state => { --state.count; }),
     init: async () => {
-        const jsonData = await fetch('/api/init').then(res=>res.json());
+        const jsonData = await fetch('/api/init').then(res => res.json());
         set({ ...jsonData, ready: true, inited: true });
     },
     /**
      * allow deep nested state update with help of Immer
+     * 
+     * @param {string} account 
+     * @param {number} amount 
      */
     addMoney: (account, amount) => {
         if (account === "888") {
             set(temp => { temp.money.money1.balance = temp.money.money1.balance + amount })
-        } else if (account==="999") {
-            set(temp => {temp.money.money2.balance = temp.money.money2.balance + amount })
+        } else if (account === "999") {
+            set(temp => { temp.money.money2.balance = temp.money.money2.balance + amount })
         }
     },
-    drawMoney: (account, amount) => { 
+    /**
+     * draw out Money
+     * @param {string} account 
+     * @param {number} amount 
+     */
+    drawMoney: (account, amount) => {
         if (account === "888") {
-            set(temp => {temp.money.money1.balance = temp.money.money1.balance - amount })
-        } else if (account==="999") {
-            set(temp => {temp.money.money2.balance = temp.money.money2.balance - amount })
+            set(temp => { temp.money.money1.balance = temp.money.money1.balance - amount })
+        } else if (account === "999") {
+            set(temp => { temp.money.money2.balance = temp.money.money2.balance - amount })
         }
     }
 })

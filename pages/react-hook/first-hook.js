@@ -1,10 +1,11 @@
 import Layout from "../../components/layout";
 import Head from 'next/head';
 import { Text, Row, Input, Button, Card, Spacer, Grid } from "@nextui-org/react";
-import { memo, useCallback, useEffect, useState } from "react";
+import React, {  memo, useCallback, useEffect, useState } from "react";
 
 /**
  * use memo to wrap component to skip re-rendering when its props are the same as on last render
+ * @type {React.FC<{helloAction: ()=>void}>}
  */
 const PostButton = memo(({ helloAction }) => {
 
@@ -24,6 +25,7 @@ const PostButton = memo(({ helloAction }) => {
 
 /**
  * use memo to wrap component to skip re-rendering when its props are the same as on last render
+ * @type {React.FC<{resetAction: ()=>void}>}
  */
 const ResetButton = memo(({ resetAction }) => {
 
@@ -40,6 +42,10 @@ const ResetButton = memo(({ resetAction }) => {
     )
 });
 
+/**
+ * 
+ * @returns {JSX.Element}
+ */
 export default function FirstHook() {
 
     const [data, setData] = useState('world');

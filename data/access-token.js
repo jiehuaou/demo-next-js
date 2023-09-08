@@ -7,7 +7,7 @@ const fakeToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkw
 
 /**
  * @typedef {import('jose').JWTVerifyResult} JWTVerifyResult
- * @typedef {import('jose').JWTPayload & import("../types/types").ExtendedUser} JWTPayloadEx
+ * @typedef {import('jose').JWTPayload & import("@ts/types").ExtendedUser} JWTPayloadEx
  */
 
 /**

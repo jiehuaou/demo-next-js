@@ -43,7 +43,7 @@ declare module "foo-lib" {
 }
 
 
-let data : import("foo-lib").FooRequest = {
+let data: import("foo-lib").FooRequest = {
     id: 1,
     name: "hello",
     extra: "extra" // this field is defined in different file.

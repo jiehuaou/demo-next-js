@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Layout from '../../components/layout';
+import Layout from '@comp/layout';
 import useAuthStore, {initState} from '../../store/auth-store';
 import utilityStyles from '../../styles/utils.module.css';
 import usePersistStore from '../../hook/use-persist-store';
@@ -8,6 +8,10 @@ import { useEffect, useState } from 'react';
 
 
 
+/**
+ * component to show user-name
+ * @type{React.FC<{user:string, ready:boolean, loading:boolean}>}
+ */
 const UserName = function ({ loading, ready, user }) {
   
     if (loading) {
@@ -35,8 +39,14 @@ const UserName = function ({ loading, ready, user }) {
 //     return data;
 // }
 
+/**
+ * Auth Demo
+ * @returns {JSX.Element}
+ */
 export default function AuthDemo() {
-
+    /**
+     * @type {import('@store/auth-store').AuthStoreType}
+     */
     const myAuthStore = usePersistStore(useAuthStore(), {});
     const { user, token, stamp, ready, loading, login, logout } = myAuthStore;
 

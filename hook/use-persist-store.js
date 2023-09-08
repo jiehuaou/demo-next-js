@@ -7,6 +7,12 @@ import { useEffect, useState } from 'react';
  * when zustand was persist.
  */
 
+/**
+ * 
+ * @param {*} store 
+ * @param {*} defaultState 
+ * @returns {import('@store/auth-store').AuthStoreType}
+ */
 const usePersistStore = (store, defaultState = {}) => {
     const result = store;
     const [data, setData] = useState(defaultState);

@@ -1,4 +1,6 @@
 import { type MyContact, type MyIdentity, type greetFunction } from "./other";
+import { DefaultSession  } from "next-auth";
+
 
 /**
  * define global types which are used in other files without importing.
@@ -63,13 +65,13 @@ declare global {
         where: string;
     }
 
-    function talk (param: HelloEx) : HelloEx ;
+    function talk(param: HelloEx): HelloEx;
 
-    
+
     // -----------------------------------
     // make local types globally accessible
 
-    type MyIdentity2 = MyIdentity; 
+    type MyIdentity2 = MyIdentity;
     type MyContact2 = MyContact;
     type greetFunc = greetFunction;
     // -----------------------------------
@@ -79,10 +81,21 @@ declare global {
 
 // extend 'next-auth'.Session with new custom Property ‘counter’.
 declare module "next-auth" {
-    interface Session {
-        counter?: number;  
+    interface Session extends DefaultSession{
+        /**
+         * custom counter
+         */
+        counter?: number;
+        user?: DefaultSession['user'] & {
+            /**
+             * custom role property
+             */
+            role?: string | null
+            sub?: string | null
+        }
     }
+
 }
 
 
-export {};
+export { };
