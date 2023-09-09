@@ -1,8 +1,7 @@
+import { Button, Card, Row, Text } from "@nextui-org/react";
+import { signOut } from "next-auth/react";
 import Head from 'next/head';
-import Layout from '../../components/layout';
-import { useSession, signIn, signOut } from "next-auth/react"
-import { Card, Text, Row, Button, Spacer, Loading } from "@nextui-org/react";
-import { useEffect, useState } from 'react';
+import Layout from '@components/layout';
 
 const AccessDenyPage = () => {
     return (

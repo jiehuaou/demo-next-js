@@ -1,9 +1,7 @@
-import Link from 'next/link';
+import Layout from '@components/layout';
 import Head from 'next/head';
+import Link from 'next/link';
 import Script from 'next/script';
-import Layout from '../../components/layout';
-import Alert from '../../components/alert';
-import useSWR from 'swr';
 import { useState } from "react";
 
 export default function FirstPost() {

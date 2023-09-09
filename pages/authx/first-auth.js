@@ -1,8 +1,8 @@
 import Head from 'next/head';
-import Layout from '@comp/layout';
-import useAuthStore, {initState} from '../../store/auth-store';
-import utilityStyles from '../../styles/utils.module.css';
-import usePersistStore from '../../hook/use-persist-store';
+import Layout from '@components/layout';
+import useAuthStore from '@store/auth-store';
+import utilityStyles from '@styles/utils.module.css';
+import usePersistStore from '@hook/use-persist-store';
 import { Card, Text, Row, Button, Spacer, Loading } from "@nextui-org/react";
 import { useEffect, useState } from 'react';
 

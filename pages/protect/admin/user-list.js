@@ -1,11 +1,11 @@
 //@ts-check
-import Layout from "../../../components/layout";
+import Layout from "@components/layout";
+import UserListComponent from "@components/UserListComponent";
+import useAuth from "@hook/use-auth";
+import { Button, Card, Grid, Text } from "@nextui-org/react";
+import { signOut, useSession } from "next-auth/react";
 import Head from 'next/head';
-import { Card, Grid, Text, Badge, Button, Loading } from "@nextui-org/react";
-import { useSession, signOut } from "next-auth/react";
-import React, { useEffect, useState } from "react";
-import UserListComponent from "../../../components/UserListComponent";
-import useAuth from "../../../hook/use-auth";
+import { useEffect, useState } from "react";
 
 const iconColor = 'secondary';
 

@@ -1,6 +1,6 @@
 //@ts-check
-import tk from "../../data/access-token";
-import { validateUser } from "../../data/user";
+import tk from "@data/access-token";
+import { validateUser } from "@data/user";
 
 /**
  * demo an authentication backend service ( mock the java back-end with database service)

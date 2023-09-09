@@ -20,12 +20,62 @@ import { assert, expect } from 'chai';  // Using Assert style
  * @typedef {import('@ts/shape-namespace2').getArea} GetRectArea
  */
 
+
+
+const DaysOfWeek = Object.freeze({
+    Mon : 1,
+    Tue : 2,
+    Wed : 3,
+    Thu : 4,
+    Fri : 5,
+    Sat : 6,
+    Sun : 7,
+    None: 0,
+    1: 'Mon',
+    2: 'Tue',
+    3: 'Wed',
+    4: 'Thu',
+    5: 'Fri',
+    6: 'Sat',
+    7: 'Sun',
+    0: 'None'
+});
+
+/**
+ * 
+ * @param {WeekNumber} weekDay
+ * @return {WeekString}
+ */
+const fromWeekDay = (weekDay) => {
+    /**
+     * @type {WeekString}
+     */
+    // let result = "None";
+    // Object.entries(DaysOfWeek).findIndex((entry) => {
+    //     const [x,y] = entry;
+    //     if (y === weekDay) {
+    //         result = /** @type {WeekString} */ (x);
+    //     }
+    // });
+
+    return DaysOfWeek[weekDay];
+}
+
+/**
+ * 
+ * @param {WeekString} week 
+ * @returns {WeekNumber}
+ */
+const toWeekDay = (week) => {
+    return DaysOfWeek[week];
+}
+
 /**
  * @type{query}
  */
 const fooQuery = (request) => {
-    if(typeof request === 'string') {
-        return  {
+    if (typeof request === 'string') {
+        return {
             id: 0,
             expired: Math.floor(new Date().getTime() / 1000) + 1000,
             token: 'test-' + request
@@ -48,7 +98,7 @@ const fooQuery = (request) => {
  */
 const getCircleArea = (circle) => {
     const result = circle.radius * circle.radius * Math.PI;
-    return result;    
+    return result;
 }
 
 /**
@@ -56,8 +106,8 @@ const getCircleArea = (circle) => {
  * @type {GetRectArea}  
  */
 const getRectArea = (rectangle) => {
-    const result = (rectangle.start.x-rectangle.end.x) * 
-                   (rectangle.start.y-rectangle.end.y);
+    const result = (rectangle.start.x - rectangle.end.x) *
+        (rectangle.start.y - rectangle.end.y);
     return Math.abs(result);
 }
 
@@ -92,7 +142,7 @@ describe('jsdoc test', () => {
             token: '11188889999'
         }
         const jsData = JSON.parse("{\"name\":\"test@example.com\",\"id\":30,\"token\":\"11188889999\"}");
-        
+
         // cast any to MyIdentity2, Note: use (any type) to cast data,
         const result =/** @type {MyIdentity2} */ (jsData);
 
@@ -128,7 +178,7 @@ describe('jsdoc test', () => {
         }
 
         const result = fooQuery(request);
-        
+
         expect(result.id).to.be.equal(request.id);
         expect(result.token).to.be.equal(`test-${request.name}`);
     })
@@ -140,7 +190,7 @@ describe('jsdoc test', () => {
         const request = 'hello';
 
         const result = fooQuery(request);
-        
+
         expect(result.id).to.be.equal(0);
         expect(result.token).to.be.equal(`test-${request}`);
     })
@@ -150,12 +200,12 @@ describe('jsdoc test', () => {
          * @type{Circle}
          */
         const request = {
-            center: {x:2, y:3},  // this circle does not have "z" property.
-            radius: 10 
+            center: { x: 2, y: 3 },  // this circle does not have "z" property.
+            radius: 10
         }
 
-        const result = getCircleArea(request);        
-        expect(result).to.be.equal(10*10*Math.PI);
+        const result = getCircleArea(request);
+        expect(result).to.be.equal(10 * 10 * Math.PI);
     })
 
     it('jsdoc import namespace myshape 2 test', () => {
@@ -163,12 +213,12 @@ describe('jsdoc test', () => {
          * @type{Rectangle}
          */
         const request = {
-            start: {x:2, y:3, z:4},  // this circle does have "z" property.
-            end: {x:4, y:6}, 
+            start: { x: 2, y: 3, z: 4 },  // this circle does have "z" property.
+            end: { x: 4, y: 6 },
         }
 
-        const result = getRectArea(request);        
-        expect(result).to.be.equal((4-2)*(6-3));
+        const result = getRectArea(request);
+        expect(result).to.be.equal((4 - 2) * (6 - 3));
     })
 
     it('jsdoc neverReturn test', () => {
@@ -182,7 +232,7 @@ describe('jsdoc test', () => {
         const request = {
             name: 'hello',
         }
-        const {name} = request;
+        const { name } = request;
         console.log(name);
     })
 });

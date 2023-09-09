@@ -2,7 +2,7 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials";
-import LoggerFactory from "../../../lib/logger";
+import LoggerFactory from "@lib/logger";
 
 const jwtLogger = LoggerFactory(process.env.LOG_JWT);
 const authLogger = LoggerFactory(process.env.LOG_AUTHORIZE);

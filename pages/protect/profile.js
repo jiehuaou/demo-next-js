@@ -1,8 +1,8 @@
-import Layout from "../../components/layout";
+import Layout from "@components/layout";
 import Head from 'next/head';
 import { Card, Grid, Text, Badge, Button, Loading } from "@nextui-org/react";
 import { useSession, signOut } from "next-auth/react"
-import useAuth from "../../hook/use-auth";
+import useAuth from "@hook/use-auth";
 
 const iconColor = 'secondary';
 

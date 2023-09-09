@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import { useReducer, useState } from "react";
-import Alert from '../../components/alert';
-import Layout from '../../components/layout';
-import { useThemeContext } from "../../context/theme";
+import Alert from '@components/alert';
+import Layout from '@components/layout';
+import { useThemeContext } from "@context/theme";
 
 /**
  * A description of the entire function.

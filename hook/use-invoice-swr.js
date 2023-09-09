@@ -2,7 +2,7 @@
 import axios from "axios";
 // import { useEffect, useState } from "react";
 import useSWR from "swr";
-import useAuthStore from "../store/auth-store";
+import useAuthStore from "@store/auth-store";
 
 const counter = { index: 1 }
 

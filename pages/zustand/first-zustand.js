@@ -1,8 +1,8 @@
 import { Button, Card, Row, Spacer, Text } from '@nextui-org/react';
 import Head from 'next/head';
 import  { useEffect } from 'react';
-import Layout from '../../components/layout';
-import useCounterStore from '../../store/zustand-store';
+import Layout from '@components/layout';
+import useCounterStore from '@store/zustand-store';
 
 
 /**

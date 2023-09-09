@@ -2,12 +2,12 @@ import { Button, Loading, Row, Spacer, Text } from "@nextui-org/react";
 import Head from 'next/head';
 import { useEffect } from 'react';
 import { mutate, useSWRConfig } from "swr";
-import InvoiceListComponent from '../../components/InvoiceListComponent';
-import Layout from '../../components/layout';
-import useInvoiceSWR from '../../hook/use-invoice-swr';
-import usePersistStore from '../../hook/use-persist-store';
-import useAuthStore from '../../store/auth-store';
-import utilityStyles from '../../styles/utils.module.css';
+import InvoiceListComponent from '@components/InvoiceListComponent';
+import Layout from '@components/layout';
+import useInvoiceSWR from '@hook/use-invoice-swr';
+import usePersistStore from '@hook/use-persist-store';
+import useAuthStore from '@store/auth-store';
+import utilityStyles from '@styles/utils.module.css';
 
 
 /**

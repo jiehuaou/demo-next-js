@@ -1,4 +1,4 @@
-import { Users } from "../../../data/user";
+import { Users } from "@data/user";
 
 /**
  * this service is protected, which is not allowed access without Login

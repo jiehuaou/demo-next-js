@@ -8,6 +8,20 @@ import { DefaultSession  } from "next-auth";
 
 declare global {
 
+    type WeekString =  "None"|"Mon"|"Tue"|"Wed"|"Thu"|"Fri"|"Sat"|"Sun";
+    type WeekNumber =  0|1|2|3|4|5|6|7;
+
+    // enum WeekEnum {
+    //     None = 0,
+    //     Mon = 1,
+    //     Tue,
+    //     Wed,
+    //     Thu,
+    //     Fri,
+    //     Sat,
+    //     Sun
+    // }
+
     /**
      * generic Error Type
      */
@@ -86,6 +100,8 @@ declare module "next-auth" {
          * custom counter
          */
         counter?: number;
+
+        // use inter
         user?: DefaultSession['user'] & {
             /**
              * custom role property

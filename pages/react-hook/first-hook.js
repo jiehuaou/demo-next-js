@@ -1,4 +1,4 @@
-import Layout from "../../components/layout";
+import Layout from "@components/layout";
 import Head from 'next/head';
 import { Text, Row, Input, Button, Card, Spacer, Grid } from "@nextui-org/react";
 import React, {  memo, useCallback, useEffect, useState } from "react";

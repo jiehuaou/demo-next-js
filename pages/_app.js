@@ -1,6 +1,6 @@
 import { NextUIProvider } from '@nextui-org/react';
 import { SessionProvider } from "next-auth/react";
-import { ThemeProvider } from "../context/theme";
+import { ThemeProvider } from "@context/theme";
 import '../styles/globals.css';
 
 const REFETCH_INTERVAL_SECOND = parseInt(process.env.REFETCH_INTERVAL_SECOND || '30');
